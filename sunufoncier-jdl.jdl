@@ -1,0 +1,178 @@
+
+entity Dossier {
+	numero String,
+    valeurBatie Double,
+    valeurVenale Double,
+    valeurLocativ Double,
+    activite String
+}
+entity Locataire{
+    nom String,
+    personne Boolean,
+    activite String,
+    ninea String,
+    montant Double
+}
+entity EvaluationSurfaceBatie{
+    superficieTotale Double,
+    superficieBatie Double
+}
+entity EvaluationCoursAmenage{
+    surface Double,
+    coeff Double
+}
+entity EvaluationCloture{
+    lineaire Double,
+    coeff Double
+}
+entity EvaluationBatiments{
+    niveau Integer,
+    surface Double,
+    coeff Double
+}
+entity Region{
+	code String,
+    libelle String
+}
+entity Departement{
+	code String,
+    libelle String
+}
+entity Arrondissement{
+	code String,
+    libelle String
+}
+entity Commune{
+	code String,
+    libelle String
+}
+entity Quartier{
+	code String,
+    libelle String
+}
+entity Lotissement{
+	code String,
+    libelle String
+}
+entity Nature{
+	code String,
+    libelle String
+}
+entity UsageDossier{
+	code String,
+    libelle String
+}
+
+entity RefParcelaire{
+	numeroParcelle String,
+    natureParcelle String
+}
+entity Refcadastrale{
+	codeSection String,
+    codeParcelle String,
+    nicad String,
+    superfici Double,
+    titreMere String,
+    titreCree String,
+    numeroRequisition String,
+    dateBornage Instant
+}
+entity Proprietaire{
+	prenom String,
+    nom String,
+    situation SituationProprietaire,
+    gestionDelegue Boolean,
+    raisonSocial String,
+    siegeSocial String,
+    personneMorale Boolean,
+    dateNaiss Instant,
+    lieuNaissance String,
+    numCNI String,
+    ninea String,
+    adresse String,
+    email String,
+    telephone String,
+    telephone2 String,
+    telephone3 String,
+    aquisition String,
+    statutPersoneStructure String,
+    typeStructure TypeStructure,
+    nombreHeritiers Integer,
+    ServiceOcupant String,
+    Etablssement String
+}
+entity Representant{
+	prenom String,
+	lienProprietaire String,
+    nom String,
+    actif Boolean,
+    raisonSocial String,
+    siegeSocial String,
+    personneMorale Boolean,
+    dateNaiss Instant,
+    lieuNaissance String,
+    numCNI String,
+    ninea String,
+    adresse String,
+    email String,
+    telephone String,
+    telephone2 String,
+    telephone3 String,
+    statutPersoneStructure String,
+    typeStructure TypeStructure
+}
+
+entity CategorieBatie{
+	libelle String,
+    prixMetreCare Double
+}
+
+entity CategorieCloture{
+	libelle String,
+    prixMetreCare Double
+}
+entity CategorieCoursAmenage{
+	libelle String,
+    prixMetreCare Double
+}
+entity CategorieNature{
+	libelle String,
+    prixMetreCare Double
+}
+enum SituationProprietaire{
+	RESIDENT, DECEDE, EXTERIEUR, AUTRE
+}
+enum TypeStructure{
+	ENTREPRISE_INDIVIDUEL, SURL, GIE, SA, SARL, SNC, SCS, ASSOCIATION, ONG, ORG_GOUV
+}
+relationship ManyToOne{
+    EvaluationCloture{categoriteCloture} to CategorieCloture{evaluationCloture},
+    EvaluationSurfaceBatie{categorieBatie} to CategorieBatie{evaluationSurfaceBatie},
+    EvaluationCoursAmenage{categorieCoursAmenage} to CategorieCoursAmenage{evaluationCoursAmenage},
+    EvaluationBatiments{categorieNature} to CategorieNature{evaluationBatiments},
+    RefParcelaire{commune} to Commune{refParcelaire}
+}
+relationship OneToMany{
+	Dossier{evaluationSurfaceBatie} to EvaluationSurfaceBatie{dossier},
+    Dossier{evaluationBatiments} to EvaluationBatiments{dossier},
+    Dossier{evaluationCloture} to EvaluationCloture{dossier},
+    Dossier{evaluationCoursAmenage} to EvaluationCoursAmenage{dossier},
+    Dossier{locataire} to Locataire{dossier},
+	Lotissement{lotissement} to Dossier{dossier},
+    UsageDossier{dossier} to Dossier{usageDossier},
+    Region{departement} to Departement{region},
+    Departement{arrondissement} to Arrondissement{departement},
+    Arrondissement{commune} to Commune{arrondissement},
+    Commune{quartier} to Quartier{communune},
+    Quartier{lotissement} to Lotissement{quartier},
+    Proprietaire{dossier} to Dossier{proprietaire}
+    Proprietaire{representant} to Representant{proprietaire}
+    RefParcelaire{dossier} to Dossier{refParcelaire}
+    Refcadastrale{dossier} to Dossier{refcadastrale}
+}
+
+
+paginate all with pagination
+service all with serviceImpl
+dto all with mapstruct
+filter all except Proprietaire, Representant
