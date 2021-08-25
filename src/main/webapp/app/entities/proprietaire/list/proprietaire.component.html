@@ -1,0 +1,138 @@
+<div>
+  <h2 id="page-heading" data-cy="ProprietaireHeading">
+    <span>Proprietaires</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-proprietaire"
+        [routerLink]="['/proprietaire/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Proprietaire </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="proprietaires?.length === 0">
+    <span>No proprietaires found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="proprietaires && proprietaires.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="prenom"><span>Prenom</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="nom"><span>Nom</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="situation"><span>Situation</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="gestionDelegue"><span>Gestion Delegue</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="raisonSocial"><span>Raison Social</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="siegeSocial"><span>Siege Social</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="personneMorale"><span>Personne Morale</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="dateNaiss"><span>Date Naiss</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="lieuNaissance"><span>Lieu Naissance</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="numCNI"><span>Num CNI</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="ninea"><span>Ninea</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="adresse"><span>Adresse</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="email"><span>Email</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="telephone"><span>Telephone</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="telephone2"><span>Telephone 2</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="telephone3"><span>Telephone 3</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="aquisition"><span>Aquisition</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="statutPersoneStructure"><span>Statut Persone Structure</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="typeStructure"><span>Type Structure</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="nombreHeritiers"><span>Nombre Heritiers</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="serviceOcupant"><span>Service Ocupant</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="etablssement"><span>Etablssement</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proprietaire of proprietaires; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/proprietaire', proprietaire.id, 'view']">{{ proprietaire.id }}</a>
+          </td>
+          <td>{{ proprietaire.prenom }}</td>
+          <td>{{ proprietaire.nom }}</td>
+          <td>{{ proprietaire.situation }}</td>
+          <td>{{ proprietaire.gestionDelegue }}</td>
+          <td>{{ proprietaire.raisonSocial }}</td>
+          <td>{{ proprietaire.siegeSocial }}</td>
+          <td>{{ proprietaire.personneMorale }}</td>
+          <td>{{ proprietaire.dateNaiss | formatMediumDatetime }}</td>
+          <td>{{ proprietaire.lieuNaissance }}</td>
+          <td>{{ proprietaire.numCNI }}</td>
+          <td>{{ proprietaire.ninea }}</td>
+          <td>{{ proprietaire.adresse }}</td>
+          <td>{{ proprietaire.email }}</td>
+          <td>{{ proprietaire.telephone }}</td>
+          <td>{{ proprietaire.telephone2 }}</td>
+          <td>{{ proprietaire.telephone3 }}</td>
+          <td>{{ proprietaire.aquisition }}</td>
+          <td>{{ proprietaire.statutPersoneStructure }}</td>
+          <td>{{ proprietaire.typeStructure }}</td>
+          <td>{{ proprietaire.nombreHeritiers }}</td>
+          <td>{{ proprietaire.serviceOcupant }}</td>
+          <td>{{ proprietaire.etablssement }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/proprietaire', proprietaire.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/proprietaire', proprietaire.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(proprietaire)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="proprietaires && proprietaires.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="evaluationCloture">
+      <h2 data-cy="evaluationClotureDetailsHeading"><span>Evaluation Cloture</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ evaluationCloture.id }}</span>
+        </dd>
+        <dt><span>Lineaire</span></dt>
+        <dd>
+          <span>{{ evaluationCloture.lineaire }}</span>
+        </dd>
+        <dt><span>Coeff</span></dt>
+        <dd>
+          <span>{{ evaluationCloture.coeff }}</span>
+        </dd>
+        <dt><span>Categorite Cloture</span></dt>
+        <dd>
+          <div *ngIf="evaluationCloture.categoriteCloture">
+            <a [routerLink]="['/categorie-cloture', evaluationCloture.categoriteCloture?.id, 'view']">{{
+              evaluationCloture.categoriteCloture?.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Dossier</span></dt>
+        <dd>
+          <div *ngIf="evaluationCloture.dossier">
+            <a [routerLink]="['/dossier', evaluationCloture.dossier?.id, 'view']">{{ evaluationCloture.dossier?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/evaluation-cloture', evaluationCloture.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

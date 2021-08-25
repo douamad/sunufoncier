@@ -1,0 +1,37 @@
+{
+  "name": "Lotissement",
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "libelle",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "dossier",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "lotissement"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "quartier",
+      "otherEntityRelationshipName": "lotissement",
+      "relationshipName": "quartier"
+    }
+  ],
+  "entityTableName": "lotissement",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210728231145"
+}

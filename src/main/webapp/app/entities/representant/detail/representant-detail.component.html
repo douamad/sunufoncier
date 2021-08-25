@@ -1,0 +1,106 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="representant">
+      <h2 data-cy="representantDetailsHeading"><span>Representant</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ representant.id }}</span>
+        </dd>
+        <dt><span>Prenom</span></dt>
+        <dd>
+          <span>{{ representant.prenom }}</span>
+        </dd>
+        <dt><span>Lien Proprietaire</span></dt>
+        <dd>
+          <span>{{ representant.lienProprietaire }}</span>
+        </dd>
+        <dt><span>Nom</span></dt>
+        <dd>
+          <span>{{ representant.nom }}</span>
+        </dd>
+        <dt><span>Actif</span></dt>
+        <dd>
+          <span>{{ representant.actif }}</span>
+        </dd>
+        <dt><span>Raison Social</span></dt>
+        <dd>
+          <span>{{ representant.raisonSocial }}</span>
+        </dd>
+        <dt><span>Siege Social</span></dt>
+        <dd>
+          <span>{{ representant.siegeSocial }}</span>
+        </dd>
+        <dt><span>Personne Morale</span></dt>
+        <dd>
+          <span>{{ representant.personneMorale }}</span>
+        </dd>
+        <dt><span>Date Naiss</span></dt>
+        <dd>
+          <span>{{ representant.dateNaiss | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Lieu Naissance</span></dt>
+        <dd>
+          <span>{{ representant.lieuNaissance }}</span>
+        </dd>
+        <dt><span>Num CNI</span></dt>
+        <dd>
+          <span>{{ representant.numCNI }}</span>
+        </dd>
+        <dt><span>Ninea</span></dt>
+        <dd>
+          <span>{{ representant.ninea }}</span>
+        </dd>
+        <dt><span>Adresse</span></dt>
+        <dd>
+          <span>{{ representant.adresse }}</span>
+        </dd>
+        <dt><span>Email</span></dt>
+        <dd>
+          <span>{{ representant.email }}</span>
+        </dd>
+        <dt><span>Telephone</span></dt>
+        <dd>
+          <span>{{ representant.telephone }}</span>
+        </dd>
+        <dt><span>Telephone 2</span></dt>
+        <dd>
+          <span>{{ representant.telephone2 }}</span>
+        </dd>
+        <dt><span>Telephone 3</span></dt>
+        <dd>
+          <span>{{ representant.telephone3 }}</span>
+        </dd>
+        <dt><span>Statut Persone Structure</span></dt>
+        <dd>
+          <span>{{ representant.statutPersoneStructure }}</span>
+        </dd>
+        <dt><span>Type Structure</span></dt>
+        <dd>
+          <span>{{ representant.typeStructure }}</span>
+        </dd>
+        <dt><span>Proprietaire</span></dt>
+        <dd>
+          <div *ngIf="representant.proprietaire">
+            <a [routerLink]="['/proprietaire', representant.proprietaire?.id, 'view']">{{ representant.proprietaire?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/representant', representant.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="locataire">
+      <h2 data-cy="locataireDetailsHeading"><span>Locataire</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ locataire.id }}</span>
+        </dd>
+        <dt><span>Nom</span></dt>
+        <dd>
+          <span>{{ locataire.nom }}</span>
+        </dd>
+        <dt><span>Personne</span></dt>
+        <dd>
+          <span>{{ locataire.personne }}</span>
+        </dd>
+        <dt><span>Activite</span></dt>
+        <dd>
+          <span>{{ locataire.activite }}</span>
+        </dd>
+        <dt><span>Ninea</span></dt>
+        <dd>
+          <span>{{ locataire.ninea }}</span>
+        </dd>
+        <dt><span>Montant</span></dt>
+        <dd>
+          <span>{{ locataire.montant }}</span>
+        </dd>
+        <dt><span>Dossier</span></dt>
+        <dd>
+          <div *ngIf="locataire.dossier">
+            <a [routerLink]="['/dossier', locataire.dossier?.id, 'view']">{{ locataire.dossier?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/locataire', locataire.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

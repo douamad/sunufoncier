@@ -1,0 +1,55 @@
+{
+  "name": "Refcadastrale",
+  "fields": [
+    {
+      "fieldName": "codeSection",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codeParcelle",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nicad",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "superfici",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "titreMere",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "titreCree",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numeroRequisition",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateBornage",
+      "fieldType": "Instant"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "dossier",
+      "otherEntityRelationshipName": "refcadastrale",
+      "relationshipName": "dossier"
+    }
+  ],
+  "entityTableName": "refcadastrale",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210728231149"
+}

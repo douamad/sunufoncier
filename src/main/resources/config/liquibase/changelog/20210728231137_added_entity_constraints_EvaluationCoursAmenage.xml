@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity EvaluationCoursAmenage.
+    -->
+    <changeSet id="20210728231137-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="categorie_cours_amenage_id"
+                                 baseTableName="evaluation_cours_amenage"
+                                 constraintName="fk_evaluation_cours_amenage__categorie_cours_amenage_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="categorie_cours_amenage"/>
+
+        <addForeignKeyConstraint baseColumnNames="dossier_id"
+                                 baseTableName="evaluation_cours_amenage"
+                                 constraintName="fk_evaluation_cours_amenage__dossier_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="dossier"/>
+    </changeSet>
+</databaseChangeLog>

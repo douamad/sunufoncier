@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="refcadastrale">
+      <h2 data-cy="refcadastraleDetailsHeading"><span>Refcadastrale</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ refcadastrale.id }}</span>
+        </dd>
+        <dt><span>Code Section</span></dt>
+        <dd>
+          <span>{{ refcadastrale.codeSection }}</span>
+        </dd>
+        <dt><span>Code Parcelle</span></dt>
+        <dd>
+          <span>{{ refcadastrale.codeParcelle }}</span>
+        </dd>
+        <dt><span>Nicad</span></dt>
+        <dd>
+          <span>{{ refcadastrale.nicad }}</span>
+        </dd>
+        <dt><span>Superfici</span></dt>
+        <dd>
+          <span>{{ refcadastrale.superfici }}</span>
+        </dd>
+        <dt><span>Titre Mere</span></dt>
+        <dd>
+          <span>{{ refcadastrale.titreMere }}</span>
+        </dd>
+        <dt><span>Titre Cree</span></dt>
+        <dd>
+          <span>{{ refcadastrale.titreCree }}</span>
+        </dd>
+        <dt><span>Numero Requisition</span></dt>
+        <dd>
+          <span>{{ refcadastrale.numeroRequisition }}</span>
+        </dd>
+        <dt><span>Date Bornage</span></dt>
+        <dd>
+          <span>{{ refcadastrale.dateBornage | formatMediumDatetime }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/refcadastrale', refcadastrale.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

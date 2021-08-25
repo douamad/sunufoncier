@@ -1,0 +1,103 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-refcadastrale-heading" data-cy="RefcadastraleCreateUpdateHeading">Create or edit a Refcadastrale</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_codeSection">Code Section</label>
+          <input
+            type="text"
+            class="form-control"
+            name="codeSection"
+            id="field_codeSection"
+            data-cy="codeSection"
+            formControlName="codeSection"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_codeParcelle">Code Parcelle</label>
+          <input
+            type="text"
+            class="form-control"
+            name="codeParcelle"
+            id="field_codeParcelle"
+            data-cy="codeParcelle"
+            formControlName="codeParcelle"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_nicad">Nicad</label>
+          <input type="text" class="form-control" name="nicad" id="field_nicad" data-cy="nicad" formControlName="nicad" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_superfici">Superfici</label>
+          <input type="number" class="form-control" name="superfici" id="field_superfici" data-cy="superfici" formControlName="superfici" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_titreMere">Titre Mere</label>
+          <input type="text" class="form-control" name="titreMere" id="field_titreMere" data-cy="titreMere" formControlName="titreMere" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_titreCree">Titre Cree</label>
+          <input type="text" class="form-control" name="titreCree" id="field_titreCree" data-cy="titreCree" formControlName="titreCree" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numeroRequisition">Numero Requisition</label>
+          <input
+            type="text"
+            class="form-control"
+            name="numeroRequisition"
+            id="field_numeroRequisition"
+            data-cy="numeroRequisition"
+            formControlName="numeroRequisition"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_dateBornage">Date Bornage</label>
+          <div class="d-flex">
+            <input
+              id="field_dateBornage"
+              data-cy="dateBornage"
+              type="datetime-local"
+              class="form-control"
+              name="dateBornage"
+              formControlName="dateBornage"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -6,6 +6,7 @@ entity Dossier {
     valeurLocativ Double,
     activite String
 }
+
 entity Locataire{
     nom String,
     personne Boolean,
@@ -13,18 +14,22 @@ entity Locataire{
     ninea String,
     montant Double
 }
+
 entity EvaluationSurfaceBatie{
     superficieTotale Double,
     superficieBatie Double
 }
+
 entity EvaluationCoursAmenage{
     surface Double,
     coeff Double
 }
+
 entity EvaluationCloture{
     lineaire Double,
     coeff Double
 }
+
 entity EvaluationBatiments{
     niveau Integer,
     surface Double,
@@ -65,7 +70,8 @@ entity UsageDossier{
 
 entity RefParcelaire{
 	numeroParcelle String,
-    natureParcelle String
+    natureParcelle String,
+    batie Boolean
 }
 entity Refcadastrale{
 	codeSection String,
@@ -136,7 +142,8 @@ entity CategorieCoursAmenage{
     prixMetreCare Double
 }
 entity CategorieNature{
-	libelle String,
+	nature String,
+    libelle String,
     prixMetreCare Double
 }
 enum SituationProprietaire{

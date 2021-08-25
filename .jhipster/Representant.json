@@ -1,0 +1,96 @@
+{
+  "name": "Representant",
+  "fields": [
+    {
+      "fieldName": "prenom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lienProprietaire",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "actif",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "raisonSocial",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "siegeSocial",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "personneMorale",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateNaiss",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "lieuNaissance",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numCNI",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ninea",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "adresse",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone2",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone3",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statutPersoneStructure",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "typeStructure",
+      "fieldType": "TypeStructure",
+      "fieldValues": "ENTREPRISE_INDIVIDUEL,SURL,GIE,SA,SARL,SNC,SCS,ASSOCIATION,ONG,ORG_GOUV"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "proprietaire",
+      "otherEntityRelationshipName": "representant",
+      "relationshipName": "proprietaire"
+    }
+  ],
+  "entityTableName": "representant",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210728231151"
+}

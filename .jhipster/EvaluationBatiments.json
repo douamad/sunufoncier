@@ -1,0 +1,41 @@
+{
+  "name": "EvaluationBatiments",
+  "fields": [
+    {
+      "fieldName": "niveau",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "surface",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "coeff",
+      "fieldType": "Double"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "categorieNature",
+      "otherEntityRelationshipName": "evaluationBatiments",
+      "relationshipName": "categorieNature"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "dossier",
+      "otherEntityRelationshipName": "evaluationBatiments",
+      "relationshipName": "dossier"
+    }
+  ],
+  "entityTableName": "evaluation_batiments",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210728231139"
+}

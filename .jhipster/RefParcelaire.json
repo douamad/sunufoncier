@@ -1,0 +1,41 @@
+{
+  "name": "RefParcelaire",
+  "fields": [
+    {
+      "fieldName": "numeroParcelle",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "natureParcelle",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "batie",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "dossier",
+      "otherEntityRelationshipName": "refParcelaire",
+      "relationshipName": "dossier"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "commune",
+      "otherEntityRelationshipName": "refParcelaire",
+      "relationshipName": "commune"
+    }
+  ],
+  "entityTableName": "ref_parcelaire",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210728231148"
+}

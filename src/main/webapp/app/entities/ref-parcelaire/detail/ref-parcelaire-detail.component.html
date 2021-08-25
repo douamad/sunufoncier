@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="refParcelaire">
+      <h2 data-cy="refParcelaireDetailsHeading"><span>Ref Parcelaire</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ refParcelaire.id }}</span>
+        </dd>
+        <dt><span>Numero Parcelle</span></dt>
+        <dd>
+          <span>{{ refParcelaire.numeroParcelle }}</span>
+        </dd>
+        <dt><span>Nature Parcelle</span></dt>
+        <dd>
+          <span>{{ refParcelaire.natureParcelle }}</span>
+        </dd>
+        <dt><span>Batie</span></dt>
+        <dd>
+          <span>{{ refParcelaire.batie }}</span>
+        </dd>
+        <dt><span>Commune</span></dt>
+        <dd>
+          <div *ngIf="refParcelaire.commune">
+            <a [routerLink]="['/commune', refParcelaire.commune?.id, 'view']">{{ refParcelaire.commune?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/ref-parcelaire', refParcelaire.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

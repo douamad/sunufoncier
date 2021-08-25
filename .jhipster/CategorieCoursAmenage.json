@@ -1,0 +1,31 @@
+{
+  "name": "CategorieCoursAmenage",
+  "fields": [
+    {
+      "fieldName": "libelle",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prixMetreCare",
+      "fieldType": "Double"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "evaluationCoursAmenage",
+      "otherEntityRelationshipName": "categorieCoursAmenage",
+      "relationshipName": "evaluationCoursAmenage"
+    }
+  ],
+  "entityTableName": "categorie_cours_amenage",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210728231154"
+}

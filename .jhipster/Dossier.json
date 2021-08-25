@@ -1,0 +1,97 @@
+{
+  "name": "Dossier",
+  "fields": [
+    {
+      "fieldName": "numero",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "valeurBatie",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "valeurVenale",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "valeurLocativ",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "activite",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "evaluationSurfaceBatie",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "evaluationSurfaceBatie"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "evaluationBatiments",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "evaluationBatiments"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "evaluationCloture",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "evaluationCloture"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "evaluationCoursAmenage",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "evaluationCoursAmenage"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "locataire",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "locataire"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "lotissement",
+      "otherEntityRelationshipName": "lotissement",
+      "relationshipName": "dossier"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "usageDossier",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "usageDossier"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "proprietaire",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "proprietaire"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "refParcelaire",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "refParcelaire"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "refcadastrale",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "refcadastrale"
+    }
+  ],
+  "entityTableName": "dossier",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210728231134"
+}

@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="evaluationBatiments">
+      <h2 data-cy="evaluationBatimentsDetailsHeading"><span>Evaluation Batiments</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ evaluationBatiments.id }}</span>
+        </dd>
+        <dt><span>Niveau</span></dt>
+        <dd>
+          <span>{{ evaluationBatiments.niveau }}</span>
+        </dd>
+        <dt><span>Surface</span></dt>
+        <dd>
+          <span>{{ evaluationBatiments.surface }}</span>
+        </dd>
+        <dt><span>Coeff</span></dt>
+        <dd>
+          <span>{{ evaluationBatiments.coeff }}</span>
+        </dd>
+        <dt><span>Categorie Nature</span></dt>
+        <dd>
+          <div *ngIf="evaluationBatiments.categorieNature">
+            <a [routerLink]="['/categorie-nature', evaluationBatiments.categorieNature?.id, 'view']">{{
+              evaluationBatiments.categorieNature?.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Dossier</span></dt>
+        <dd>
+          <div *ngIf="evaluationBatiments.dossier">
+            <a [routerLink]="['/dossier', evaluationBatiments.dossier?.id, 'view']">{{ evaluationBatiments.dossier?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/evaluation-batiments', evaluationBatiments.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

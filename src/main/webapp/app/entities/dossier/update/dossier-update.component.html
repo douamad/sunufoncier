@@ -1,0 +1,1212 @@
+<div class="row">
+  <h2 class="col-12">References</h2>
+  <div class="fieldset section-rp col-6">
+    <h2 data-cy="RefParcelaireCreateUpdateHeading" id="jhi-ref-parcelaire-heading">Ref Parcelaire</h2>
+    <form (ngSubmit)="save()" [formGroup]="editRPForm" name="editRPForm" novalidate role="form">
+      <div class="row">
+        <div class="form-group col-4">
+          <label class="form-control-label" for="field_rp_commune">Commune</label>
+          <select class="form-control" data-cy="commune" formControlName="commune" id="field_rp_commune" name="commune">
+            <option [ngValue]="null"></option>
+            <option
+              *ngFor="let communeOption of communesSharedCollection; trackBy: trackCommuneById"
+              [ngValue]="communeOption.id === editRPForm.get('commune')!.value?.id ? editRPForm.get('commune')!.value : communeOption"
+            >
+              {{ communeOption.libelle }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group col-4">
+          <label class="form-control-label" for="field_rp_natureParcelle">Localisation</label>
+          <input
+            class="form-control"
+            data-cy="natureParcelle"
+            formControlName="natureParcelle"
+            id="field_rp_natureParcelle"
+            name="natureParcelle"
+            type="text"
+          />
+        </div>
+        <div class="form-group col-2">
+          <label class="form-control-label" for="field_rp_numeroParcelle">N° Parcelle</label>
+          <input
+            class="form-control"
+            data-cy="numeroParcelle"
+            formControlName="numeroParcelle"
+            id="field_rp_numeroParcelle"
+            name="numeroParcelle"
+            type="text"
+          />
+        </div>
+        <div class="form-group col-2">
+          <label class="form-control-label" for="field_rp_batie">Batie</label>
+          <input class="form-check" data-cy="batie" formControlName="batie" id="field_rp_batie" name="batie" type="checkbox" />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="fieldset col-6 section-rc">
+    <h2 data-cy="RefcadastraleCreateUpdateHeading" id="jhi-refcadastrale-heading">Ref Cadastrale</h2>
+    <form (ngSubmit)="save()" [formGroup]="editRCForm" name="editRCForm" novalidate role="form">
+      <div class="row">
+        <div class="form-group col-3">
+          <label class="form-control-label" for="field_rc_codeSection">Code Section</label>
+          <input
+            class="form-control"
+            data-cy="codeSection"
+            formControlName="codeSection"
+            id="field_rc_codeSection"
+            name="codeSection"
+            type="text"
+          />
+        </div>
+
+        <div class="form-group col-3">
+          <label class="form-control-label" for="field_rc_codeParcelle">Code Parcelle</label>
+          <input
+            class="form-control"
+            data-cy="codeParcelle"
+            formControlName="codeParcelle"
+            id="field_rc_codeParcelle"
+            name="codeParcelle"
+            type="text"
+          />
+        </div>
+
+        <div class="form-group col-4">
+          <label class="form-control-label" for="field_rc_nicad">Nicad</label>
+          <input class="form-control" data-cy="nicad" formControlName="nicad" id="field_rc_nicad" name="nicad" type="text" />
+        </div>
+
+        <div class="form-group col-2">
+          <label class="form-control-label" for="field_rc_superfici">Superficie</label>
+          <input
+            class="form-control"
+            data-cy="superfici"
+            formControlName="superfici"
+            id="field_rc_superfici"
+            name="superfici"
+            type="number"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-3">
+          <label class="form-control-label" for="field_rc_titreMere">Titre Mere</label>
+          <input
+            class="form-control"
+            data-cy="titreMere"
+            formControlName="titreMere"
+            id="field_rc_titreMere"
+            name="titreMere"
+            type="text"
+          />
+        </div>
+
+        <div class="form-group col-3">
+          <label class="form-control-label" for="field_rc_titreCree">Titre Cree</label>
+          <input
+            class="form-control"
+            data-cy="titreCree"
+            formControlName="titreCree"
+            id="field_rc_titreCree"
+            name="titreCree"
+            type="text"
+          />
+        </div>
+
+        <div class="form-group col-3">
+          <label class="form-control-label" for="field_rc_numeroRequisition">N° Requisition</label>
+          <input
+            class="form-control"
+            data-cy="numeroRequisition"
+            formControlName="numeroRequisition"
+            id="field_rc_numeroRequisition"
+            name="numeroRequisition"
+            type="text"
+          />
+        </div>
+
+        <div class="form-group col-3">
+          <label class="form-control-label" for="field_rc_dateBornage">Date Bornage</label>
+          <div class="d-flex">
+            <input
+              class="form-control"
+              data-cy="dateBornage"
+              formControlName="dateBornage"
+              id="field_rc_dateBornage"
+              name="dateBornage"
+              placeholder="YYYY-MM-DD HH:mm"
+              type="datetime-local"
+            />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<hr />
+
+<div class="row">
+  <h2 class="col-12">Occupation</h2>
+  <div class="fieldset section-usage col-6">
+    <div class="form-group col-12">
+      <label class="form-control-label" for="field_MyusageDossier">Usage</label>
+      <select class="form-control" data-cy="usageDossier" id="field_MyusageDossier" name="usageDossier">
+        <option [ngValue]="null"></option>
+        <option
+          *ngFor="let usageDossierOption of usageDossiersSharedCollection; trackBy: trackUsageDossierById"
+          [ngValue]="
+            usageDossierOption.id === editForm.get('usageDossier')!.value?.id ? editForm.get('usageDossier')!.value : usageDossierOption
+          "
+        >
+          {{ usageDossierOption.libelle }}
+        </option>
+      </select>
+    </div>
+    <div class="locataires">
+      <h3>Les Locataires</h3>
+      <div *ngIf="locataires && locataires.length > 0" class="table-responsive" id="entities">
+        <table aria-describedby="page-heading" class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col"><span>Nom</span></th>
+              <th scope="col"><span>Personne</span></th>
+              <th scope="col"><span>Activite</span></th>
+              <th scope="col"><span>Ninea</span></th>
+              <th scope="col"><span>Montant</span></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let locataire of locataires; trackBy: trackLocataireId" data-cy="entityTable">
+              <td>{{ locataire.nom }}</td>
+              <td>{{ locataire.personne }}</td>
+              <td>{{ locataire.activite }}</td>
+              <td>{{ locataire.ninea }}</td>
+              <td>{{ locataire.montant }}</td>
+              <td class="text-right">
+                <div class="btn-group">
+                  <button
+                    [routerLink]="['/locataire', locataire.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                    type="submit"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                  </button>
+
+                  <button
+                    [routerLink]="['/locataire', locataire.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                    type="submit"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                  </button>
+
+                  <button (click)="deleteLoacataire(locataire)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton" type="submit">
+                    <fa-icon icon="times"></fa-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="fieldset col-6 section-proprio">
+    <div class="pro-part">
+      <h2 data-cy="ProprietaireCreateUpdateHeading" id="jhi-proprietaire-heading">Proprietaire</h2>
+      <form (ngSubmit)="save()" [formGroup]="editProprioForm" name="editProprioForm" novalidate role="form">
+        <div class="row">
+          <div class="form-group col-3">
+            <label class="form-control-label" for="field_proprio_personneMorale">Personne Morale</label>
+            <input
+              class="form-check"
+              data-cy="personneMorale"
+              formControlName="personneMorale"
+              id="field_proprio_personneMorale"
+              name="personneMorale"
+              type="checkbox"
+            />
+          </div>
+          <div class="form-group col-3">
+            <label class="form-control-label" for="field_proprio_gestionDelegue">Gestion Delegue ?</label>
+            <input
+              class="form-check"
+              data-cy="gestionDelegue"
+              formControlName="gestionDelegue"
+              id="field_proprio_gestionDelegue"
+              name="gestionDelegue"
+              type="checkbox"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_proprio_prenom"
+              >Prenom <span *ngIf="editProprioForm.get('personneMorale')!.value == true">Contact</span></label
+            >
+            <input class="form-control" data-cy="prenom" formControlName="prenom" id="field_proprio_prenom" name="prenom" type="text" />
+          </div>
+          <div class="form-group col">
+            <label class="form-control-label" for="field_proprio_nom"
+              >Nom <span *ngIf="editProprioForm.get('personneMorale')!.value == true">Contact</span></label
+            >
+            <input class="form-control" data-cy="nom" formControlName="nom" id="field_proprio_nom" name="nom" type="text" />
+          </div>
+          <div *ngIf="editProprioForm.get('personneMorale')!.value != true" class="form-group col">
+            <label class="form-control-label" for="field_proprio_situation">Situation</label>
+            <select class="form-control" data-cy="situation" formControlName="situation" id="field_proprio_situation" name="situation">
+              <option [ngValue]="null"></option>
+              <option value="RESIDENT">RESIDENT</option>
+              <option value="DECEDE">DECEDE</option>
+              <option value="EXTERIEUR">EXTERIEUR</option>
+              <option value="AUTRE">AUTRE</option>
+            </select>
+          </div>
+          <div *ngIf="editProprioForm.get('personneMorale')!.value == true" class="form-group col">
+            <label class="form-control-label" for="field_proprio_statutPersoneStructure">Statut Dans Structure</label>
+            <input
+              class="form-control"
+              data-cy="statutPersoneStructure"
+              formControlName="statutPersoneStructure"
+              id="field_proprio_statutPersoneStructure"
+              name="statutPersoneStructure"
+              type="text"
+            />
+          </div>
+        </div>
+        <div class="row personne-morale" *ngIf="editProprioForm.get('personneMorale')!.value == true">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_proprio_raisonSocial">Raison Social</label>
+            <input
+              class="form-control"
+              data-cy="raisonSocial"
+              formControlName="raisonSocial"
+              id="field_proprio_raisonSocial"
+              name="raisonSocial"
+              type="text"
+            />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_proprio_siegeSocial">Siege Social</label>
+            <input
+              class="form-control"
+              data-cy="siegeSocial"
+              formControlName="siegeSocial"
+              id="field_proprio_siegeSocial"
+              name="siegeSocial"
+              type="text"
+            />
+          </div>
+          <div class="form-group col">
+            <label class="form-control-label" for="field_proprio_ninea">Ninea</label>
+            <input class="form-control" data-cy="ninea" formControlName="ninea" id="field_proprio_ninea" name="ninea" type="text" />
+          </div>
+        </div>
+        <div *ngIf="editProprioForm.get('personneMorale')!.value == true" class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_proprio_typeStructure">Type Structure</label>
+            <select
+              class="form-control"
+              data-cy="typeStructure"
+              formControlName="typeStructure"
+              id="field_proprio_typeStructure"
+              name="typeStructure"
+            >
+              <option [ngValue]="null"></option>
+              <option value="ENTREPRISE_INDIVIDUEL">ENTREPRISE_INDIVIDUEL</option>
+              <option value="SURL">SURL</option>
+              <option value="GIE">GIE</option>
+              <option value="SA">SA</option>
+              <option value="SARL">SARL</option>
+              <option value="SNC">SNC</option>
+              <option value="SCS">SCS</option>
+              <option value="ASSOCIATION">ASSOCIATION</option>
+              <option value="ONG">ONG</option>
+              <option value="ORG_GOUV">ORG_GOUV</option>
+            </select>
+          </div>
+          <div class="form-group col">
+            <label class="form-control-label" for="field_proprio_serviceOcupant">Service Ocupant</label>
+            <input
+              class="form-control"
+              data-cy="serviceOcupant"
+              formControlName="serviceOcupant"
+              id="field_proprio_serviceOcupant"
+              name="serviceOcupant"
+              type="text"
+            />
+          </div>
+          <div class="form-group col">
+            <label class="form-control-label" for="field_proprio_etablssement">Etablssement</label>
+            <input
+              class="form-control"
+              data-cy="etablssement"
+              formControlName="etablssement"
+              id="field_proprio_etablssement"
+              name="etablssement"
+              type="text"
+            />
+          </div>
+        </div>
+
+        <div *ngIf="editProprioForm.get('personneMorale')!.value != true" class="row">
+          <div class="form-group col-3">
+            <label class="form-control-label" for="field_proprio_dateNaiss">Date Naiss</label>
+            <div class="d-flex">
+              <input
+                class="form-control"
+                data-cy="dateNaiss"
+                formControlName="dateNaiss"
+                id="field_proprio_dateNaiss"
+                name="dateNaiss"
+                placeholder="YYYY-MM-DD"
+                type="date"
+              />
+            </div>
+          </div>
+          <div class="form-group col-3">
+            <label class="form-control-label" for="field_proprio_lieuNaissance">Lieu Naissance</label>
+            <input
+              class="form-control"
+              data-cy="lieuNaissance"
+              formControlName="lieuNaissance"
+              id="field_proprio_lieuNaissance"
+              name="lieuNaissance"
+              type="text"
+            />
+          </div>
+          <div class="form-group col-4">
+            <label class="form-control-label" for="field_proprio_numCNI">Num CNI</label>
+            <input class="form-control" data-cy="numCNI" formControlName="numCNI" id="field_proprio_numCNI" name="numCNI" type="text" />
+          </div>
+          <div class="form-group col-2" *ngIf="editProprioForm.get('situation')!.value == 'DECEDE'">
+            <label class="form-control-label" for="field_proprio_nombreHeritiers">Nb Heritiers</label>
+            <input
+              class="form-control"
+              data-cy="nombreHeritiers"
+              formControlName="nombreHeritiers"
+              id="field_proprio_nombreHeritiers"
+              name="nombreHeritiers"
+              type="number"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_proprio_adresse">Adresse</label>
+            <input class="form-control" data-cy="adresse" formControlName="adresse" id="field_proprio_adresse" name="adresse" type="text" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-4">
+            <label class="form-control-label" for="field_proprio_email">Email</label>
+            <input class="form-control" data-cy="email" formControlName="email" id="field_proprio_email" name="email" type="text" />
+          </div>
+          <div class="form-group col-3">
+            <label class="form-control-label" for="field_proprio_telephone">Telephone</label>
+            <input
+              class="form-control"
+              data-cy="telephone"
+              formControlName="telephone"
+              id="field_proprio_telephone"
+              name="telephone"
+              type="text"
+            />
+          </div>
+          <div class="form-group col-3">
+            <label class="form-control-label" for="field_proprio_telephone2">Telephone 2</label>
+            <input
+              class="form-control"
+              data-cy="telephone2"
+              formControlName="telephone2"
+              id="field_proprio_telephone2"
+              name="telephone2"
+              type="text"
+            />
+          </div>
+          <div class="form-group col-2">
+            <label class="form-control-label" for="field_proprio_aquisition">Aquisition</label>
+            <input
+              class="form-control"
+              data-cy="aquisition"
+              formControlName="aquisition"
+              id="field_proprio_aquisition"
+              name="aquisition"
+              type="text"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="delegue-part" *ngIf="editProprioForm.get('gestionDelegue')!.value == true">
+      <form name="editRepForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editRepForm">
+        <h2 id="jhi-representant-heading" data-cy="RepresentantCreateUpdateHeading">Representant</h2>
+
+        <div>
+          <div class="row">
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_personneMorale">Personne Morale</label>
+              <input
+                type="checkbox"
+                class="form-check"
+                name="personneMorale"
+                id="field_rep_personneMorale"
+                data-cy="personneMorale"
+                formControlName="personneMorale"
+              />
+            </div>
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_prenom"
+                >Prenom <span *ngIf="editRepForm.get('personneMorale')!.value == true">Contact</span></label
+              >
+              <input type="text" class="form-control" name="prenom" id="field_rep_prenom" data-cy="prenom" formControlName="prenom" />
+            </div>
+
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_nom"
+                >Nom <span *ngIf="editRepForm.get('personneMorale')!.value == true">Contact</span></label
+              >
+              <input type="text" class="form-control" name="nom" id="field_rep_nom" data-cy="nom" formControlName="nom" />
+            </div>
+            <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value != true">
+              <label class="form-control-label" for="field_rep_lienProprietaire">Lien Proprietaire</label>
+              <input
+                type="text"
+                class="form-control"
+                name="lienProprietaire"
+                id="field_rep_lienProprietaire"
+                data-cy="lienProprietaire"
+                formControlName="lienProprietaire"
+              />
+            </div>
+            <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value == true">
+              <label class="form-control-label" for="field_rep_statutPersoneStructure">Statut dans Structure</label>
+              <input
+                type="text"
+                class="form-control"
+                name="statutPersoneStructure"
+                id="field_rep_statutPersoneStructure"
+                data-cy="statutPersoneStructure"
+                formControlName="statutPersoneStructure"
+              />
+            </div>
+          </div>
+
+          <div class="row" *ngIf="editRepForm.get('personneMorale')!.value == true">
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_raisonSocial">Raison Social</label>
+              <input
+                type="text"
+                class="form-control"
+                name="raisonSocial"
+                id="field_rep_raisonSocial"
+                data-cy="raisonSocial"
+                formControlName="raisonSocial"
+              />
+            </div>
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_ninea">Ninea</label>
+              <input type="text" class="form-control" name="ninea" id="field_rep_ninea" data-cy="ninea" formControlName="ninea" />
+            </div>
+
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_typeStructure">Type Structure</label>
+              <select
+                class="form-control"
+                name="typeStructure"
+                formControlName="typeStructure"
+                id="field_rep_typeStructure"
+                data-cy="typeStructure"
+              >
+                <option [ngValue]="null"></option>
+                <option value="ENTREPRISE_INDIVIDUEL">ENTREPRISE_INDIVIDUEL</option>
+                <option value="SURL">SURL</option>
+                <option value="GIE">GIE</option>
+                <option value="SA">SA</option>
+                <option value="SARL">SARL</option>
+                <option value="SNC">SNC</option>
+                <option value="SCS">SCS</option>
+                <option value="ASSOCIATION">ASSOCIATION</option>
+                <option value="ONG">ONG</option>
+                <option value="ORG_GOUV">ORG_GOUV</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="editRepForm.get('personneMorale')!.value != true">
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_dateNaiss">Date Naiss</label>
+              <div class="d-flex">
+                <input
+                  id="field_rep_dateNaiss"
+                  data-cy="dateNaiss"
+                  type="datetime-local"
+                  class="form-control"
+                  name="dateNaiss"
+                  formControlName="dateNaiss"
+                  placeholder="YYYY-MM-DD HH:mm"
+                />
+              </div>
+            </div>
+
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_lieuNaissance">Lieu Naissance</label>
+              <input
+                type="text"
+                class="form-control"
+                name="lieuNaissance"
+                id="field_rep_lieuNaissance"
+                data-cy="lieuNaissance"
+                formControlName="lieuNaissance"
+              />
+            </div>
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_numCNI">Num CNI</label>
+              <input type="text" class="form-control" name="numCNI" id="field_rep_numCNI" data-cy="numCNI" formControlName="numCNI" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value == true">
+              <label class="form-control-label" for="field_rep_siegeSocial">Siege Social</label>
+              <input
+                type="text"
+                class="form-control"
+                name="siegeSocial"
+                id="field_rep_siegeSocial"
+                data-cy="siegeSocial"
+                formControlName="siegeSocial"
+              />
+            </div>
+
+            <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value != true">
+              <label class="form-control-label" for="field_rep_adresse">Adresse</label>
+              <input type="text" class="form-control" name="adresse" id="field_rep_adresse" data-cy="adresse" formControlName="adresse" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_email">Email</label>
+              <input type="text" class="form-control" name="email" id="field_rep_email" data-cy="email" formControlName="email" />
+            </div>
+
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_telephone">Telephone</label>
+              <input
+                type="text"
+                class="form-control"
+                name="telephone"
+                id="field_rep_telephone"
+                data-cy="telephone"
+                formControlName="telephone"
+              />
+            </div>
+
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_telephone2">Telephone 2</label>
+              <input
+                type="text"
+                class="form-control"
+                name="telephone2"
+                id="field_rep_telephone2"
+                data-cy="telephone2"
+                formControlName="telephone2"
+              />
+            </div>
+
+            <div class="form-group col">
+              <label class="form-control-label" for="field_rep_telephone3">Telephone 3</label>
+              <input
+                type="text"
+                class="form-control"
+                name="telephone3"
+                id="field_rep_telephone3"
+                data-cy="telephone3"
+                formControlName="telephone3"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <h2 class="col-12">Evalation</h2>
+  <div class="fieldset col-6">
+    <form name="editESBForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editESBForm">
+      <h6 id="jhi-evaluation-surface-batie-heading" data-cy="EvaluationSurfaceBatieCreateUpdateHeading">Evaluation Surface Batie</h6>
+
+      <div>
+        <div class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_esb_superficieTotale">Superficie Totale</label>
+            <input
+              type="number"
+              class="form-control"
+              name="superficieTotale"
+              id="field_esb_superficieTotale"
+              data-cy="superficieTotale"
+              formControlName="superficieTotale"
+            />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_esb_superficieBatie">Superficie Batie</label>
+            <input
+              type="number"
+              class="form-control"
+              name="superficieBatie"
+              id="field_esb_superficieBatie"
+              data-cy="superficieBatie"
+              formControlName="superficieBatie"
+            />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_esb_categorieBatie">Categorie Batie</label>
+            <select
+              class="form-control"
+              id="field_esb_categorieBatie"
+              data-cy="categorieBatie"
+              name="categorieBatie"
+              formControlName="categorieBatie"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                  categorieBatieOption.id === editESBForm.get('categorieBatie')!.value?.id
+                    ? editESBForm.get('categorieBatie')!.value
+                    : categorieBatieOption
+                "
+                *ngFor="let categorieBatieOption of categorieBatiesSharedCollection; trackBy: trackCategorieBatieById"
+              >
+                {{ categorieBatieOption.libelle }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive" id="entities_esb" *ngIf="evaluationSurfaceBaties && evaluationSurfaceBaties.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort>
+            <th scope="col"><span>Superficie Totale</span></th>
+            <th scope="col"><span>Superficie Batie</span></th>
+            <th scope="col"><span>Categorie</span></th>
+            <th scope="col"><span>Prix M²</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let evaluationSurfaceBatie of evaluationSurfaceBaties; trackBy: trackESBId" data-cy="entityTable">
+            <td>{{ evaluationSurfaceBatie.superficieTotale }}</td>
+            <td>{{ evaluationSurfaceBatie.superficieBatie }}</td>
+            <td>{{ evaluationSurfaceBatie.categorieBatie?.libelle }}</td>
+            <td>{{ evaluationSurfaceBatie.categorieBatie?.prixMetreCare }}</td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/evaluation-surface-batie', evaluationSurfaceBatie.id, 'view']"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button
+                  type="submit"
+                  [routerLink]="['/evaluation-surface-batie', evaluationSurfaceBatie.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                </button>
+                <button
+                  type="submit"
+                  (click)="deleteESB(evaluationSurfaceBatie)"
+                  class="btn btn-danger btn-sm"
+                  data-cy="entityDeleteButton"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="fieldset col-6">
+    <form name="editECAForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editECAForm">
+      <h6 id="jhi-evaluation-cours-amenage-heading" data-cy="EvaluationCoursAmenageCreateUpdateHeading">Evaluation Cours Amenage</h6>
+
+      <div>
+        <div class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_eca_surface">Surface</label>
+            <input type="number" class="form-control" name="surface" id="field_eca_surface" data-cy="surface" formControlName="surface" />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_eca_coeff">Coeff</label>
+            <input type="number" class="form-control" name="coeff" id="field_eca_coeff" data-cy="coeff" formControlName="coeff" />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_eca_categorieCoursAmenage">Categorie Cours Amenage</label>
+            <select
+              class="form-control"
+              id="field_eca_categorieCoursAmenage"
+              data-cy="categorieCoursAmenage"
+              name="categorieCoursAmenage"
+              formControlName="categorieCoursAmenage"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                  categorieCoursAmenageOption.id === editECAForm.get('categorieCoursAmenage')!.value?.id
+                    ? editECAForm.get('categorieCoursAmenage')!.value
+                    : categorieCoursAmenageOption
+                "
+                *ngFor="let categorieCoursAmenageOption of categorieCoursAmenagesSharedCollection; trackBy: trackCategorieCoursAmenageById"
+              >
+                {{ categorieCoursAmenageOption.libelle }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive" id="entities_eca" *ngIf="evaluationCoursAmenages && evaluationCoursAmenages.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span>Surface</span></th>
+            <th scope="col"><span>Coeff</span></th>
+            <th scope="col"><span>Categorie</span></th>
+            <th scope="col"><span>Prix M²</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let evaluationCoursAmenage of evaluationCoursAmenages; trackBy: trackECAId" data-cy="entityTable">
+            <td>{{ evaluationCoursAmenage.surface }}</td>
+            <td>{{ evaluationCoursAmenage.coeff }}</td>
+            <td>{{ evaluationCoursAmenage.categorieCoursAmenage?.libelle }}</td>
+            <td>{{ evaluationCoursAmenage.categorieCoursAmenage?.prixMetreCare }}</td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/evaluation-cours-amenage', evaluationCoursAmenage.id, 'view']"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button
+                  type="submit"
+                  [routerLink]="['/evaluation-cours-amenage', evaluationCoursAmenage.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                </button>
+
+                <button
+                  type="submit"
+                  (click)="deleteECA(evaluationCoursAmenage)"
+                  class="btn btn-danger btn-sm"
+                  data-cy="entityDeleteButton"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="fieldset col-6">
+    <form name="editEBForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editEBForm">
+      <h6 id="jhi-evaluation-batiments-heading" data-cy="EvaluationBatimentsCreateUpdateHeading">Evaluation Batiments</h6>
+      <div>
+        <div class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_eb_niveau">Niveau</label>
+            <input type="number" class="form-control" name="niveau" id="field_eb_niveau" data-cy="niveau" formControlName="niveau" />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_eb_surface">Surface</label>
+            <input type="number" class="form-control" name="surface" id="field_eb_surface" data-cy="surface" formControlName="surface" />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_eb_coeff">Coeff</label>
+            <input type="number" class="form-control" name="coeff" id="field_eb_coeff" data-cy="coeff" formControlName="coeff" />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_eb_categorieNature">Categorie Nature</label>
+            <select
+              class="form-control"
+              id="field_eb_categorieNature"
+              data-cy="categorieNature"
+              name="categorieNature"
+              formControlName="categorieNature"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                  categorieNatureOption.id === editEBForm.get('categorieNature')!.value?.id
+                    ? editEBForm.get('categorieNature')!.value
+                    : categorieNatureOption
+                "
+                *ngFor="let categorieNatureOption of categorieNaturesSharedCollection; trackBy: trackCategorieNatureById"
+              >
+                {{ categorieNatureOption.libelle }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive" id="entities_eb" *ngIf="evaluationBatiments && evaluationBatiments.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort>
+            <th scope="col"><span>Niveau</span></th>
+            <th scope="col"><span>Surface</span></th>
+            <th scope="col"><span>Coeff</span></th>
+            <th scope="col"><span>Categorie Nature</span></th>
+            <th scope="col"><span>prix m²</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let evaluationBatiments of evaluationBatiments; trackBy: trackEBId" data-cy="entityTable">
+            <td>{{ evaluationBatiments.niveau }}</td>
+            <td>{{ evaluationBatiments.surface }}</td>
+            <td>{{ evaluationBatiments.coeff }}</td>
+            <td>{{ evaluationBatiments.categorieNature?.libelle }}</td>
+            <td>
+              {{ evaluationBatiments.categorieNature?.prixMetreCare }}
+            </td>
+            <td>
+              <div *ngIf="evaluationBatiments.dossier">
+                <a [routerLink]="['/dossier', evaluationBatiments.dossier?.id, 'view']">{{ evaluationBatiments.dossier?.id }}</a>
+              </div>
+            </td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/evaluation-batiments', evaluationBatiments.id, 'view']"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button
+                  type="submit"
+                  [routerLink]="['/evaluation-batiments', evaluationBatiments.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                </button>
+
+                <button type="submit" (click)="deleteEB(evaluationBatiments)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="fieldset col-6">
+    <form name="editECForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editECForm">
+      <h6 id="jhi-evaluation-cloture-heading" data-cy="EvaluationClotureCreateUpdateHeading">Evaluation Cloture</h6>
+
+      <div>
+        <div class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_ec_lineaire">Lineaire</label>
+            <input
+              type="number"
+              class="form-control"
+              name="lineaire"
+              id="field_ec_lineaire"
+              data-cy="lineaire"
+              formControlName="lineaire"
+            />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_ec_coeff">Coeff</label>
+            <input type="number" class="form-control" name="coeff" id="field_ec_coeff" data-cy="coeff" formControlName="coeff" />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_ec_categoriteCloture">Categorite Cloture</label>
+            <select
+              class="form-control"
+              id="field_ec_categoriteCloture"
+              data-cy="categoriteCloture"
+              name="categoriteCloture"
+              formControlName="categoriteCloture"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                  categorieClotureOption.id === editECForm.get('categoriteCloture')!.value?.id
+                    ? editECForm.get('categoriteCloture')!.value
+                    : categorieClotureOption
+                "
+                *ngFor="let categorieClotureOption of categorieCloturesSharedCollection; trackBy: trackCategorieClotureById"
+              >
+                {{ categorieClotureOption.id }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive" id="entities_ec" *ngIf="evaluationClotures && evaluationClotures.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span>Lineaire</span></th>
+            <th scope="col"><span>Coeff</span></th>
+            <th scope="col"><span>Categorite</span></th>
+            <th scope="col"><span>Prix M²</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let evaluationCloture of evaluationClotures; trackBy: trackECId" data-cy="entityTable">
+            <td>{{ evaluationCloture.lineaire }}</td>
+            <td>{{ evaluationCloture.coeff }}</td>
+            <td>{{ evaluationCloture.categoriteCloture?.libelle }}</td>
+            <td>{{ evaluationCloture.categoriteCloture?.prixMetreCare }}</td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/evaluation-cloture', evaluationCloture.id, 'view']"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline">View</span>
+                </button>
+
+                <button
+                  type="submit"
+                  [routerLink]="['/evaluation-cloture', evaluationCloture.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline">Edit</span>
+                </button>
+
+                <button type="submit" (click)="deleteEC(evaluationCloture)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="col-8">
+    <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+      <h2 data-cy="DossierCreateUpdateHeading" id="jhi-dossier-heading">Create or edit a Dossier</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div [hidden]="editForm.get('id')!.value == null" class="form-group">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input [readonly]="true" class="form-control" data-cy="id" formControlName="id" id="field_id" name="id" type="number" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numero">Numero</label>
+          <input class="form-control" data-cy="numero" formControlName="numero" id="field_numero" name="numero" type="text" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_valeurBatie">Valeur Batie</label>
+          <input
+            class="form-control"
+            data-cy="valeurBatie"
+            formControlName="valeurBatie"
+            id="field_valeurBatie"
+            name="valeurBatie"
+            type="number"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_valeurVenale">Valeur Venale</label>
+          <input
+            class="form-control"
+            data-cy="valeurVenale"
+            formControlName="valeurVenale"
+            id="field_valeurVenale"
+            name="valeurVenale"
+            type="number"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_valeurLocativ">Valeur Locativ</label>
+          <input
+            class="form-control"
+            data-cy="valeurLocativ"
+            formControlName="valeurLocativ"
+            id="field_valeurLocativ"
+            name="valeurLocativ"
+            type="number"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_activite">Activite</label>
+          <input class="form-control" data-cy="activite" formControlName="activite" id="field_activite" name="activite" type="text" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_dossier">Dossier</label>
+          <select class="form-control" data-cy="dossier" formControlName="dossier" id="field_dossier" name="dossier">
+            <option [ngValue]="null"></option>
+            <option
+              *ngFor="let lotissementOption of lotissementsSharedCollection; trackBy: trackLotissementById"
+              [ngValue]="lotissementOption.id === editForm.get('dossier')!.value?.id ? editForm.get('dossier')!.value : lotissementOption"
+            >
+              {{ lotissementOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_usageDossier">Usage Dossier</label>
+          <select class="form-control" data-cy="usageDossier" formControlName="usageDossier" id="field_usageDossier" name="usageDossier">
+            <option [ngValue]="null"></option>
+            <option
+              *ngFor="let usageDossierOption of usageDossiersSharedCollection; trackBy: trackUsageDossierById"
+              [ngValue]="
+                usageDossierOption.id === editForm.get('usageDossier')!.value?.id ? editForm.get('usageDossier')!.value : usageDossierOption
+              "
+            >
+              {{ usageDossierOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_proprietaire">Proprietaire</label>
+          <select class="form-control" data-cy="proprietaire" formControlName="proprietaire" id="field_proprietaire" name="proprietaire">
+            <option [ngValue]="null"></option>
+            <option
+              *ngFor="let proprietaireOption of proprietairesSharedCollection; trackBy: trackProprietaireById"
+              [ngValue]="
+                proprietaireOption.id === editForm.get('proprietaire')!.value?.id ? editForm.get('proprietaire')!.value : proprietaireOption
+              "
+            >
+              {{ proprietaireOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_refParcelaire">Ref Parcelaire</label>
+          <select
+            class="form-control"
+            data-cy="refParcelaire"
+            formControlName="refParcelaire"
+            id="field_refParcelaire"
+            name="refParcelaire"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              *ngFor="let refParcelaireOption of refParcelairesSharedCollection; trackBy: trackRefParcelaireById"
+              [ngValue]="
+                refParcelaireOption.id === editForm.get('refParcelaire')!.value?.id
+                  ? editForm.get('refParcelaire')!.value
+                  : refParcelaireOption
+              "
+            >
+              {{ refParcelaireOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_refcadastrale">Refcadastrale</label>
+          <select
+            class="form-control"
+            data-cy="refcadastrale"
+            formControlName="refcadastrale"
+            id="field_refcadastrale"
+            name="refcadastrale"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              *ngFor="let refcadastraleOption of refcadastralesSharedCollection; trackBy: trackRefcadastraleById"
+              [ngValue]="
+                refcadastraleOption.id === editForm.get('refcadastrale')!.value?.id
+                  ? editForm.get('refcadastrale')!.value
+                  : refcadastraleOption
+              "
+            >
+              {{ refcadastraleOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+          data-cy="entityCreateSaveButton"
+          id="save-entity"
+          type="submit"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

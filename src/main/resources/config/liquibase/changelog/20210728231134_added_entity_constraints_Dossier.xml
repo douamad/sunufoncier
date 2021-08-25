@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Dossier.
+    -->
+    <changeSet id="20210728231134-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="dossier_id"
+                                 baseTableName="dossier"
+                                 constraintName="fk_dossier__dossier_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lotissement"/>
+
+        <addForeignKeyConstraint baseColumnNames="usage_dossier_id"
+                                 baseTableName="dossier"
+                                 constraintName="fk_dossier__usage_dossier_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="usage_dossier"/>
+
+        <addForeignKeyConstraint baseColumnNames="proprietaire_id"
+                                 baseTableName="dossier"
+                                 constraintName="fk_dossier__proprietaire_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="proprietaire"/>
+
+        <addForeignKeyConstraint baseColumnNames="ref_parcelaire_id"
+                                 baseTableName="dossier"
+                                 constraintName="fk_dossier__ref_parcelaire_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ref_parcelaire"/>
+
+        <addForeignKeyConstraint baseColumnNames="refcadastrale_id"
+                                 baseTableName="dossier"
+                                 constraintName="fk_dossier__refcadastrale_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="refcadastrale"/>
+    </changeSet>
+</databaseChangeLog>

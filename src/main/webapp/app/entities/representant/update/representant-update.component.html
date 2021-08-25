@@ -1,0 +1,221 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-representant-heading" data-cy="RepresentantCreateUpdateHeading">Create or edit a Representant</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_prenom">Prenom</label>
+          <input type="text" class="form-control" name="prenom" id="field_prenom" data-cy="prenom" formControlName="prenom" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_lienProprietaire">Lien Proprietaire</label>
+          <input
+            type="text"
+            class="form-control"
+            name="lienProprietaire"
+            id="field_lienProprietaire"
+            data-cy="lienProprietaire"
+            formControlName="lienProprietaire"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_nom">Nom</label>
+          <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_actif">Actif</label>
+          <input type="checkbox" class="form-check" name="actif" id="field_actif" data-cy="actif" formControlName="actif" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_raisonSocial">Raison Social</label>
+          <input
+            type="text"
+            class="form-control"
+            name="raisonSocial"
+            id="field_raisonSocial"
+            data-cy="raisonSocial"
+            formControlName="raisonSocial"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_siegeSocial">Siege Social</label>
+          <input
+            type="text"
+            class="form-control"
+            name="siegeSocial"
+            id="field_siegeSocial"
+            data-cy="siegeSocial"
+            formControlName="siegeSocial"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_personneMorale">Personne Morale</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="personneMorale"
+            id="field_personneMorale"
+            data-cy="personneMorale"
+            formControlName="personneMorale"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_dateNaiss">Date Naiss</label>
+          <div class="d-flex">
+            <input
+              id="field_dateNaiss"
+              data-cy="dateNaiss"
+              type="datetime-local"
+              class="form-control"
+              name="dateNaiss"
+              formControlName="dateNaiss"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_lieuNaissance">Lieu Naissance</label>
+          <input
+            type="text"
+            class="form-control"
+            name="lieuNaissance"
+            id="field_lieuNaissance"
+            data-cy="lieuNaissance"
+            formControlName="lieuNaissance"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numCNI">Num CNI</label>
+          <input type="text" class="form-control" name="numCNI" id="field_numCNI" data-cy="numCNI" formControlName="numCNI" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_ninea">Ninea</label>
+          <input type="text" class="form-control" name="ninea" id="field_ninea" data-cy="ninea" formControlName="ninea" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_adresse">Adresse</label>
+          <input type="text" class="form-control" name="adresse" id="field_adresse" data-cy="adresse" formControlName="adresse" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_telephone">Telephone</label>
+          <input type="text" class="form-control" name="telephone" id="field_telephone" data-cy="telephone" formControlName="telephone" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_telephone2">Telephone 2</label>
+          <input
+            type="text"
+            class="form-control"
+            name="telephone2"
+            id="field_telephone2"
+            data-cy="telephone2"
+            formControlName="telephone2"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_telephone3">Telephone 3</label>
+          <input
+            type="text"
+            class="form-control"
+            name="telephone3"
+            id="field_telephone3"
+            data-cy="telephone3"
+            formControlName="telephone3"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_statutPersoneStructure">Statut Persone Structure</label>
+          <input
+            type="text"
+            class="form-control"
+            name="statutPersoneStructure"
+            id="field_statutPersoneStructure"
+            data-cy="statutPersoneStructure"
+            formControlName="statutPersoneStructure"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_typeStructure">Type Structure</label>
+          <select
+            class="form-control"
+            name="typeStructure"
+            formControlName="typeStructure"
+            id="field_typeStructure"
+            data-cy="typeStructure"
+          >
+            <option [ngValue]="null"></option>
+            <option value="ENTREPRISE_INDIVIDUEL">ENTREPRISE_INDIVIDUEL</option>
+            <option value="SURL">SURL</option>
+            <option value="GIE">GIE</option>
+            <option value="SA">SA</option>
+            <option value="SARL">SARL</option>
+            <option value="SNC">SNC</option>
+            <option value="SCS">SCS</option>
+            <option value="ASSOCIATION">ASSOCIATION</option>
+            <option value="ONG">ONG</option>
+            <option value="ORG_GOUV">ORG_GOUV</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_proprietaire">Proprietaire</label>
+          <select class="form-control" id="field_proprietaire" data-cy="proprietaire" name="proprietaire" formControlName="proprietaire">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                proprietaireOption.id === editForm.get('proprietaire')!.value?.id ? editForm.get('proprietaire')!.value : proprietaireOption
+              "
+              *ngFor="let proprietaireOption of proprietairesSharedCollection; trackBy: trackProprietaireById"
+            >
+              {{ proprietaireOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

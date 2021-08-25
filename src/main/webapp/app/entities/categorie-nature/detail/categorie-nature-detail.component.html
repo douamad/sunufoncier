@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="categorieNature">
+      <h2 data-cy="categorieNatureDetailsHeading"><span>Categorie Nature</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ categorieNature.id }}</span>
+        </dd>
+        <dt><span>Nature</span></dt>
+        <dd>
+          <span>{{ categorieNature.nature }}</span>
+        </dd>
+        <dt><span>Libelle</span></dt>
+        <dd>
+          <span>{{ categorieNature.libelle }}</span>
+        </dd>
+        <dt><span>Prix Metre Care</span></dt>
+        <dd>
+          <span>{{ categorieNature.prixMetreCare }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/categorie-nature', categorieNature.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

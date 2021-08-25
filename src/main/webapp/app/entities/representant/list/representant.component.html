@@ -1,0 +1,136 @@
+<div>
+  <h2 id="page-heading" data-cy="RepresentantHeading">
+    <span>Representants</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-representant"
+        [routerLink]="['/representant/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Representant </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="representants?.length === 0">
+    <span>No representants found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="representants && representants.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="prenom"><span>Prenom</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="lienProprietaire"><span>Lien Proprietaire</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="nom"><span>Nom</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="actif"><span>Actif</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="raisonSocial"><span>Raison Social</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="siegeSocial"><span>Siege Social</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="personneMorale"><span>Personne Morale</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="dateNaiss"><span>Date Naiss</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="lieuNaissance"><span>Lieu Naissance</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="numCNI"><span>Num CNI</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="ninea"><span>Ninea</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="adresse"><span>Adresse</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="email"><span>Email</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="telephone"><span>Telephone</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="telephone2"><span>Telephone 2</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="telephone3"><span>Telephone 3</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="statutPersoneStructure"><span>Statut Persone Structure</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="typeStructure"><span>Type Structure</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="proprietaire.id"><span>Proprietaire</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let representant of representants; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/representant', representant.id, 'view']">{{ representant.id }}</a>
+          </td>
+          <td>{{ representant.prenom }}</td>
+          <td>{{ representant.lienProprietaire }}</td>
+          <td>{{ representant.nom }}</td>
+          <td>{{ representant.actif }}</td>
+          <td>{{ representant.raisonSocial }}</td>
+          <td>{{ representant.siegeSocial }}</td>
+          <td>{{ representant.personneMorale }}</td>
+          <td>{{ representant.dateNaiss | formatMediumDatetime }}</td>
+          <td>{{ representant.lieuNaissance }}</td>
+          <td>{{ representant.numCNI }}</td>
+          <td>{{ representant.ninea }}</td>
+          <td>{{ representant.adresse }}</td>
+          <td>{{ representant.email }}</td>
+          <td>{{ representant.telephone }}</td>
+          <td>{{ representant.telephone2 }}</td>
+          <td>{{ representant.telephone3 }}</td>
+          <td>{{ representant.statutPersoneStructure }}</td>
+          <td>{{ representant.typeStructure }}</td>
+          <td>
+            <div *ngIf="representant.proprietaire">
+              <a [routerLink]="['/proprietaire', representant.proprietaire?.id, 'view']">{{ representant.proprietaire?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/representant', representant.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/representant', representant.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(representant)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="representants && representants.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="dossier">
+      <h2 data-cy="dossierDetailsHeading"><span>Dossier</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ dossier.id }}</span>
+        </dd>
+        <dt><span>Numero</span></dt>
+        <dd>
+          <span>{{ dossier.numero }}</span>
+        </dd>
+        <dt><span>Valeur Batie</span></dt>
+        <dd>
+          <span>{{ dossier.valeurBatie }}</span>
+        </dd>
+        <dt><span>Valeur Venale</span></dt>
+        <dd>
+          <span>{{ dossier.valeurVenale }}</span>
+        </dd>
+        <dt><span>Valeur Locativ</span></dt>
+        <dd>
+          <span>{{ dossier.valeurLocativ }}</span>
+        </dd>
+        <dt><span>Activite</span></dt>
+        <dd>
+          <span>{{ dossier.activite }}</span>
+        </dd>
+        <dt><span>Dossier</span></dt>
+        <dd>
+          <div *ngIf="dossier.dossier">
+            <a [routerLink]="['/lotissement', dossier.dossier?.id, 'view']">{{ dossier.dossier?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Usage Dossier</span></dt>
+        <dd>
+          <div *ngIf="dossier.usageDossier">
+            <a [routerLink]="['/usage-dossier', dossier.usageDossier?.id, 'view']">{{ dossier.usageDossier?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Proprietaire</span></dt>
+        <dd>
+          <div *ngIf="dossier.proprietaire">
+            <a [routerLink]="['/proprietaire', dossier.proprietaire?.id, 'view']">{{ dossier.proprietaire?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Ref Parcelaire</span></dt>
+        <dd>
+          <div *ngIf="dossier.refParcelaire">
+            <a [routerLink]="['/ref-parcelaire', dossier.refParcelaire?.id, 'view']">{{ dossier.refParcelaire?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Refcadastrale</span></dt>
+        <dd>
+          <div *ngIf="dossier.refcadastrale">
+            <a [routerLink]="['/refcadastrale', dossier.refcadastrale?.id, 'view']">{{ dossier.refcadastrale?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/dossier', dossier.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

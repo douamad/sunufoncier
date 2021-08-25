@@ -1,0 +1,119 @@
+{
+  "name": "Proprietaire",
+  "fields": [
+    {
+      "fieldName": "prenom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "situation",
+      "fieldType": "SituationProprietaire",
+      "fieldValues": "RESIDENT,DECEDE,EXTERIEUR,AUTRE"
+    },
+    {
+      "fieldName": "gestionDelegue",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "raisonSocial",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "siegeSocial",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "personneMorale",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "dateNaiss",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "lieuNaissance",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numCNI",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ninea",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "adresse",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone2",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone3",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "aquisition",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statutPersoneStructure",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "typeStructure",
+      "fieldType": "TypeStructure",
+      "fieldValues": "ENTREPRISE_INDIVIDUEL,SURL,GIE,SA,SARL,SNC,SCS,ASSOCIATION,ONG,ORG_GOUV"
+    },
+    {
+      "fieldName": "nombreHeritiers",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "serviceOcupant",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "etablssement",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "dossier",
+      "otherEntityRelationshipName": "proprietaire",
+      "relationshipName": "dossier"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "representant",
+      "otherEntityRelationshipName": "proprietaire",
+      "relationshipName": "representant"
+    }
+  ],
+  "entityTableName": "proprietaire",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210728231150"
+}

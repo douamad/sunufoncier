@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="evaluationSurfaceBatie">
+      <h2 data-cy="evaluationSurfaceBatieDetailsHeading"><span>Evaluation Surface Batie</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ evaluationSurfaceBatie.id }}</span>
+        </dd>
+        <dt><span>Superficie Totale</span></dt>
+        <dd>
+          <span>{{ evaluationSurfaceBatie.superficieTotale }}</span>
+        </dd>
+        <dt><span>Superficie Batie</span></dt>
+        <dd>
+          <span>{{ evaluationSurfaceBatie.superficieBatie }}</span>
+        </dd>
+        <dt><span>Categorie Batie</span></dt>
+        <dd>
+          <div *ngIf="evaluationSurfaceBatie.categorieBatie">
+            <a [routerLink]="['/categorie-batie', evaluationSurfaceBatie.categorieBatie?.id, 'view']">{{
+              evaluationSurfaceBatie.categorieBatie?.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Dossier</span></dt>
+        <dd>
+          <div *ngIf="evaluationSurfaceBatie.dossier">
+            <a [routerLink]="['/dossier', evaluationSurfaceBatie.dossier?.id, 'view']">{{ evaluationSurfaceBatie.dossier?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/evaluation-surface-batie', evaluationSurfaceBatie.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

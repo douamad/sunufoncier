@@ -1,0 +1,74 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-ref-parcelaire-heading" data-cy="RefParcelaireCreateUpdateHeading">Create or edit a Ref Parcelaire</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numeroParcelle">Numero Parcelle</label>
+          <input
+            type="text"
+            class="form-control"
+            name="numeroParcelle"
+            id="field_numeroParcelle"
+            data-cy="numeroParcelle"
+            formControlName="numeroParcelle"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_natureParcelle">Nature Parcelle</label>
+          <input
+            type="text"
+            class="form-control"
+            name="natureParcelle"
+            id="field_natureParcelle"
+            data-cy="natureParcelle"
+            formControlName="natureParcelle"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_batie">Batie</label>
+          <input type="checkbox" class="form-check" name="batie" id="field_batie" data-cy="batie" formControlName="batie" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_commune">Commune</label>
+          <select class="form-control" id="field_commune" data-cy="commune" name="commune" formControlName="commune">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="communeOption.id === editForm.get('commune')!.value?.id ? editForm.get('commune')!.value : communeOption"
+              *ngFor="let communeOption of communesSharedCollection; trackBy: trackCommuneById"
+            >
+              {{ communeOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

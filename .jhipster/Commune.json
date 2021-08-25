@@ -1,0 +1,43 @@
+{
+  "name": "Commune",
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "libelle",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "quartier",
+      "otherEntityRelationshipName": "communune",
+      "relationshipName": "quartier"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "arrondissement",
+      "otherEntityRelationshipName": "commune",
+      "relationshipName": "arrondissement"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "refParcelaire",
+      "otherEntityRelationshipName": "commune",
+      "relationshipName": "refParcelaire"
+    }
+  ],
+  "entityTableName": "commune",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210728231143"
+}

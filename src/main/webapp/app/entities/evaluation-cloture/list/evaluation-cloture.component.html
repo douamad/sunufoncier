@@ -1,0 +1,112 @@
+<div>
+  <h2 id="page-heading" data-cy="EvaluationClotureHeading">
+    <span>Evaluation Clotures</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-evaluation-cloture"
+        [routerLink]="['/evaluation-cloture/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Evaluation Cloture </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="evaluationClotures?.length === 0">
+    <span>No evaluationClotures found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="evaluationClotures && evaluationClotures.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="lineaire"><span>Lineaire</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="coeff"><span>Coeff</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="categoriteCloture.id"><span>Categorite Cloture</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="dossier.id"><span>Dossier</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let evaluationCloture of evaluationClotures; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/evaluation-cloture', evaluationCloture.id, 'view']">{{ evaluationCloture.id }}</a>
+          </td>
+          <td>{{ evaluationCloture.lineaire }}</td>
+          <td>{{ evaluationCloture.coeff }}</td>
+          <td>
+            <div *ngIf="evaluationCloture.categoriteCloture">
+              <a [routerLink]="['/categorie-cloture', evaluationCloture.categoriteCloture?.id, 'view']">{{
+                evaluationCloture.categoriteCloture?.id
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="evaluationCloture.dossier">
+              <a [routerLink]="['/dossier', evaluationCloture.dossier?.id, 'view']">{{ evaluationCloture.dossier?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/evaluation-cloture', evaluationCloture.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/evaluation-cloture', evaluationCloture.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(evaluationCloture)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="evaluationClotures && evaluationClotures.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

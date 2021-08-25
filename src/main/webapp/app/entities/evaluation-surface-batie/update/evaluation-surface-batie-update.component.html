@@ -1,0 +1,94 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-evaluation-surface-batie-heading" data-cy="EvaluationSurfaceBatieCreateUpdateHeading">
+        Create or edit a Evaluation Surface Batie
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_superficieTotale">Superficie Totale</label>
+          <input
+            type="number"
+            class="form-control"
+            name="superficieTotale"
+            id="field_superficieTotale"
+            data-cy="superficieTotale"
+            formControlName="superficieTotale"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_superficieBatie">Superficie Batie</label>
+          <input
+            type="number"
+            class="form-control"
+            name="superficieBatie"
+            id="field_superficieBatie"
+            data-cy="superficieBatie"
+            formControlName="superficieBatie"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_categorieBatie">Categorie Batie</label>
+          <select
+            class="form-control"
+            id="field_categorieBatie"
+            data-cy="categorieBatie"
+            name="categorieBatie"
+            formControlName="categorieBatie"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                categorieBatieOption.id === editForm.get('categorieBatie')!.value?.id
+                  ? editForm.get('categorieBatie')!.value
+                  : categorieBatieOption
+              "
+              *ngFor="let categorieBatieOption of categorieBatiesSharedCollection; trackBy: trackCategorieBatieById"
+            >
+              {{ categorieBatieOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_dossier">Dossier</label>
+          <select class="form-control" id="field_dossier" data-cy="dossier" name="dossier" formControlName="dossier">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="dossierOption.id === editForm.get('dossier')!.value?.id ? editForm.get('dossier')!.value : dossierOption"
+              *ngFor="let dossierOption of dossiersSharedCollection; trackBy: trackDossierById"
+            >
+              {{ dossierOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
