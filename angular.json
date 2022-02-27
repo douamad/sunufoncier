@@ -95,6 +95,7 @@
   },
   "defaultProject": "sunufoncier",
   "cli": {
+    "analytics": false,
     "packageManager": "npm"
   }
 }

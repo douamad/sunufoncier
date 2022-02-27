@@ -1,17 +1,20 @@
 <div class="row">
-  <h2 class="col-12">References</h2>
   <div class="fieldset section-rp col-6">
     <h2 data-cy="RefParcelaireCreateUpdateHeading" id="jhi-ref-parcelaire-heading">Ref Parcelaire</h2>
     <form (ngSubmit)="save()" [formGroup]="editRPForm" name="editRPForm" novalidate role="form">
       <div class="row">
         <div class="form-group col-4">
           <label class="form-control-label" for="field_rp_commune">Commune</label>
-          <select class="form-control" data-cy="commune" formControlName="commune" id="field_rp_commune" name="commune">
+          <select
+            (input)="setNicad()"
+            class="form-control"
+            data-cy="commune"
+            formControlName="commune"
+            id="field_rp_commune"
+            name="commune"
+          >
             <option [ngValue]="null"></option>
-            <option
-              *ngFor="let communeOption of communesSharedCollection; trackBy: trackCommuneById"
-              [ngValue]="communeOption.id === editRPForm.get('commune')!.value?.id ? editRPForm.get('commune')!.value : communeOption"
-            >
+            <option *ngFor="let communeOption of communesSharedCollection; trackBy: trackCommuneById" [ngValue]="communeOption">
               {{ communeOption.libelle }}
             </option>
           </select>
@@ -53,6 +56,7 @@
         <div class="form-group col-3">
           <label class="form-control-label" for="field_rc_codeSection">Code Section</label>
           <input
+            (input)="setNicad()"
             class="form-control"
             data-cy="codeSection"
             formControlName="codeSection"
@@ -65,6 +69,7 @@
         <div class="form-group col-3">
           <label class="form-control-label" for="field_rc_codeParcelle">Code Parcelle</label>
           <input
+            (input)="setNicad()"
             class="form-control"
             data-cy="codeParcelle"
             formControlName="codeParcelle"
@@ -76,7 +81,7 @@
 
         <div class="form-group col-4">
           <label class="form-control-label" for="field_rc_nicad">Nicad</label>
-          <input class="form-control" data-cy="nicad" formControlName="nicad" id="field_rc_nicad" name="nicad" type="text" />
+          <input class="form-control" data-cy="nicad" formControlName="nicad" id="field_rc_nicad" name="nicad" type="text" readonly />
         </div>
 
         <div class="form-group col-2">
@@ -104,7 +109,7 @@
           />
         </div>
 
-        <div class="form-group col-3">
+        <div class="form-group col-2">
           <label class="form-control-label" for="field_rc_titreCree">Titre Cree</label>
           <input
             class="form-control"
@@ -128,7 +133,7 @@
           />
         </div>
 
-        <div class="form-group col-3">
+        <div class="form-group col-4">
           <label class="form-control-label" for="field_rc_dateBornage">Date Bornage</label>
           <div class="d-flex">
             <input
@@ -137,8 +142,8 @@
               formControlName="dateBornage"
               id="field_rc_dateBornage"
               name="dateBornage"
-              placeholder="YYYY-MM-DD HH:mm"
-              type="datetime-local"
+              placeholder="YYYY-MM-DD"
+              type="date"
             />
           </div>
         </div>
@@ -150,8 +155,8 @@
 <hr />
 
 <div class="row">
-  <h2 class="col-12">Occupation</h2>
   <div class="fieldset section-usage col-6">
+    <h2 class="col-12">Occupation</h2>
     <div class="form-group col-12">
       <label class="form-control-label" for="field_MyusageDossier">Usage</label>
       <select class="form-control" data-cy="usageDossier" id="field_MyusageDossier" name="usageDossier">
@@ -159,7 +164,9 @@
         <option
           *ngFor="let usageDossierOption of usageDossiersSharedCollection; trackBy: trackUsageDossierById"
           [ngValue]="
-            usageDossierOption.id === editForm.get('usageDossier')!.value?.id ? editForm.get('usageDossier')!.value : usageDossierOption
+            usageDossierOption.id === editDossierForm.get('usageDossier')!.value?.id
+              ? editDossierForm.get('usageDossier')!.value
+              : usageDossierOption
           "
         >
           {{ usageDossierOption.libelle }}
@@ -167,23 +174,26 @@
       </select>
     </div>
     <div class="locataires">
-      <h3>Les Locataires</h3>
+      <div class="row">
+        <h6 class="col-9">Liste Locataires</h6>
+        <button (click)="ajouterLocataire(addLocataire)" class="btn btn-sm" type="button">Ajouter Locataire</button>
+      </div>
       <div *ngIf="locataires && locataires.length > 0" class="table-responsive" id="entities">
         <table aria-describedby="page-heading" class="table table-striped">
           <thead>
             <tr>
               <th scope="col"><span>Nom</span></th>
-              <th scope="col"><span>Personne</span></th>
+              <th scope="col"><span>P. Morale?</span></th>
               <th scope="col"><span>Activite</span></th>
               <th scope="col"><span>Ninea</span></th>
-              <th scope="col"><span>Montant</span></th>
+              <th scope="col"><span>Mensualité</span></th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let locataire of locataires; trackBy: trackLocataireId" data-cy="entityTable">
               <td>{{ locataire.nom }}</td>
-              <td>{{ locataire.personne }}</td>
+              <td><fa-icon icon="check" *ngIf="locataire.personne"></fa-icon></td>
               <td>{{ locataire.activite }}</td>
               <td>{{ locataire.ninea }}</td>
               <td>{{ locataire.montant }}</td>
@@ -642,11 +652,13 @@
 </div>
 <hr />
 <div class="row">
-  <h2 class="col-12">Evalation</h2>
+  <h2 class="col-12">Evaluation</h2>
   <div class="fieldset col-6">
     <form name="editESBForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editESBForm">
-      <h6 id="jhi-evaluation-surface-batie-heading" data-cy="EvaluationSurfaceBatieCreateUpdateHeading">Evaluation Surface Batie</h6>
-
+      <div class="row">
+        <h6 class="col-9">Evaluation Surface Batie</h6>
+        <button class="btn btn-sm">Ajouter Evaluation</button>
+      </div>
       <div>
         <div class="row">
           <div class="form-group col">
@@ -751,8 +763,10 @@
   </div>
   <div class="fieldset col-6">
     <form name="editECAForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editECAForm">
-      <h6 id="jhi-evaluation-cours-amenage-heading" data-cy="EvaluationCoursAmenageCreateUpdateHeading">Evaluation Cours Amenage</h6>
-
+      <div class="row">
+        <h6 class="col-9">Evaluation Cours Amenagé</h6>
+        <button class="btn btn-sm">Ajouter Cours Aménagé</button>
+      </div>
       <div>
         <div class="row">
           <div class="form-group col">
@@ -1042,16 +1056,75 @@
     </div>
   </div>
 </div>
+<ng-template #addLocataire let-c="close" let-d="dismiss">
+  <form (ngSubmit)="saveLocataire()" [formGroup]="editLocataireForm" name="editLocataireForm" novalidate role="form">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-add-tarifG">Ajouter Tarification</h4>
+      <button (click)="d('Cross click')" aria-label="Close" class="close" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div class="form-group" [hidden]="editLocataireForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+        <div class="row">
+          <div class="form-group col-9">
+            <label class="form-control-label" for="field_nom">Nom Complet</label>
+            <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+          </div>
+          <div class="form-group col">
+            <label class="form-control-label" for="field_personne">Personne Morale?</label>
+            <input type="checkbox" class="form-check" name="personne" id="field_personne" data-cy="personne" formControlName="personne" />
+          </div>
+        </div>
+        <div class="row" *ngIf="this.editLocataireForm.get(['personne'])!.value == true">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_activite_locataire">Activite</label>
+            <input
+              type="text"
+              class="form-control"
+              name="activite"
+              id="field_activite_locataire"
+              data-cy="activite"
+              formControlName="activite"
+            />
+          </div>
+          <div class="form-group col">
+            <label class="form-control-label" for="field_ninea">Ninea</label>
+            <input type="text" class="form-control" name="ninea" id="field_ninea" data-cy="ninea" formControlName="ninea" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_montant">Mensualité</label>
+            <input type="number" class="form-control" name="montant" id="field_montant" data-cy="montant" formControlName="montant" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="cancel-save" class="btn btn-secondary" (click)="resetLocataireForm()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+      </button>
 
-<div>
+      <button type="submit" id="add-locataire" [disabled]="editLocataireForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+      </button>
+    </div>
+  </form>
+</ng-template>
+<!--  <div>
   <div class="col-8">
-    <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+    <form (ngSubmit)="save()" [formGroup]="editDossierForm" name="editDossierForm" novalidate role="form">
       <h2 data-cy="DossierCreateUpdateHeading" id="jhi-dossier-heading">Create or edit a Dossier</h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div [hidden]="editForm.get('id')!.value == null" class="form-group">
+        <div [hidden]="editDossierForm.get('id')!.value == null" class="form-group">
           <label class="form-control-label" for="field_id">ID</label>
           <input [readonly]="true" class="form-control" data-cy="id" formControlName="id" id="field_id" name="id" type="number" />
         </div>
@@ -1108,7 +1181,7 @@
             <option [ngValue]="null"></option>
             <option
               *ngFor="let lotissementOption of lotissementsSharedCollection; trackBy: trackLotissementById"
-              [ngValue]="lotissementOption.id === editForm.get('dossier')!.value?.id ? editForm.get('dossier')!.value : lotissementOption"
+              [ngValue]="lotissementOption.id === editDossierForm.get('dossier')!.value?.id ? editDossierForm.get('dossier')!.value : lotissementOption"
             >
               {{ lotissementOption.id }}
             </option>
@@ -1122,7 +1195,7 @@
             <option
               *ngFor="let usageDossierOption of usageDossiersSharedCollection; trackBy: trackUsageDossierById"
               [ngValue]="
-                usageDossierOption.id === editForm.get('usageDossier')!.value?.id ? editForm.get('usageDossier')!.value : usageDossierOption
+                usageDossierOption.id === editDossierForm.get('usageDossier')!.value?.id ? editDossierForm.get('usageDossier')!.value : usageDossierOption
               "
             >
               {{ usageDossierOption.id }}
@@ -1137,7 +1210,7 @@
             <option
               *ngFor="let proprietaireOption of proprietairesSharedCollection; trackBy: trackProprietaireById"
               [ngValue]="
-                proprietaireOption.id === editForm.get('proprietaire')!.value?.id ? editForm.get('proprietaire')!.value : proprietaireOption
+                proprietaireOption.id === editDossierForm.get('proprietaire')!.value?.id ? editDossierForm.get('proprietaire')!.value : proprietaireOption
               "
             >
               {{ proprietaireOption.id }}
@@ -1158,8 +1231,8 @@
             <option
               *ngFor="let refParcelaireOption of refParcelairesSharedCollection; trackBy: trackRefParcelaireById"
               [ngValue]="
-                refParcelaireOption.id === editForm.get('refParcelaire')!.value?.id
-                  ? editForm.get('refParcelaire')!.value
+                refParcelaireOption.id === editDossierForm.get('refParcelaire')!.value?.id
+                  ? editDossierForm.get('refParcelaire')!.value
                   : refParcelaireOption
               "
             >
@@ -1181,8 +1254,8 @@
             <option
               *ngFor="let refcadastraleOption of refcadastralesSharedCollection; trackBy: trackRefcadastraleById"
               [ngValue]="
-                refcadastraleOption.id === editForm.get('refcadastrale')!.value?.id
-                  ? editForm.get('refcadastrale')!.value
+                refcadastraleOption.id === editDossierForm.get('refcadastrale')!.value?.id
+                  ? editDossierForm.get('refcadastrale')!.value
                   : refcadastraleOption
               "
             >
@@ -1198,7 +1271,7 @@
         </button>
 
         <button
-          [disabled]="editForm.invalid || isSaving"
+          [disabled]="editDossierForm.invalid || isSaving"
           class="btn btn-primary"
           data-cy="entityCreateSaveButton"
           id="save-entity"
@@ -1209,4 +1282,4 @@
       </div>
     </form>
   </div>
-</div>
+</div> -->

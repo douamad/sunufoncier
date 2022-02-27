@@ -6,7 +6,6 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ILocataire, getLocataireIdentifier } from '../locataire.model';
-import { IEvaluationSurfaceBatie } from 'app/entities/evaluation-surface-batie/evaluation-surface-batie.model';
 
 export type EntityResponseType = HttpResponse<ILocataire>;
 export type EntityArrayResponseType = HttpResponse<ILocataire[]>;

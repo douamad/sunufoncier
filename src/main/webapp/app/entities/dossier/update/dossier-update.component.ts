@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -25,7 +25,7 @@ import { EvaluationCoursAmenage, IEvaluationCoursAmenage } from 'app/entities/ev
 import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { ICommune } from 'app/entities/commune/commune.model';
 import { CommuneService } from 'app/entities/commune/service/commune.service';
-import { ILocataire } from 'app/entities/locataire/locataire.model';
+import { ILocataire, Locataire } from 'app/entities/locataire/locataire.model';
 import { LocataireService } from 'app/entities/locataire/service/locataire.service';
 import { LocataireDeleteDialogComponent } from 'app/entities/locataire/delete/locataire-delete-dialog.component';
 import { IRepresentant, Representant } from 'app/entities/representant/representant.model';
@@ -52,7 +52,7 @@ import { EvaluationSurfaceBatieDeleteDialogComponent } from 'app/entities/evalua
 })
 export class DossierUpdateComponent implements OnInit {
   isSaving = false;
-  locataires?: ILocataire[];
+  locataires: ILocataire[] = [];
   evaluationBatiments?: IEvaluationBatiments[];
   evaluationClotures?: IEvaluationCloture[];
   evaluationCoursAmenages?: IEvaluationCoursAmenage[];
@@ -69,7 +69,7 @@ export class DossierUpdateComponent implements OnInit {
   categorieCloturesSharedCollection: ICategorieCloture[] = [];
   categorieNaturesSharedCollection: ICategorieNature[] = [];
 
-  editForm = this.fb.group({
+  editDossierForm = this.fb.group({
     id: [],
     numero: [],
     valeurBatie: [],
@@ -176,6 +176,16 @@ export class DossierUpdateComponent implements OnInit {
     typeStructure: [],
     proprietaire: [],
   });
+  editLocataireForm = this.fb.group({
+    id: [],
+    nom: ['', [Validators.required]],
+    personne: [],
+    activite: [],
+    ninea: [],
+    montant: ['', [Validators.required]],
+    dossier: [],
+  });
+  idDossier: number | undefined;
   constructor(
     protected dossierService: DossierService,
     protected lotissementService: LotissementService,
@@ -201,7 +211,9 @@ export class DossierUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ dossier }) => {
       this.updateForm(dossier);
-
+      if (dossier.id) {
+        this.idDossier = dossier.id;
+      }
       this.loadRelationshipsOptions();
     });
   }
@@ -268,10 +280,12 @@ export class DossierUpdateComponent implements OnInit {
     return item.id!;
   }
   loadLocataires(): void {
-    this.locataireService
-      .query()
-      .pipe(map((res: HttpResponse<ILocataire[]>) => res.body ?? []))
-      .subscribe((locataires: ILocataire[]) => (this.locataires = locataires));
+    if (this.idDossier) {
+      this.locataireService
+        .query()
+        .pipe(map((res: HttpResponse<ILocataire[]>) => res.body ?? []))
+        .subscribe((locataires: ILocataire[]) => (this.locataires = locataires));
+    }
   }
   loadEB(): void {
     this.evaluationBatimentsService
@@ -353,6 +367,46 @@ export class DossierUpdateComponent implements OnInit {
       }
     });
   }
+  setNicad(): void {
+    const commune: string = this.editRPForm.get(['commune'])!.value ? this.editRPForm.get(['commune'])!.value.code : '';
+    const section: string = this.editRCForm.get(['codeSection'])!.value ? this.editRCForm.get(['codeSection'])!.value : '';
+    const parcelle: string = this.editRCForm.get(['codeParcelle'])!.value ? this.editRCForm.get(['codeParcelle'])!.value : '';
+    this.editRCForm.get(['nicad'])!.setValue(`${commune}-${section}-${parcelle}`);
+  }
+
+  saveLocataire(): void {
+    const locataire = this.createLocataireFromForm();
+    console.warn(locataire);
+    this.locataires.push(locataire);
+    console.warn(this.locataires);
+    this.modalService.dismissAll();
+  }
+  ajouterLocataire(content: any): void {
+    this.modalService.open(content, { size: 'lg', centered: true });
+  }
+  resetLocataireForm(): void {
+    this.editLocataireForm.patchValue({
+      id: null,
+      nom: null,
+      personne: null,
+      activite: null,
+      ninea: null,
+      montant: null,
+      dossier: null,
+    });
+  }
+  createLocataireFromForm(): ILocataire {
+    return {
+      ...new Locataire(),
+      id: this.editLocataireForm.get(['id'])!.value,
+      nom: this.editLocataireForm.get(['nom'])!.value,
+      personne: this.editLocataireForm.get(['personne'])!.value,
+      activite: this.editLocataireForm.get(['activite'])!.value,
+      ninea: this.editLocataireForm.get(['ninea'])!.value,
+      montant: this.editLocataireForm.get(['montant'])!.value,
+      dossier: this.editLocataireForm.get(['dossier'])!.value,
+    };
+  }
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IDossier>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
@@ -373,7 +427,7 @@ export class DossierUpdateComponent implements OnInit {
   }
 
   protected updateForm(dossier: IDossier): void {
-    this.editForm.patchValue({
+    this.editDossierForm.patchValue({
       id: dossier.id,
       numero: dossier.numero,
       valeurBatie: dossier.valeurBatie,
@@ -415,7 +469,7 @@ export class DossierUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<ILotissement[]>) => res.body ?? []))
       .pipe(
         map((lotissements: ILotissement[]) =>
-          this.lotissementService.addLotissementToCollectionIfMissing(lotissements, this.editForm.get('dossier')!.value)
+          this.lotissementService.addLotissementToCollectionIfMissing(lotissements, this.editDossierForm.get('dossier')!.value)
         )
       )
       .subscribe((lotissements: ILotissement[]) => (this.lotissementsSharedCollection = lotissements));
@@ -425,7 +479,7 @@ export class DossierUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IUsageDossier[]>) => res.body ?? []))
       .pipe(
         map((usageDossiers: IUsageDossier[]) =>
-          this.usageDossierService.addUsageDossierToCollectionIfMissing(usageDossiers, this.editForm.get('usageDossier')!.value)
+          this.usageDossierService.addUsageDossierToCollectionIfMissing(usageDossiers, this.editDossierForm.get('usageDossier')!.value)
         )
       )
       .subscribe((usageDossiers: IUsageDossier[]) => (this.usageDossiersSharedCollection = usageDossiers));
@@ -435,7 +489,7 @@ export class DossierUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IProprietaire[]>) => res.body ?? []))
       .pipe(
         map((proprietaires: IProprietaire[]) =>
-          this.proprietaireService.addProprietaireToCollectionIfMissing(proprietaires, this.editForm.get('proprietaire')!.value)
+          this.proprietaireService.addProprietaireToCollectionIfMissing(proprietaires, this.editDossierForm.get('proprietaire')!.value)
         )
       )
       .subscribe((proprietaires: IProprietaire[]) => (this.proprietairesSharedCollection = proprietaires));
@@ -445,7 +499,7 @@ export class DossierUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IRefParcelaire[]>) => res.body ?? []))
       .pipe(
         map((refParcelaires: IRefParcelaire[]) =>
-          this.refParcelaireService.addRefParcelaireToCollectionIfMissing(refParcelaires, this.editForm.get('refParcelaire')!.value)
+          this.refParcelaireService.addRefParcelaireToCollectionIfMissing(refParcelaires, this.editDossierForm.get('refParcelaire')!.value)
         )
       )
       .subscribe((refParcelaires: IRefParcelaire[]) => (this.refParcelairesSharedCollection = refParcelaires));
@@ -455,7 +509,7 @@ export class DossierUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IRefcadastrale[]>) => res.body ?? []))
       .pipe(
         map((refcadastrales: IRefcadastrale[]) =>
-          this.refcadastraleService.addRefcadastraleToCollectionIfMissing(refcadastrales, this.editForm.get('refcadastrale')!.value)
+          this.refcadastraleService.addRefcadastraleToCollectionIfMissing(refcadastrales, this.editDossierForm.get('refcadastrale')!.value)
         )
       )
       .subscribe((refcadastrales: IRefcadastrale[]) => (this.refcadastralesSharedCollection = refcadastrales));
@@ -536,17 +590,17 @@ export class DossierUpdateComponent implements OnInit {
   protected createFromForm(): IDossier {
     return {
       ...new Dossier(),
-      id: this.editForm.get(['id'])!.value,
-      numero: this.editForm.get(['numero'])!.value,
-      valeurBatie: this.editForm.get(['valeurBatie'])!.value,
-      valeurVenale: this.editForm.get(['valeurVenale'])!.value,
-      valeurLocativ: this.editForm.get(['valeurLocativ'])!.value,
-      activite: this.editForm.get(['activite'])!.value,
-      dossier: this.editForm.get(['dossier'])!.value,
-      usageDossier: this.editForm.get(['usageDossier'])!.value,
-      proprietaire: this.editForm.get(['proprietaire'])!.value,
-      refParcelaire: this.editForm.get(['refParcelaire'])!.value,
-      refcadastrale: this.editForm.get(['refcadastrale'])!.value,
+      id: this.editDossierForm.get(['id'])!.value,
+      numero: this.editDossierForm.get(['numero'])!.value,
+      valeurBatie: this.editDossierForm.get(['valeurBatie'])!.value,
+      valeurVenale: this.editDossierForm.get(['valeurVenale'])!.value,
+      valeurLocativ: this.editDossierForm.get(['valeurLocativ'])!.value,
+      activite: this.editDossierForm.get(['activite'])!.value,
+      dossier: this.editDossierForm.get(['dossier'])!.value,
+      usageDossier: this.editDossierForm.get(['usageDossier'])!.value,
+      proprietaire: this.editDossierForm.get(['proprietaire'])!.value,
+      refParcelaire: this.editDossierForm.get(['refParcelaire'])!.value,
+      refcadastrale: this.editDossierForm.get(['refcadastrale'])!.value,
     };
   }
 
@@ -645,7 +699,7 @@ export class DossierUpdateComponent implements OnInit {
       id: this.editRPForm.get(['id'])!.value,
       numeroParcelle: this.editRPForm.get(['numeroParcelle'])!.value,
       natureParcelle: this.editRPForm.get(['natureParcelle'])!.value,
-      batie: this.editForm.get(['batie'])!.value,
+      batie: this.editDossierForm.get(['batie'])!.value,
       commune: this.editRPForm.get(['commune'])!.value,
     };
   }
@@ -738,7 +792,7 @@ export class DossierUpdateComponent implements OnInit {
     };
   }
   protected updateRepForm(representant: IRepresentant): void {
-    this.editForm.patchValue({
+    this.editRepForm.patchValue({
       id: representant.id,
       prenom: representant.prenom,
       lienProprietaire: representant.lienProprietaire,
