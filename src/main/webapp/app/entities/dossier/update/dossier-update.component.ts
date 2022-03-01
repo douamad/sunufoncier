@@ -53,10 +53,10 @@ import { EvaluationSurfaceBatieDeleteDialogComponent } from 'app/entities/evalua
 export class DossierUpdateComponent implements OnInit {
   isSaving = false;
   locataires: ILocataire[] = [];
-  evaluationBatiments?: IEvaluationBatiments[];
-  evaluationClotures?: IEvaluationCloture[];
-  evaluationCoursAmenages?: IEvaluationCoursAmenage[];
-  evaluationSurfaceBaties?: IEvaluationSurfaceBatie[];
+  evaluationBatiments: IEvaluationBatiments[] = [];
+  evaluationClotures: IEvaluationCloture[] = [];
+  evaluationCoursAmenages: IEvaluationCoursAmenage[] = [];
+  evaluationSurfaceBaties: IEvaluationSurfaceBatie[] = [];
 
   lotissementsSharedCollection: ILotissement[] = [];
   usageDossiersSharedCollection: IUsageDossier[] = [];
@@ -288,84 +288,118 @@ export class DossierUpdateComponent implements OnInit {
     }
   }
   loadEB(): void {
-    this.evaluationBatimentsService
-      .query()
-      .pipe(map((res: HttpResponse<IEvaluationBatiments[]>) => res.body ?? []))
-      .subscribe((eb: IEvaluationBatiments[]) => (this.evaluationBatiments = eb));
+    if (this.idDossier) {
+      this.evaluationBatimentsService
+        .query()
+        .pipe(map((res: HttpResponse<IEvaluationBatiments[]>) => res.body ?? []))
+        .subscribe((eb: IEvaluationBatiments[]) => (this.evaluationBatiments = eb));
+    }
   }
 
   loadEC(): void {
-    this.evaluationClotureService
-      .query()
-      .pipe(map((res: HttpResponse<IEvaluationCloture[]>) => res.body ?? []))
-      .subscribe((ec: IEvaluationCloture[]) => (this.evaluationClotures = ec));
+    if (this.idDossier) {
+      this.evaluationClotureService
+        .query()
+        .pipe(map((res: HttpResponse<IEvaluationCloture[]>) => res.body ?? []))
+        .subscribe((ec: IEvaluationCloture[]) => (this.evaluationClotures = ec));
+    }
   }
 
   loadESB(): void {
-    this.evaluationSurfaceBatieService
-      .query()
-      .pipe(map((res: HttpResponse<IEvaluationSurfaceBatie[]>) => res.body ?? []))
-      .subscribe((esb: IEvaluationSurfaceBatie[]) => (this.evaluationSurfaceBaties = esb));
+    if (this.idDossier) {
+      this.evaluationSurfaceBatieService
+        .query()
+        .pipe(map((res: HttpResponse<IEvaluationSurfaceBatie[]>) => res.body ?? []))
+        .subscribe((esb: IEvaluationSurfaceBatie[]) => (this.evaluationSurfaceBaties = esb));
+    }
   }
 
   loadECA(): void {
-    this.evaluationCoursAmenageService
-      .query()
-      .pipe(map((res: HttpResponse<IEvaluationCoursAmenage[]>) => res.body ?? []))
-      .subscribe((eca: IEvaluationCoursAmenage[]) => (this.evaluationCoursAmenages = eca));
+    if (this.idDossier) {
+      this.evaluationCoursAmenageService
+        .query()
+        .pipe(map((res: HttpResponse<IEvaluationCoursAmenage[]>) => res.body ?? []))
+        .subscribe((eca: IEvaluationCoursAmenage[]) => (this.evaluationCoursAmenages = eca));
+    }
   }
   trackLocataireId(index: number, item: ILocataire): number {
     return item.id!;
   }
-  deleteLoacataire(locataire: ILocataire): void {
-    const modalRef = this.modalService.open(LocataireDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.locataire = locataire;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
-      if (reason === 'deleted') {
-        this.loadLocataires();
-      }
-    });
+  deleteLoacataire(locataire: ILocataire, i: number): void {
+    console.warn(i);
+    if (locataire.id) {
+      const modalRef = this.modalService.open(LocataireDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+      modalRef.componentInstance.locataire = locataire;
+      // unsubscribe not needed because closed completes on modal close
+      modalRef.closed.subscribe(reason => {
+        if (reason === 'deleted') {
+          this.loadLocataires();
+        }
+      });
+    } else {
+      console.warn(i);
+      this.locataires.splice(i, 1);
+      console.warn(this.locataires);
+    }
   }
-  deleteEB(evaluationBatiments: IEvaluationBatiments): void {
-    const modalRef = this.modalService.open(EvaluationBatimentsDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.evaluationBatiments = evaluationBatiments;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
-      if (reason === 'deleted') {
-        this.loadEB();
-      }
-    });
+  deleteEB(evaluationBatiment: IEvaluationBatiments, i: number): void {
+    console.warn(i);
+    console.warn(this.evaluationBatiments);
+    if (evaluationBatiment.id) {
+      const modalRef = this.modalService.open(EvaluationBatimentsDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+      modalRef.componentInstance.evaluationBatiments = evaluationBatiment;
+      // unsubscribe not needed because closed completes on modal close
+      modalRef.closed.subscribe(reason => {
+        if (reason === 'deleted') {
+          this.loadEB();
+        }
+      });
+    } else {
+      this.evaluationBatiments.splice(i, 1);
+      console.warn(this.evaluationBatiments);
+    }
   }
-  deleteEC(evaluationCloture: IEvaluationCloture): void {
-    const modalRef = this.modalService.open(EvaluationClotureDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.evaluationCloture = evaluationCloture;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
-      if (reason === 'deleted') {
-        this.loadEC();
-      }
-    });
+  deleteEC(evaluationCloture: IEvaluationCloture, i: number): void {
+    if (evaluationCloture.id) {
+      const modalRef = this.modalService.open(EvaluationClotureDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+      modalRef.componentInstance.evaluationCloture = evaluationCloture;
+      // unsubscribe not needed because closed completes on modal close
+      modalRef.closed.subscribe(reason => {
+        if (reason === 'deleted') {
+          this.loadEC();
+        }
+      });
+    } else {
+      this.evaluationClotures.splice(i, 1);
+    }
   }
-  deleteECA(evaluationCoursAmenage: IEvaluationCoursAmenage): void {
-    const modalRef = this.modalService.open(EvaluationCoursAmenageDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.evaluationCoursAmenage = evaluationCoursAmenage;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
-      if (reason === 'deleted') {
-        this.loadECA();
-      }
-    });
+  deleteECA(evaluationCoursAmenage: IEvaluationCoursAmenage, i: number): void {
+    if (evaluationCoursAmenage.id) {
+      const modalRef = this.modalService.open(EvaluationCoursAmenageDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+      modalRef.componentInstance.evaluationCoursAmenage = evaluationCoursAmenage;
+      // unsubscribe not needed because closed completes on modal close
+      modalRef.closed.subscribe(reason => {
+        if (reason === 'deleted') {
+          this.loadECA();
+        }
+      });
+    } else {
+      this.evaluationCoursAmenages.splice(i, 1);
+    }
   }
-  deleteESB(evaluationSurfaceBatie: IEvaluationSurfaceBatie): void {
-    const modalRef = this.modalService.open(EvaluationSurfaceBatieDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.evaluationSurfaceBatie = evaluationSurfaceBatie;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed.subscribe(reason => {
-      if (reason === 'deleted') {
-        this.loadESB();
-      }
-    });
+  deleteESB(evaluationSurfaceBatie: IEvaluationSurfaceBatie, i: number): void {
+    if (evaluationSurfaceBatie.id) {
+      const modalRef = this.modalService.open(EvaluationSurfaceBatieDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+      modalRef.componentInstance.evaluationSurfaceBatie = evaluationSurfaceBatie;
+      // unsubscribe not needed because closed completes on modal close
+      modalRef.closed.subscribe(reason => {
+        if (reason === 'deleted') {
+          this.loadESB();
+        }
+      });
+    } else {
+      this.evaluationSurfaceBaties.splice(i, 1);
+    }
   }
   setNicad(): void {
     const commune: string = this.editRPForm.get(['commune'])!.value ? this.editRPForm.get(['commune'])!.value.code : '';
@@ -381,7 +415,40 @@ export class DossierUpdateComponent implements OnInit {
     console.warn(this.locataires);
     this.modalService.dismissAll();
   }
+  saveECAForm(): void {
+    const eca = this.createECAFromForm();
+    console.warn(eca);
+    this.evaluationCoursAmenages.push(eca);
+    console.warn(this.evaluationCoursAmenages);
+    this.modalService.dismissAll();
+  }
+  saveESBForm(): void {
+    const esb = this.createESBFromForm();
+    console.warn(esb);
+    this.evaluationSurfaceBaties.push(esb);
+    console.warn(this.evaluationSurfaceBaties);
+    this.modalService.dismissAll();
+  }
+  saveECForm(): void {
+    const ec = this.createECFromForm();
+    console.warn(ec);
+    this.evaluationClotures.push(ec);
+    console.warn(this.evaluationClotures);
+    this.modalService.dismissAll();
+  }
   ajouterLocataire(content: any): void {
+    this.modalService.open(content, { size: 'lg', centered: true });
+  }
+  ajouterEB(content: any): void {
+    this.modalService.open(content, { size: 'lg', centered: true });
+  }
+  ajouterESB(content: any): void {
+    this.modalService.open(content, { size: 'lg', centered: true });
+  }
+  ajouterEC(content: any): void {
+    this.modalService.open(content, { size: 'lg', centered: true });
+  }
+  ajouterECA(content: any): void {
     this.modalService.open(content, { size: 'lg', centered: true });
   }
   resetLocataireForm(): void {
@@ -392,6 +459,43 @@ export class DossierUpdateComponent implements OnInit {
       activite: null,
       ninea: null,
       montant: null,
+      dossier: null,
+    });
+  }
+  resetEBForm(): void {
+    this.editEBForm.patchValue({
+      id: null,
+      niveau: null,
+      surface: null,
+      coeff: null,
+      categorieNature: null,
+      dossier: null,
+    });
+  }
+  resetECForm(): void {
+    this.editECForm.patchValue({
+      id: null,
+      lineaire: null,
+      coeff: null,
+      categoriteCloture: null,
+      dossier: null,
+    });
+  }
+  resetESBForm(): void {
+    this.editESBForm.patchValue({
+      id: null,
+      superficieTotale: null,
+      superficieBatie: null,
+      categorieBatie: null,
+      dossier: null,
+    });
+  }
+  resetECAForm(): void {
+    this.editECAForm.patchValue({
+      id: null,
+      surface: null,
+      coeff: null,
+      categorieCoursAmenage: null,
       dossier: null,
     });
   }
@@ -406,6 +510,15 @@ export class DossierUpdateComponent implements OnInit {
       montant: this.editLocataireForm.get(['montant'])!.value,
       dossier: this.editLocataireForm.get(['dossier'])!.value,
     };
+  }
+
+  saveEBForm(): void {
+    const eb = this.createEBFromForm();
+    console.warn(eb);
+    this.evaluationBatiments.push(eb);
+    console.warn(this.evaluationBatiments);
+    this.resetEBForm();
+    this.modalService.dismissAll();
   }
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IDossier>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(

@@ -187,11 +187,12 @@
               <th scope="col"><span>Activite</span></th>
               <th scope="col"><span>Ninea</span></th>
               <th scope="col"><span>Mensualité</span></th>
+              s
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let locataire of locataires; trackBy: trackLocataireId" data-cy="entityTable">
+            <tr *ngFor="let locataire of locataires; let index = index; trackBy: trackLocataireId" data-cy="entityTable">
               <td>{{ locataire.nom }}</td>
               <td><fa-icon icon="check" *ngIf="locataire.personne"></fa-icon></td>
               <td>{{ locataire.activite }}</td>
@@ -217,7 +218,12 @@
                     <fa-icon icon="pencil-alt"></fa-icon>
                   </button>
 
-                  <button (click)="deleteLoacataire(locataire)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton" type="submit">
+                  <button
+                    (click)="deleteLoacataire(locataire, index)"
+                    class="btn btn-danger btn-sm"
+                    data-cy="entityDeleteButton"
+                    type="submit"
+                  >
                     <fa-icon icon="times"></fa-icon>
                   </button>
                 </div>
@@ -654,62 +660,10 @@
 <div class="row">
   <h2 class="col-12">Evaluation</h2>
   <div class="fieldset col-6">
-    <form name="editESBForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editESBForm">
-      <div class="row">
-        <h6 class="col-9">Evaluation Surface Batie</h6>
-        <button class="btn btn-sm">Ajouter Evaluation</button>
-      </div>
-      <div>
-        <div class="row">
-          <div class="form-group col">
-            <label class="form-control-label" for="field_esb_superficieTotale">Superficie Totale</label>
-            <input
-              type="number"
-              class="form-control"
-              name="superficieTotale"
-              id="field_esb_superficieTotale"
-              data-cy="superficieTotale"
-              formControlName="superficieTotale"
-            />
-          </div>
-
-          <div class="form-group col">
-            <label class="form-control-label" for="field_esb_superficieBatie">Superficie Batie</label>
-            <input
-              type="number"
-              class="form-control"
-              name="superficieBatie"
-              id="field_esb_superficieBatie"
-              data-cy="superficieBatie"
-              formControlName="superficieBatie"
-            />
-          </div>
-
-          <div class="form-group col">
-            <label class="form-control-label" for="field_esb_categorieBatie">Categorie Batie</label>
-            <select
-              class="form-control"
-              id="field_esb_categorieBatie"
-              data-cy="categorieBatie"
-              name="categorieBatie"
-              formControlName="categorieBatie"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
-                  categorieBatieOption.id === editESBForm.get('categorieBatie')!.value?.id
-                    ? editESBForm.get('categorieBatie')!.value
-                    : categorieBatieOption
-                "
-                *ngFor="let categorieBatieOption of categorieBatiesSharedCollection; trackBy: trackCategorieBatieById"
-              >
-                {{ categorieBatieOption.libelle }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </form>
+    <div class="row">
+      <h6 class="col-9">Evaluation Surface Batie</h6>
+      <button type="button" (click)="ajouterESB(addESBForm)" class="btn btn-sm">Ajouter Surface Batie</button>
+    </div>
     <div class="table-responsive" id="entities_esb" *ngIf="evaluationSurfaceBaties && evaluationSurfaceBaties.length > 0">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
@@ -722,7 +676,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let evaluationSurfaceBatie of evaluationSurfaceBaties; trackBy: trackESBId" data-cy="entityTable">
+          <tr *ngFor="let evaluationSurfaceBatie of evaluationSurfaceBaties; let index = index; trackBy: trackESBId" data-cy="entityTable">
             <td>{{ evaluationSurfaceBatie.superficieTotale }}</td>
             <td>{{ evaluationSurfaceBatie.superficieBatie }}</td>
             <td>{{ evaluationSurfaceBatie.categorieBatie?.libelle }}</td>
@@ -748,7 +702,7 @@
                 </button>
                 <button
                   type="submit"
-                  (click)="deleteESB(evaluationSurfaceBatie)"
+                  (click)="deleteESB(evaluationSurfaceBatie, index)"
                   class="btn btn-danger btn-sm"
                   data-cy="entityDeleteButton"
                 >
@@ -762,48 +716,10 @@
     </div>
   </div>
   <div class="fieldset col-6">
-    <form name="editECAForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editECAForm">
-      <div class="row">
-        <h6 class="col-9">Evaluation Cours Amenagé</h6>
-        <button class="btn btn-sm">Ajouter Cours Aménagé</button>
-      </div>
-      <div>
-        <div class="row">
-          <div class="form-group col">
-            <label class="form-control-label" for="field_eca_surface">Surface</label>
-            <input type="number" class="form-control" name="surface" id="field_eca_surface" data-cy="surface" formControlName="surface" />
-          </div>
-
-          <div class="form-group col">
-            <label class="form-control-label" for="field_eca_coeff">Coeff</label>
-            <input type="number" class="form-control" name="coeff" id="field_eca_coeff" data-cy="coeff" formControlName="coeff" />
-          </div>
-
-          <div class="form-group col">
-            <label class="form-control-label" for="field_eca_categorieCoursAmenage">Categorie Cours Amenage</label>
-            <select
-              class="form-control"
-              id="field_eca_categorieCoursAmenage"
-              data-cy="categorieCoursAmenage"
-              name="categorieCoursAmenage"
-              formControlName="categorieCoursAmenage"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
-                  categorieCoursAmenageOption.id === editECAForm.get('categorieCoursAmenage')!.value?.id
-                    ? editECAForm.get('categorieCoursAmenage')!.value
-                    : categorieCoursAmenageOption
-                "
-                *ngFor="let categorieCoursAmenageOption of categorieCoursAmenagesSharedCollection; trackBy: trackCategorieCoursAmenageById"
-              >
-                {{ categorieCoursAmenageOption.libelle }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </form>
+    <div class="row">
+      <h6 class="col-9">Evaluation Cours Amenagé</h6>
+      <button type="button" (click)="ajouterECA(addECAForm)" class="btn btn-sm">Ajouter Cours Aménagé</button>
+    </div>
     <div class="table-responsive" id="entities_eca" *ngIf="evaluationCoursAmenages && evaluationCoursAmenages.length > 0">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
@@ -816,7 +732,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let evaluationCoursAmenage of evaluationCoursAmenages; trackBy: trackECAId" data-cy="entityTable">
+          <tr *ngFor="let evaluationCoursAmenage of evaluationCoursAmenages; let index = index; trackBy: trackECAId" data-cy="entityTable">
             <td>{{ evaluationCoursAmenage.surface }}</td>
             <td>{{ evaluationCoursAmenage.coeff }}</td>
             <td>{{ evaluationCoursAmenage.categorieCoursAmenage?.libelle }}</td>
@@ -843,7 +759,7 @@
 
                 <button
                   type="submit"
-                  (click)="deleteECA(evaluationCoursAmenage)"
+                  (click)="deleteECA(evaluationCoursAmenage, index)"
                   class="btn btn-danger btn-sm"
                   data-cy="entityDeleteButton"
                 >
@@ -857,50 +773,10 @@
     </div>
   </div>
   <div class="fieldset col-6">
-    <form name="editEBForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editEBForm">
-      <h6 id="jhi-evaluation-batiments-heading" data-cy="EvaluationBatimentsCreateUpdateHeading">Evaluation Batiments</h6>
-      <div>
-        <div class="row">
-          <div class="form-group col">
-            <label class="form-control-label" for="field_eb_niveau">Niveau</label>
-            <input type="number" class="form-control" name="niveau" id="field_eb_niveau" data-cy="niveau" formControlName="niveau" />
-          </div>
-
-          <div class="form-group col">
-            <label class="form-control-label" for="field_eb_surface">Surface</label>
-            <input type="number" class="form-control" name="surface" id="field_eb_surface" data-cy="surface" formControlName="surface" />
-          </div>
-
-          <div class="form-group col">
-            <label class="form-control-label" for="field_eb_coeff">Coeff</label>
-            <input type="number" class="form-control" name="coeff" id="field_eb_coeff" data-cy="coeff" formControlName="coeff" />
-          </div>
-
-          <div class="form-group col">
-            <label class="form-control-label" for="field_eb_categorieNature">Categorie Nature</label>
-            <select
-              class="form-control"
-              id="field_eb_categorieNature"
-              data-cy="categorieNature"
-              name="categorieNature"
-              formControlName="categorieNature"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
-                  categorieNatureOption.id === editEBForm.get('categorieNature')!.value?.id
-                    ? editEBForm.get('categorieNature')!.value
-                    : categorieNatureOption
-                "
-                *ngFor="let categorieNatureOption of categorieNaturesSharedCollection; trackBy: trackCategorieNatureById"
-              >
-                {{ categorieNatureOption.libelle }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </form>
+    <div class="row">
+      <h6 class="col-9" id="jhi-evaluation-batiments-heading" data-cy="EvaluationBatimentsCreateUpdateHeading">Evaluation Batiments</h6>
+      <button type="button" (click)="ajouterEB(addEBForm)" class="btn btn-sm">Ajouter Batiments</button>
+    </div>
     <div class="table-responsive" id="entities_eb" *ngIf="evaluationBatiments && evaluationBatiments.length > 0">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
@@ -914,24 +790,24 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let evaluationBatiments of evaluationBatiments; trackBy: trackEBId" data-cy="entityTable">
-            <td>{{ evaluationBatiments.niveau }}</td>
-            <td>{{ evaluationBatiments.surface }}</td>
-            <td>{{ evaluationBatiments.coeff }}</td>
-            <td>{{ evaluationBatiments.categorieNature?.libelle }}</td>
+          <tr *ngFor="let evaluationBatiment of evaluationBatiments; let index = index; trackBy: trackEBId" data-cy="entityTable">
+            <td>{{ evaluationBatiment.niveau }}</td>
+            <td>{{ evaluationBatiment.surface }}</td>
+            <td>{{ evaluationBatiment.coeff }}</td>
+            <td>{{ evaluationBatiment.categorieNature?.libelle }}</td>
             <td>
-              {{ evaluationBatiments.categorieNature?.prixMetreCare }}
+              {{ evaluationBatiment.categorieNature?.prixMetreCare }}
             </td>
             <td>
-              <div *ngIf="evaluationBatiments.dossier">
-                <a [routerLink]="['/dossier', evaluationBatiments.dossier?.id, 'view']">{{ evaluationBatiments.dossier?.id }}</a>
+              <div *ngIf="evaluationBatiment.dossier">
+                <a [routerLink]="['/dossier', evaluationBatiment.dossier?.id, 'view']">{{ evaluationBatiment.dossier?.id }}</a>
               </div>
             </td>
             <td class="text-right">
               <div class="btn-group">
                 <button
                   type="submit"
-                  [routerLink]="['/evaluation-batiments', evaluationBatiments.id, 'view']"
+                  [routerLink]="['/evaluation-batiments', evaluationBatiment.id, 'view']"
                   class="btn btn-info btn-sm"
                   data-cy="entityDetailsButton"
                 >
@@ -940,14 +816,19 @@
 
                 <button
                   type="submit"
-                  [routerLink]="['/evaluation-batiments', evaluationBatiments.id, 'edit']"
+                  [routerLink]="['/evaluation-batiments', evaluationBatiment.id, 'edit']"
                   class="btn btn-primary btn-sm"
                   data-cy="entityEditButton"
                 >
                   <fa-icon icon="pencil-alt"></fa-icon>
                 </button>
 
-                <button type="submit" (click)="deleteEB(evaluationBatiments)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <button
+                  type="submit"
+                  (click)="deleteEB(evaluationBatiment, index)"
+                  class="btn btn-danger btn-sm"
+                  data-cy="entityDeleteButton"
+                >
                   <fa-icon icon="times"></fa-icon>
                 </button>
               </div>
@@ -958,53 +839,10 @@
     </div>
   </div>
   <div class="fieldset col-6">
-    <form name="editECForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editECForm">
-      <h6 id="jhi-evaluation-cloture-heading" data-cy="EvaluationClotureCreateUpdateHeading">Evaluation Cloture</h6>
-
-      <div>
-        <div class="row">
-          <div class="form-group col">
-            <label class="form-control-label" for="field_ec_lineaire">Lineaire</label>
-            <input
-              type="number"
-              class="form-control"
-              name="lineaire"
-              id="field_ec_lineaire"
-              data-cy="lineaire"
-              formControlName="lineaire"
-            />
-          </div>
-
-          <div class="form-group col">
-            <label class="form-control-label" for="field_ec_coeff">Coeff</label>
-            <input type="number" class="form-control" name="coeff" id="field_ec_coeff" data-cy="coeff" formControlName="coeff" />
-          </div>
-
-          <div class="form-group col">
-            <label class="form-control-label" for="field_ec_categoriteCloture">Categorite Cloture</label>
-            <select
-              class="form-control"
-              id="field_ec_categoriteCloture"
-              data-cy="categoriteCloture"
-              name="categoriteCloture"
-              formControlName="categoriteCloture"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
-                  categorieClotureOption.id === editECForm.get('categoriteCloture')!.value?.id
-                    ? editECForm.get('categoriteCloture')!.value
-                    : categorieClotureOption
-                "
-                *ngFor="let categorieClotureOption of categorieCloturesSharedCollection; trackBy: trackCategorieClotureById"
-              >
-                {{ categorieClotureOption.id }}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </form>
+    <div class="row">
+      <h6 class="col-9" id="jhi-evaluation-cloture-heading" data-cy="EvaluationClotureCreateUpdateHeading">Evaluation Cloture</h6>
+      <button type="button" (click)="ajouterEC(addECForm)" class="btn btn-sm">Ajouter Cloture</button>
+    </div>
     <div class="table-responsive" id="entities_ec" *ngIf="evaluationClotures && evaluationClotures.length > 0">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
@@ -1017,7 +855,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let evaluationCloture of evaluationClotures; trackBy: trackECId" data-cy="entityTable">
+          <tr *ngFor="let evaluationCloture of evaluationClotures; let index = index; trackBy: trackECId" data-cy="entityTable">
             <td>{{ evaluationCloture.lineaire }}</td>
             <td>{{ evaluationCloture.coeff }}</td>
             <td>{{ evaluationCloture.categoriteCloture?.libelle }}</td>
@@ -1044,7 +882,12 @@
                   <span class="d-none d-md-inline">Edit</span>
                 </button>
 
-                <button type="submit" (click)="deleteEC(evaluationCloture)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <button
+                  type="submit"
+                  (click)="deleteEC(evaluationCloture, index)"
+                  class="btn btn-danger btn-sm"
+                  data-cy="entityDeleteButton"
+                >
                   <fa-icon icon="times"></fa-icon>
                   <span class="d-none d-md-inline">Delete</span>
                 </button>
@@ -1111,6 +954,270 @@
       </button>
 
       <button type="submit" id="add-locataire" [disabled]="editLocataireForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+      </button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #addEBForm let-c="close" let-d="dismiss">
+  <form (ngSubmit)="saveEBForm()" [formGroup]="editEBForm" name="editEBForm" novalidate role="form">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-add-EBForm">Ajouter Evaluation Batiment</h4>
+      <button (click)="d('Cross click')" aria-label="Close" class="close" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group" [hidden]="editEBForm.get('id')!.value == null">
+        <label class="form-control-label" for="field_idEB">ID</label>
+        <input type="number" class="form-control" name="id" id="field_idEB" data-cy="id" formControlName="id" [readonly]="true" />
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <label class="form-control-label" for="field_eb_niveau">Niveau</label>
+          <input type="number" class="form-control" name="niveau" id="field_eb_niveau" data-cy="niveau" formControlName="niveau" />
+        </div>
+
+        <div class="form-group col">
+          <label class="form-control-label" for="field_eb_surface">Surface</label>
+          <input type="number" class="form-control" name="surface" id="field_eb_surface" data-cy="surface" formControlName="surface" />
+        </div>
+
+        <div class="form-group col">
+          <label class="form-control-label" for="field_eb_coeff">Coeff</label>
+          <input type="number" class="form-control" name="coeff" id="field_eb_coeff" data-cy="coeff" formControlName="coeff" />
+        </div>
+
+        <div class="form-group col">
+          <label class="form-control-label" for="field_eb_categorieNature">Categorie Nature</label>
+          <select
+            class="form-control"
+            id="field_eb_categorieNature"
+            data-cy="categorieNature"
+            name="categorieNature"
+            formControlName="categorieNature"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                categorieNatureOption.id === editEBForm.get('categorieNature')!.value?.id
+                  ? editEBForm.get('categorieNature')!.value
+                  : categorieNatureOption
+              "
+              *ngFor="let categorieNatureOption of categorieNaturesSharedCollection; trackBy: trackCategorieNatureById"
+            >
+              {{ categorieNatureOption.libelle }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="cancel-save-EBForm" class="btn btn-secondary" (click)="resetLocataireForm()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+      </button>
+
+      <button type="submit" id="add-EBForm" [disabled]="editEBForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+      </button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #addECAForm let-c="close" let-d="dismiss">
+  <form (ngSubmit)="saveECAForm()" [formGroup]="editECAForm" name="editECAForm" novalidate role="form">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-add-ECAForm">Ajouter Evaluation Cloture Aménagement</h4>
+      <button (click)="d('Cross click')" aria-label="Close" class="close" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div class="form-group" [hidden]="editECAForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_idECA" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_eca_surface">Surface</label>
+            <input type="number" class="form-control" name="surface" id="field_eca_surface" data-cy="surface" formControlName="surface" />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_eca_coeff">Coeff</label>
+            <input type="number" class="form-control" name="coeff" id="field_eca_coeff" data-cy="coeff" formControlName="coeff" />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_eca_categorieCoursAmenage">Categorie Cours Amenage</label>
+            <select
+              class="form-control"
+              id="field_eca_categorieCoursAmenage"
+              data-cy="categorieCoursAmenage"
+              name="categorieCoursAmenage"
+              formControlName="categorieCoursAmenage"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                  categorieCoursAmenageOption.id === editECAForm.get('categorieCoursAmenage')!.value?.id
+                    ? editECAForm.get('categorieCoursAmenage')!.value
+                    : categorieCoursAmenageOption
+                "
+                *ngFor="let categorieCoursAmenageOption of categorieCoursAmenagesSharedCollection; trackBy: trackCategorieCoursAmenageById"
+              >
+                {{ categorieCoursAmenageOption.libelle }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="cancel-save-ECAForm" class="btn btn-secondary" (click)="resetECAForm()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+      </button>
+
+      <button type="submit" id="add-ECAForm" [disabled]="editECAForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+      </button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #addESBForm let-c="close" let-d="dismiss">
+  <form (ngSubmit)="saveESBForm()" [formGroup]="editESBForm" name="editESBForm" novalidate role="form">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-add-ESBForm">Ajouter Evaluation Surface Batie</h4>
+      <button (click)="d('Cross click')" aria-label="Close" class="close" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div class="form-group" [hidden]="editESBForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_idESB">ID</label>
+          <input type="number" class="form-control" name="id" id="field_idESB" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_esb_superficieTotale">Superficie Totale</label>
+            <input
+              type="number"
+              class="form-control"
+              name="superficieTotale"
+              id="field_esb_superficieTotale"
+              data-cy="superficieTotale"
+              formControlName="superficieTotale"
+            />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_esb_superficieBatie">Superficie Batie</label>
+            <input
+              type="number"
+              class="form-control"
+              name="superficieBatie"
+              id="field_esb_superficieBatie"
+              data-cy="superficieBatie"
+              formControlName="superficieBatie"
+            />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_esb_categorieBatie">Categorie Batie</label>
+            <select
+              class="form-control"
+              id="field_esb_categorieBatie"
+              data-cy="categorieBatie"
+              name="categorieBatie"
+              formControlName="categorieBatie"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                  categorieBatieOption.id === editESBForm.get('categorieBatie')!.value?.id
+                    ? editESBForm.get('categorieBatie')!.value
+                    : categorieBatieOption
+                "
+                *ngFor="let categorieBatieOption of categorieBatiesSharedCollection; trackBy: trackCategorieBatieById"
+              >
+                {{ categorieBatieOption.libelle }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="cancel-save-ESBForm" class="btn btn-secondary" (click)="resetESBForm()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+      </button>
+
+      <button type="submit" id="add-ESBForm" [disabled]="editEBForm.invalid || isSaving" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+      </button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #addECForm let-c="close" let-d="dismiss">
+  <form (ngSubmit)="saveECForm()" [formGroup]="editECForm" name="editECForm" novalidate role="form">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-add-ECForm">Ajouter Tarification</h4>
+      <button (click)="d('Cross click')" aria-label="Close" class="close" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div class="row">
+          <div class="form-group col">
+            <label class="form-control-label" for="field_ec_lineaire">Lineaire</label>
+            <input
+              type="number"
+              class="form-control"
+              name="lineaire"
+              id="field_ec_lineaire"
+              data-cy="lineaire"
+              formControlName="lineaire"
+            />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_ec_coeff">Coeff</label>
+            <input type="number" class="form-control" name="coeff" id="field_ec_coeff" data-cy="coeff" formControlName="coeff" />
+          </div>
+
+          <div class="form-group col">
+            <label class="form-control-label" for="field_ec_categoriteCloture">Categorite Cloture</label>
+            <select
+              class="form-control"
+              id="field_ec_categoriteCloture"
+              data-cy="categoriteCloture"
+              name="categoriteCloture"
+              formControlName="categoriteCloture"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                  categorieClotureOption.id === editECForm.get('categoriteCloture')!.value?.id
+                    ? editECForm.get('categoriteCloture')!.value
+                    : categorieClotureOption
+                "
+                *ngFor="let categorieClotureOption of categorieCloturesSharedCollection; trackBy: trackCategorieClotureById"
+              >
+                {{ categorieClotureOption.id }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="cancel-save-ECForm" class="btn btn-secondary" (click)="resetECForm()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+      </button>
+
+      <button type="submit" id="add-ECForm" [disabled]="editECForm.invalid || isSaving" class="btn btn-primary">
         <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
       </button>
     </div>
