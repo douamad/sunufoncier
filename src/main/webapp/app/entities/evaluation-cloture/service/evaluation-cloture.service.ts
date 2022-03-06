@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IEvaluationCloture, getEvaluationClotureIdentifier } from '../evaluation-cloture.model';
+import { IEvaluationBatiments } from 'app/entities/evaluation-batiments/evaluation-batiments.model';
 
 export type EntityResponseType = HttpResponse<IEvaluationCloture>;
 export type EntityArrayResponseType = HttpResponse<IEvaluationCloture[]>;
@@ -43,6 +44,11 @@ export class EvaluationClotureService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IEvaluationCloture[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IEvaluationCloture[]>(`${this.resourceUrl}/list`, { params: options, observe: 'response' });
   }
 
   queryByDossier(idDossier: number): Observable<EntityArrayResponseType> {

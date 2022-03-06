@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICategorieNature, getCategorieNatureIdentifier } from '../categorie-nature.model';
+import { ICategorieCoursAmenage } from 'app/entities/categorie-cours-amenage/categorie-cours-amenage.model';
 
 export type EntityResponseType = HttpResponse<ICategorieNature>;
 export type EntityArrayResponseType = HttpResponse<ICategorieNature[]>;
@@ -44,7 +45,10 @@ export class CategorieNatureService {
     const options = createRequestOption(req);
     return this.http.get<ICategorieNature[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
-
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<ICategorieNature[]>(`${this.resourceUrl}/list`, { params: options, observe: 'response' });
+  }
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

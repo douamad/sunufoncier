@@ -44,6 +44,10 @@ export class EvaluationBatimentsService {
     const options = createRequestOption(req);
     return this.http.get<IEvaluationBatiments[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IEvaluationBatiments[]>(`${this.resourceUrl}/list`, { params: options, observe: 'response' });
+  }
 
   queryByDossier(idDossier: number): Observable<EntityArrayResponseType> {
     const options = createRequestOption();

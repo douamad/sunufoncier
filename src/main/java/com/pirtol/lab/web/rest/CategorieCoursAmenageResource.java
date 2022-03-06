@@ -165,6 +165,17 @@ public class CategorieCoursAmenageResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/categorie-cours-amenages/list")
+    public ResponseEntity<List<CategorieCoursAmenageDTO>> getListAllCategorieCoursAmenages(
+        CategorieCoursAmenageCriteria criteria,
+        Pageable pageable
+    ) {
+        log.debug("REST request to get CategorieCoursAmenages by criteria: {}", criteria);
+        List<CategorieCoursAmenageDTO> page = categorieCoursAmenageQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page);
+    }
+
     /**
      * {@code GET  /categorie-cours-amenages/count} : count all the categorieCoursAmenages.
      *

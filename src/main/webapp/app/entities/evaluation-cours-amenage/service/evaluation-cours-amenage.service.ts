@@ -44,6 +44,12 @@ export class EvaluationCoursAmenageService {
     const options = createRequestOption(req);
     return this.http.get<IEvaluationCoursAmenage[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
+
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IEvaluationCoursAmenage[]>(`${this.resourceUrl}/list`, { params: options, observe: 'response' });
+  }
+
   queryByDossier(idDossier: number): Observable<EntityArrayResponseType> {
     const options = createRequestOption();
     return this.http.get<IEvaluationCoursAmenage[]>(`this.resourceUrl/bydossier/${idDossier}`, { params: options, observe: 'response' });

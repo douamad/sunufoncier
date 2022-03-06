@@ -161,6 +161,14 @@ public class CategorieNatureResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/categorie-natures/list")
+    public ResponseEntity<List<CategorieNatureDTO>> getListAllCategorieNatures(CategorieNatureCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get CategorieNatures by criteria: {}", criteria);
+        List<CategorieNatureDTO> page = categorieNatureQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page);
+    }
+
     /**
      * {@code GET  /categorie-natures/count} : count all the categorieNatures.
      *

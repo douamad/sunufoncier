@@ -157,6 +157,20 @@ public class CommuneResource {
     }
 
     /**
+     * {@code GET  /communes} : get all the communes.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of communes in body.
+     */
+    @GetMapping("/communes/all")
+    public ResponseEntity<List<CommuneDTO>> getListAllCommunes(CommuneCriteria criteria) {
+        log.debug("REST request to get Communes by criteria: {}", criteria);
+        List<CommuneDTO> list = communeQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest());
+        return ResponseEntity.ok().body(list);
+    }
+
+    /**
      * {@code GET  /communes/count} : count all the communes.
      *
      * @param criteria the criteria which the requested entities should match.

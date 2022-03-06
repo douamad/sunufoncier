@@ -161,6 +161,14 @@ public class EvaluationClotureResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/evaluation-clotures/list")
+    public ResponseEntity<List<EvaluationClotureDTO>> getListAllEvaluationClotures(EvaluationClotureCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get EvaluationClotures by criteria: {}", criteria);
+        List<EvaluationClotureDTO> page = evaluationClotureQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page);
+    }
+
     /**
      * {@code GET  /evaluation-clotures/count} : count all the evaluationClotures.
      *

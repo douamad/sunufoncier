@@ -161,6 +161,14 @@ public class CategorieBatieResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/categorie-baties/list")
+    public ResponseEntity<List<CategorieBatieDTO>> getListAllCategorieBaties(CategorieBatieCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get CategorieBaties by criteria: {}", criteria);
+        List<CategorieBatieDTO> page = categorieBatieQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page);
+    }
+
     /**
      * {@code GET  /categorie-baties/count} : count all the categorieBaties.
      *

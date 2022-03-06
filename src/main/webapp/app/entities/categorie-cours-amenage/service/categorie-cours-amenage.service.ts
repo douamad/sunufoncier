@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICategorieCoursAmenage, getCategorieCoursAmenageIdentifier } from '../categorie-cours-amenage.model';
+import { ICategorieCloture } from 'app/entities/categorie-cloture/categorie-cloture.model';
 
 export type EntityResponseType = HttpResponse<ICategorieCoursAmenage>;
 export type EntityArrayResponseType = HttpResponse<ICategorieCoursAmenage[]>;
@@ -44,7 +45,10 @@ export class CategorieCoursAmenageService {
     const options = createRequestOption(req);
     return this.http.get<ICategorieCoursAmenage[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
-
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<ICategorieCoursAmenage[]>(`${this.resourceUrl}/list`, { params: options, observe: 'response' });
+  }
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

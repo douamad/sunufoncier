@@ -48,7 +48,7 @@
           <td>{{ commune.libelle }}</td>
           <td>
             <div *ngIf="commune.arrondissement">
-              <a [routerLink]="['/arrondissement', commune.arrondissement?.id, 'view']">{{ commune.arrondissement?.id }}</a>
+              <a [routerLink]="['/arrondissement', commune.arrondissement?.id, 'view']">{{ commune.arrondissement?.libelle }}</a>
             </div>
           </td>
           <td class="text-right">

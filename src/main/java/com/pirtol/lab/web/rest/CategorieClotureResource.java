@@ -161,6 +161,14 @@ public class CategorieClotureResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/categorie-clotures/list")
+    public ResponseEntity<List<CategorieClotureDTO>> getListAllCategorieClotures(CategorieClotureCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get CategorieClotures by criteria: {}", criteria);
+        List<CategorieClotureDTO> page = categorieClotureQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page);
+    }
+
     /**
      * {@code GET  /categorie-clotures/count} : count all the categorieClotures.
      *

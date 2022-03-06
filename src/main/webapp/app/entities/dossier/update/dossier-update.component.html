@@ -683,7 +683,7 @@
   <div class="fieldset col-6">
     <div class="row">
       <h6 class="col-9">A/ Evaluation Terrain</h6>
-      <button type="button" (click)="ajouterESB(addESBForm)" class="btn btn-sm">Ajouter Surface Batie</button>
+      <button type="button" (click)="ajouterESB(addESBForm)" class="btn btn-sm">Ajouter Terrain</button>
     </div>
     <div class="table-responsive" id="entities_esb" *ngIf="evaluationSurfaceBaties && evaluationSurfaceBaties.length > 0">
       <table class="table table-striped" aria-describedby="page-heading">
@@ -1108,7 +1108,7 @@
 <ng-template #addESBForm let-c="close" let-d="dismiss">
   <form (ngSubmit)="saveESBForm()" [formGroup]="editESBForm" name="editESBForm" novalidate role="form">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-add-ESBForm">Ajouter Evaluation Surface Batie</h4>
+      <h4 class="modal-title" id="modal-add-ESBForm">Ajouter Terrain</h4>
       <button (click)="d('Cross click')" aria-label="Close" class="close" type="button">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -1145,7 +1145,7 @@
           </div>
 
           <div class="form-group col">
-            <label class="form-control-label" for="field_esb_categorieBatie">Categorie Batie</label>
+            <label class="form-control-label" for="field_esb_categorieBatie">Secteur</label>
             <select
               class="form-control"
               id="field_esb_categorieBatie"

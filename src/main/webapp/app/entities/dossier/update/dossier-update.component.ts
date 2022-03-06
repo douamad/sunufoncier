@@ -644,7 +644,7 @@ export class DossierUpdateComponent implements OnInit {
       )
       .subscribe((refcadastrales: IRefcadastrale[]) => (this.refcadastralesSharedCollection = refcadastrales));
     this.communeService
-      .query()
+      .queryAll()
       .pipe(map((res: HttpResponse<ICommune[]>) => res.body ?? []))
       .pipe(
         map((communes: ICommune[]) => this.communeService.addCommuneToCollectionIfMissing(communes, this.editRPForm.get('commune')!.value))
@@ -662,7 +662,7 @@ export class DossierUpdateComponent implements OnInit {
   }
   protected loadEBRelationshipsOptions(): void {
     this.categorieNatureService
-      .query()
+      .queryAll()
       .pipe(map((res: HttpResponse<ICategorieNature[]>) => res.body ?? []))
       .pipe(
         map((categorieNatures: ICategorieNature[]) =>
@@ -676,7 +676,7 @@ export class DossierUpdateComponent implements OnInit {
   }
   protected loadECRelationshipsOptions(): void {
     this.categorieClotureService
-      .query()
+      .queryAll()
       .pipe(map((res: HttpResponse<ICategorieCloture[]>) => res.body ?? []))
       .pipe(
         map((categorieClotures: ICategorieCloture[]) =>
@@ -691,7 +691,7 @@ export class DossierUpdateComponent implements OnInit {
 
   protected loadECARelationshipsOptions(): void {
     this.categorieCoursAmenageService
-      .query()
+      .queryAll()
       .pipe(map((res: HttpResponse<ICategorieCoursAmenage[]>) => res.body ?? []))
       .pipe(
         map((categorieCoursAmenages: ICategorieCoursAmenage[]) =>
@@ -707,7 +707,7 @@ export class DossierUpdateComponent implements OnInit {
   }
   protected loadESBRelationshipsOptions(): void {
     this.categorieBatieService
-      .query()
+      .queryAll()
       .pipe(map((res: HttpResponse<ICategorieBatie[]>) => res.body ?? []))
       .pipe(
         map((categorieBaties: ICategorieBatie[]) =>

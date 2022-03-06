@@ -165,6 +165,17 @@ public class EvaluationCoursAmenageResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/evaluation-cours-amenages/list")
+    public ResponseEntity<List<EvaluationCoursAmenageDTO>> getListAllEvaluationCoursAmenages(
+        EvaluationCoursAmenageCriteria criteria,
+        Pageable pageable
+    ) {
+        log.debug("REST request to get EvaluationCoursAmenages by criteria: {}", criteria);
+        List<EvaluationCoursAmenageDTO> page = evaluationCoursAmenageQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page);
+    }
+
     /**
      * {@code GET  /evaluation-cours-amenages/count} : count all the evaluationCoursAmenages.
      *

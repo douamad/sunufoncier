@@ -162,6 +162,24 @@ public class EvaluationBatimentsResource {
     }
 
     /**
+     * {@code GET  /evaluation-batiments} : get all the evaluationBatiments.
+     *
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of evaluationBatiments in body.
+     */
+    @GetMapping("/evaluation-batiments/list")
+    public ResponseEntity<List<EvaluationBatimentsDTO>> getListAllEvaluationBatiments(
+        EvaluationBatimentsCriteria criteria,
+        Pageable pageable
+    ) {
+        log.debug("REST request to get EvaluationBatiments by criteria: {}", criteria);
+        List<EvaluationBatimentsDTO> page = evaluationBatimentsQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page);
+    }
+
+    /**
      * {@code GET  /evaluation-batiments/count} : count all the evaluationBatiments.
      *
      * @param criteria the criteria which the requested entities should match.

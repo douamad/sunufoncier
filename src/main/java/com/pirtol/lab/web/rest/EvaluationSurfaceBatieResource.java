@@ -165,6 +165,17 @@ public class EvaluationSurfaceBatieResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/evaluation-surface-baties/list")
+    public ResponseEntity<List<EvaluationSurfaceBatieDTO>> getListAllEvaluationSurfaceBaties(
+        EvaluationSurfaceBatieCriteria criteria,
+        Pageable pageable
+    ) {
+        log.debug("REST request to get EvaluationSurfaceBaties by criteria: {}", criteria);
+        List<EvaluationSurfaceBatieDTO> page = evaluationSurfaceBatieQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page);
+    }
+
     /**
      * {@code GET  /evaluation-surface-baties/count} : count all the evaluationSurfaceBaties.
      *

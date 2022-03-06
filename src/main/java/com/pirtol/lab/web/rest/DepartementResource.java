@@ -161,6 +161,21 @@ public class DepartementResource {
     }
 
     /**
+     * {@code GET  /departements} : get all the departements.
+     *
+     * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of departements in body.
+     */
+    @GetMapping("/departements/list")
+    public ResponseEntity<List<DepartementDTO>> getListAllDepartements(DepartementCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get Departements by criteria: {}", criteria);
+        List<DepartementDTO> page = departementQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(page);
+    }
+
+    /**
      * {@code GET  /departements/count} : count all the departements.
      *
      * @param criteria the criteria which the requested entities should match.
