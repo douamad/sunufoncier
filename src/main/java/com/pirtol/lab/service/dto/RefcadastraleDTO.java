@@ -27,6 +27,10 @@ public class RefcadastraleDTO implements Serializable {
 
     private Instant dateBornage;
 
+    private Boolean titreFoncier;
+
+    private Boolean titreNonImatricule;
+
     public Long getId() {
         return id;
     }
@@ -99,6 +103,22 @@ public class RefcadastraleDTO implements Serializable {
         this.dateBornage = dateBornage;
     }
 
+    public Boolean getTitreFoncier() {
+        return titreFoncier;
+    }
+
+    public void setTitreFoncier(Boolean titreFoncier) {
+        this.titreFoncier = titreFoncier;
+    }
+
+    public Boolean getTitreNonImatricule() {
+        return titreNonImatricule;
+    }
+
+    public void setTitreNonImatricule(Boolean titreNonImatricule) {
+        this.titreNonImatricule = titreNonImatricule;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -133,6 +153,8 @@ public class RefcadastraleDTO implements Serializable {
             ", titreCree='" + getTitreCree() + "'" +
             ", numeroRequisition='" + getNumeroRequisition() + "'" +
             ", dateBornage='" + getDateBornage() + "'" +
+            ", titreFoncier='" + getTitreFoncier() + "'" +
+            ", titreNonImatricule='" + getTitreNonImatricule() + "'" +
             "}";
     }
 }

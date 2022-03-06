@@ -50,6 +50,8 @@ public class RepresentantDTO implements Serializable {
 
     private ProprietaireDTO proprietaire;
 
+    private Instant dateDelivrance;
+
     public Long getId() {
         return id;
     }
@@ -210,6 +212,14 @@ public class RepresentantDTO implements Serializable {
         this.proprietaire = proprietaire;
     }
 
+    public Instant getDateDelivrance() {
+        return dateDelivrance;
+    }
+
+    public void setDateDelivrance(Instant dateDelivrance) {
+        this.dateDelivrance = dateDelivrance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -255,6 +265,7 @@ public class RepresentantDTO implements Serializable {
             ", statutPersoneStructure='" + getStatutPersoneStructure() + "'" +
             ", typeStructure='" + getTypeStructure() + "'" +
             ", proprietaire=" + getProprietaire() +
+            ", dateDelivrance=" + getDateDelivrance() +
             "}";
     }
 }

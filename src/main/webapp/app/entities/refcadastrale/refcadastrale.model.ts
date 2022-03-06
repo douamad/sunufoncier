@@ -9,6 +9,8 @@ export interface IRefcadastrale {
   superfici?: number | null;
   titreMere?: string | null;
   titreCree?: string | null;
+  titreFoncier?: boolean | null;
+  titreNonImatricule?: boolean | null;
   numeroRequisition?: string | null;
   dateBornage?: dayjs.Dayjs | null;
   dossiers?: IDossier[] | null;
@@ -24,6 +26,8 @@ export class Refcadastrale implements IRefcadastrale {
     public titreMere?: string | null,
     public titreCree?: string | null,
     public numeroRequisition?: string | null,
+    public titreFoncier?: boolean | null,
+    public titreNonImatricule?: boolean | null,
     public dateBornage?: dayjs.Dayjs | null,
     public dossiers?: IDossier[] | null
   ) {}

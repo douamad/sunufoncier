@@ -48,6 +48,12 @@ public class Refcadastrale implements Serializable {
     @Column(name = "date_bornage")
     private Instant dateBornage;
 
+    @Column(name = "titre_foncier")
+    private Boolean titreFoncier;
+
+    @Column(name = "titre_non_imatricule")
+    private Boolean titreNonImatricule;
+
     @OneToMany(mappedBy = "refcadastrale")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(
@@ -181,6 +187,22 @@ public class Refcadastrale implements Serializable {
         return this;
     }
 
+    public Boolean getTitreFoncier() {
+        return titreFoncier;
+    }
+
+    public void setTitreFoncier(Boolean titreFoncier) {
+        this.titreFoncier = titreFoncier;
+    }
+
+    public Boolean getTitreNonImatricule() {
+        return titreNonImatricule;
+    }
+
+    public void setTitreNonImatricule(Boolean titreNonImatricule) {
+        this.titreNonImatricule = titreNonImatricule;
+    }
+
     public void setDateBornage(Instant dateBornage) {
         this.dateBornage = dateBornage;
     }
@@ -248,6 +270,8 @@ public class Refcadastrale implements Serializable {
             ", titreCree='" + getTitreCree() + "'" +
             ", numeroRequisition='" + getNumeroRequisition() + "'" +
             ", dateBornage='" + getDateBornage() + "'" +
+            ", titreFoncier='" + getTitreFoncier() + "'" +
+            ", titreNonImatricule='" + getTitreNonImatricule() + "'" +
             "}";
     }
 }

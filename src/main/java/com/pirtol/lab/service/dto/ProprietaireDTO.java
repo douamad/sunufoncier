@@ -57,6 +57,8 @@ public class ProprietaireDTO implements Serializable {
 
     private String etablssement;
 
+    private Instant dateDelivrance;
+
     public Long getId() {
         return id;
     }
@@ -241,6 +243,14 @@ public class ProprietaireDTO implements Serializable {
         this.etablssement = etablssement;
     }
 
+    public Instant getDateDelivrance() {
+        return dateDelivrance;
+    }
+
+    public void setDateDelivrance(Instant dateDelivrance) {
+        this.dateDelivrance = dateDelivrance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -289,6 +299,7 @@ public class ProprietaireDTO implements Serializable {
             ", nombreHeritiers=" + getNombreHeritiers() +
             ", serviceOcupant='" + getServiceOcupant() + "'" +
             ", etablssement='" + getEtablssement() + "'" +
+            ", dateDelivrance='" + getDateDelivrance() + "'" +
             "}";
     }
 }

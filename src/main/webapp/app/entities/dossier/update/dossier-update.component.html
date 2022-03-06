@@ -97,30 +97,30 @@
         </div>
       </div>
       <div class="row">
-        <div class="form-group col-3">
-          <label class="form-control-label" for="field_rc_titreMere">Titre Mere</label>
+        <div class="form-group col-1">
+          <label class="form-control-label" for="field_rp_tni">TNI</label>
           <input
-            class="form-control"
-            data-cy="titreMere"
-            formControlName="titreMere"
-            id="field_rc_titreMere"
-            name="titreMere"
-            type="text"
+            class="form-check"
+            data-cy="titreNonImatricule"
+            (input)="tniCheckBoxChange($event.target)"
+            formControlName="titreNonImatricule"
+            id="field_rp_tni"
+            name="titreNonImatricule"
+            type="checkbox"
           />
         </div>
-
-        <div class="form-group col-2">
-          <label class="form-control-label" for="field_rc_titreCree">Titre Cree</label>
+        <div class="form-group col-1">
+          <label class="form-control-label" for="field_rp_tf">TF</label>
           <input
-            class="form-control"
-            data-cy="titreCree"
-            formControlName="titreCree"
-            id="field_rc_titreCree"
-            name="titreCree"
-            type="text"
+            class="form-check"
+            data-cy="titreFoncier"
+            (input)="tfCheckBoxChange($event.target)"
+            formControlName="titreFoncier"
+            id="field_rp_tf"
+            name="titreFoncier"
+            type="checkbox"
           />
         </div>
-
         <div class="form-group col-3">
           <label class="form-control-label" for="field_rc_numeroRequisition">N° Requisition</label>
           <input
@@ -132,8 +132,7 @@
             type="text"
           />
         </div>
-
-        <div class="form-group col-4">
+        <div class="form-group col-3">
           <label class="form-control-label" for="field_rc_dateBornage">Date Bornage</label>
           <div class="d-flex">
             <input
@@ -146,6 +145,28 @@
               type="date"
             />
           </div>
+        </div>
+        <div class="form-group col-2" *ngIf="editRCForm.get('titreFoncier')!.value == true">
+          <label class="form-control-label" for="field_rc_titreMere">Titre Mere</label>
+          <input
+            class="form-control"
+            data-cy="titreMere"
+            formControlName="titreMere"
+            id="field_rc_titreMere"
+            name="titreMere"
+            type="text"
+          />
+        </div>
+        <div class="form-group col-2">
+          <label class="form-control-label" for="field_rc_titreCree">Titre Cree</label>
+          <input
+            class="form-control"
+            data-cy="titreCree"
+            formControlName="titreCree"
+            id="field_rc_titreCree"
+            name="titreCree"
+            type="text"
+          />
         </div>
       </div>
     </form>
@@ -236,7 +257,7 @@
   </div>
   <div class="fieldset col-6 section-proprio">
     <div class="pro-part">
-      <h2 data-cy="ProprietaireCreateUpdateHeading" id="jhi-proprietaire-heading">Proprietaire</h2>
+      <h2 data-cy="ProprietaireCreateUpdateHeading" id="jhi-proprietaire-heading">Titulaire de droit</h2>
       <form (ngSubmit)="save()" [formGroup]="editProprioForm" name="editProprioForm" novalidate role="form">
         <div class="row">
           <div class="form-group col-3">
@@ -658,10 +679,10 @@
 </div>
 <hr />
 <div class="row">
-  <h2 class="col-12">Evaluation</h2>
+  <h2 class="col-12">Evaluations Immobilières</h2>
   <div class="fieldset col-6">
     <div class="row">
-      <h6 class="col-9">Evaluation Surface Batie</h6>
+      <h6 class="col-9">A/ Evaluation Terrain</h6>
       <button type="button" (click)="ajouterESB(addESBForm)" class="btn btn-sm">Ajouter Surface Batie</button>
     </div>
     <div class="table-responsive" id="entities_esb" *ngIf="evaluationSurfaceBaties && evaluationSurfaceBaties.length > 0">
@@ -670,7 +691,7 @@
           <tr jhiSort>
             <th scope="col"><span>Superficie Totale</span></th>
             <th scope="col"><span>Superficie Batie</span></th>
-            <th scope="col"><span>Categorie</span></th>
+            <th scope="col"><span>Secteur</span></th>
             <th scope="col"><span>Prix M²</span></th>
             <th scope="col"></th>
           </tr>
@@ -717,7 +738,7 @@
   </div>
   <div class="fieldset col-6">
     <div class="row">
-      <h6 class="col-9">Evaluation Cours Amenagé</h6>
+      <h6 class="col-9">C/ Evaluation Cours Amenagé</h6>
       <button type="button" (click)="ajouterECA(addECAForm)" class="btn btn-sm">Ajouter Cours Aménagé</button>
     </div>
     <div class="table-responsive" id="entities_eca" *ngIf="evaluationCoursAmenages && evaluationCoursAmenages.length > 0">
@@ -774,7 +795,7 @@
   </div>
   <div class="fieldset col-6">
     <div class="row">
-      <h6 class="col-9" id="jhi-evaluation-batiments-heading" data-cy="EvaluationBatimentsCreateUpdateHeading">Evaluation Batiments</h6>
+      <h6 class="col-9" id="jhi-evaluation-batiments-heading" data-cy="EvaluationBatimentsCreateUpdateHeading">B/ Evaluation Batiments</h6>
       <button type="button" (click)="ajouterEB(addEBForm)" class="btn btn-sm">Ajouter Batiments</button>
     </div>
     <div class="table-responsive" id="entities_eb" *ngIf="evaluationBatiments && evaluationBatiments.length > 0">
@@ -840,7 +861,7 @@
   </div>
   <div class="fieldset col-6">
     <div class="row">
-      <h6 class="col-9" id="jhi-evaluation-cloture-heading" data-cy="EvaluationClotureCreateUpdateHeading">Evaluation Cloture</h6>
+      <h6 class="col-9" id="jhi-evaluation-cloture-heading" data-cy="EvaluationClotureCreateUpdateHeading">D/ Evaluation Cloture</h6>
       <button type="button" (click)="ajouterEC(addECForm)" class="btn btn-sm">Ajouter Cloture</button>
     </div>
     <div class="table-responsive" id="entities_ec" *ngIf="evaluationClotures && evaluationClotures.length > 0">
@@ -1205,7 +1226,7 @@
                 "
                 *ngFor="let categorieClotureOption of categorieCloturesSharedCollection; trackBy: trackCategorieClotureById"
               >
-                {{ categorieClotureOption.id }}
+                {{ categorieClotureOption.libelle }}
               </option>
             </select>
           </div>

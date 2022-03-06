@@ -38,6 +38,12 @@
             <column name="date_bornage" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
+            <column name="titre_foncier" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="titre_non_imatricule" type="boolean">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="refcadastrale" columnName="date_bornage" columnDataType="${datetimeType}"/>

@@ -32,6 +32,14 @@
     {
       "fieldName": "dateBornage",
       "fieldType": "Instant"
+    },
+    {
+      "fieldName": "titreFoncier",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "titreNonImatricule",
+      "fieldType": "Boolean"
     }
   ],
   "relationships": [

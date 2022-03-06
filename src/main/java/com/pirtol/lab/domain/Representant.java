@@ -74,6 +74,9 @@ public class Representant implements Serializable {
     @Column(name = "statut_persone_structure")
     private String statutPersoneStructure;
 
+    @Column(name = "date_delivrance")
+    private Instant dateDelivrance;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type_structure")
     private TypeStructure typeStructure;
@@ -334,6 +337,14 @@ public class Representant implements Serializable {
         return this.proprietaire;
     }
 
+    public Instant getDateDelivrance() {
+        return dateDelivrance;
+    }
+
+    public void setDateDelivrance(Instant dateDelivrance) {
+        this.dateDelivrance = dateDelivrance;
+    }
+
     public Representant proprietaire(Proprietaire proprietaire) {
         this.setProprietaire(proprietaire);
         return this;
@@ -385,6 +396,7 @@ public class Representant implements Serializable {
             ", telephone3='" + getTelephone3() + "'" +
             ", statutPersoneStructure='" + getStatutPersoneStructure() + "'" +
             ", typeStructure='" + getTypeStructure() + "'" +
+            ", dateDelivrance='" + getDateDelivrance() + "'" +
             "}";
     }
 }

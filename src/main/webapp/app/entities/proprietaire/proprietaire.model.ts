@@ -30,6 +30,7 @@ export interface IProprietaire {
   etablssement?: string | null;
   dossiers?: IDossier[] | null;
   representants?: IRepresentant[] | null;
+  dateDelivrance?: dayjs.Dayjs | null;
 }
 
 export class Proprietaire implements IProprietaire {
@@ -57,6 +58,7 @@ export class Proprietaire implements IProprietaire {
     public nombreHeritiers?: number | null,
     public serviceOcupant?: string | null,
     public etablssement?: string | null,
+    public dateDelivrance?: dayjs.Dayjs | null,
     public dossiers?: IDossier[] | null,
     public representants?: IRepresentant[] | null
   ) {

@@ -128,6 +128,8 @@ export class DossierUpdateComponent implements OnInit {
     titreCree: [],
     numeroRequisition: [],
     dateBornage: [],
+    titreFoncier: [],
+    titreNonImatricule: [],
   });
   editProprioForm = this.fb.group({
     id: [],
@@ -520,6 +522,21 @@ export class DossierUpdateComponent implements OnInit {
     this.resetEBForm();
     this.modalService.dismissAll();
   }
+  tniCheckBoxChange(target: any): void {
+    if (target.checked) {
+      this.editRCForm.get(['titreFoncier'])!.setValue(false);
+    } else {
+      this.editRCForm.get(['titreFoncier'])!.setValue(true);
+    }
+  }
+  tfCheckBoxChange(target: any): void {
+    if (target.checked) {
+      this.editRCForm.get(['titreNonImatricule'])!.setValue(false);
+    } else {
+      this.editRCForm.get(['titreNonImatricule'])!.setValue(true);
+    }
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IDossier>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
@@ -825,6 +842,8 @@ export class DossierUpdateComponent implements OnInit {
       superfici: refcadastrale.superfici,
       titreMere: refcadastrale.titreMere,
       titreCree: refcadastrale.titreCree,
+      titreNonImatricule: refcadastrale.titreNonImatricule,
+      titreFoncier: refcadastrale.titreFoncier,
       numeroRequisition: refcadastrale.numeroRequisition,
       dateBornage: refcadastrale.dateBornage ? refcadastrale.dateBornage.format(DATE_TIME_FORMAT) : null,
     });
@@ -841,6 +860,8 @@ export class DossierUpdateComponent implements OnInit {
       titreMere: this.editRCForm.get(['titreMere'])!.value,
       titreCree: this.editRCForm.get(['titreCree'])!.value,
       numeroRequisition: this.editRCForm.get(['numeroRequisition'])!.value,
+      titreNonImatricule: this.editRCForm.get(['titreNonImatricule'])!.value,
+      titreFoncier: this.editRCForm.get(['titreFoncier'])!.value,
       dateBornage: this.editRCForm.get(['dateBornage'])!.value
         ? dayjs(this.editRCForm.get(['dateBornage'])!.value, DATE_TIME_FORMAT)
         : undefined,

@@ -90,6 +90,10 @@
     {
       "fieldName": "etablssement",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "dateDelivrance",
+      "fieldType": "Instant"
     }
   ],
   "relationships": [

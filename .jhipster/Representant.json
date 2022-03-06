@@ -70,6 +70,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "dateDelivrance",
+      "fieldType": "Instant"
+    },
+    {
       "fieldName": "typeStructure",
       "fieldType": "TypeStructure",
       "fieldValues": "ENTREPRISE_INDIVIDUEL,SURL,GIE,SA,SARL,SNC,SCS,ASSOCIATION,ONG,ORG_GOUV"

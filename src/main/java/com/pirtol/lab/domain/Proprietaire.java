@@ -94,6 +94,9 @@ public class Proprietaire implements Serializable {
     @Column(name = "etablssement")
     private String etablssement;
 
+    @Column(name = "date_delivrance")
+    private Instant dateDelivrance;
+
     @OneToMany(mappedBy = "proprietaire")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(
@@ -370,6 +373,14 @@ public class Proprietaire implements Serializable {
         return this.typeStructure;
     }
 
+    public Instant getDateDelivrance() {
+        return dateDelivrance;
+    }
+
+    public void setDateDelivrance(Instant dateDelivrance) {
+        this.dateDelivrance = dateDelivrance;
+    }
+
     public Proprietaire typeStructure(TypeStructure typeStructure) {
         this.typeStructure = typeStructure;
         return this;
@@ -526,6 +537,7 @@ public class Proprietaire implements Serializable {
             ", nombreHeritiers=" + getNombreHeritiers() +
             ", serviceOcupant='" + getServiceOcupant() + "'" +
             ", etablssement='" + getEtablssement() + "'" +
+            ", dateDelivrance='" + getDateDelivrance() + "'" +
             "}";
     }
 }

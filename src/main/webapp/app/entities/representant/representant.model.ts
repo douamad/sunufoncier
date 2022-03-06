@@ -21,6 +21,7 @@ export interface IRepresentant {
   telephone2?: string | null;
   telephone3?: string | null;
   statutPersoneStructure?: string | null;
+  dateDelivrance?: dayjs.Dayjs | null;
   typeStructure?: TypeStructure | null;
   proprietaire?: IProprietaire | null;
 }
@@ -45,6 +46,7 @@ export class Representant implements IRepresentant {
     public telephone2?: string | null,
     public telephone3?: string | null,
     public statutPersoneStructure?: string | null,
+    public dateDelivrance?: dayjs.Dayjs | null,
     public typeStructure?: TypeStructure | null,
     public proprietaire?: IProprietaire | null
   ) {

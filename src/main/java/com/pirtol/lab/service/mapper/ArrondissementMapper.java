@@ -9,7 +9,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring", uses = { DepartementMapper.class })
 public interface ArrondissementMapper extends EntityMapper<ArrondissementDTO, Arrondissement> {
-    @Mapping(target = "departement", source = "departement", qualifiedByName = "id")
+    @Mapping(target = "departement", source = "departement")
     ArrondissementDTO toDto(Arrondissement s);
 
     @Named("id")
