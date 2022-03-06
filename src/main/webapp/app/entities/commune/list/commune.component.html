@@ -42,7 +42,7 @@
       <tbody>
         <tr *ngFor="let commune of communes; trackBy: trackId" data-cy="entityTable">
           <td>
-            <a [routerLink]="['/commune', commune.id, 'view']">{{ commune.id }}</a>
+            <a [routerLink]="['/commune', commune.id, 'view']">{{ commune.libelle }}</a>
           </td>
           <td>{{ commune.code }}</td>
           <td>{{ commune.libelle }}</td>
