@@ -176,6 +176,440 @@
 <hr />
 
 <div class="row">
+  <div class="fieldset col-12 section-proprio">
+    <div class="pro-part">
+      <h2 data-cy="ProprietaireCreateUpdateHeading" id="jhi-proprietaire-heading">Titulaire de droit</h2>
+      <form (ngSubmit)="save()" [formGroup]="editProprioForm" name="editProprioForm" novalidate role="form">
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="form-group col-3">
+                <label class="form-control-label" for="field_proprio_personneMorale">Personne Morale</label>
+                <input
+                  class="form-check"
+                  data-cy="personneMorale"
+                  formControlName="personneMorale"
+                  id="field_proprio_personneMorale"
+                  name="personneMorale"
+                  type="checkbox"
+                />
+              </div>
+              <div class="form-group col-3">
+                <label class="form-control-label" for="field_proprio_gestionDelegue">Gestion Delegue ?</label>
+                <input
+                  class="form-check"
+                  data-cy="gestionDelegue"
+                  formControlName="gestionDelegue"
+                  id="field_proprio_gestionDelegue"
+                  name="gestionDelegue"
+                  type="checkbox"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <div class="form-group col">
+                <label class="form-control-label" for="field_proprio_prenom"
+                  >Prenom <span *ngIf="editProprioForm.get('personneMorale')!.value == true">Contact</span></label
+                >
+                <input class="form-control" data-cy="prenom" formControlName="prenom" id="field_proprio_prenom" name="prenom" type="text" />
+              </div>
+              <div class="form-group col">
+                <label class="form-control-label" for="field_proprio_nom"
+                  >Nom <span *ngIf="editProprioForm.get('personneMorale')!.value == true">Contact</span></label
+                >
+                <input class="form-control" data-cy="nom" formControlName="nom" id="field_proprio_nom" name="nom" type="text" />
+              </div>
+              <div *ngIf="editProprioForm.get('personneMorale')!.value != true" class="form-group col">
+                <label class="form-control-label" for="field_proprio_situation">Situation</label>
+                <select class="form-control" data-cy="situation" formControlName="situation" id="field_proprio_situation" name="situation">
+                  <option [ngValue]="null"></option>
+                  <option value="RESIDENT">RESIDENT</option>
+                  <option value="DECEDE">DECEDE</option>
+                  <option value="EXTERIEUR">EXTERIEUR</option>
+                  <option value="AUTRE">AUTRE</option>
+                </select>
+              </div>
+              <div *ngIf="editProprioForm.get('personneMorale')!.value == true" class="form-group col">
+                <label class="form-control-label" for="field_proprio_statutPersoneStructure">Statut Dans Structure</label>
+                <input
+                  class="form-control"
+                  data-cy="statutPersoneStructure"
+                  formControlName="statutPersoneStructure"
+                  id="field_proprio_statutPersoneStructure"
+                  name="statutPersoneStructure"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="row personne-morale" *ngIf="editProprioForm.get('personneMorale')!.value == true">
+              <div class="form-group col">
+                <label class="form-control-label" for="field_proprio_raisonSocial">Raison Social</label>
+                <input
+                  class="form-control"
+                  data-cy="raisonSocial"
+                  formControlName="raisonSocial"
+                  id="field_proprio_raisonSocial"
+                  name="raisonSocial"
+                  type="text"
+                />
+              </div>
+
+              <div class="form-group col">
+                <label class="form-control-label" for="field_proprio_siegeSocial">Siege Social</label>
+                <input
+                  class="form-control"
+                  data-cy="siegeSocial"
+                  formControlName="siegeSocial"
+                  id="field_proprio_siegeSocial"
+                  name="siegeSocial"
+                  type="text"
+                />
+              </div>
+              <div class="form-group col">
+                <label class="form-control-label" for="field_proprio_ninea">Ninea</label>
+                <input class="form-control" data-cy="ninea" formControlName="ninea" id="field_proprio_ninea" name="ninea" type="text" />
+              </div>
+            </div>
+            <div *ngIf="editProprioForm.get('personneMorale')!.value == true" class="row">
+              <div class="form-group col">
+                <label class="form-control-label" for="field_proprio_typeStructure">Type Structure</label>
+                <select
+                  class="form-control"
+                  data-cy="typeStructure"
+                  formControlName="typeStructure"
+                  id="field_proprio_typeStructure"
+                  name="typeStructure"
+                >
+                  <option [ngValue]="null"></option>
+                  <option value="ENTREPRISE_INDIVIDUEL">ENTREPRISE_INDIVIDUEL</option>
+                  <option value="SURL">SURL</option>
+                  <option value="GIE">GIE</option>
+                  <option value="SA">SA</option>
+                  <option value="SARL">SARL</option>
+                  <option value="SNC">SNC</option>
+                  <option value="SCS">SCS</option>
+                  <option value="ASSOCIATION">ASSOCIATION</option>
+                  <option value="ONG">ONG</option>
+                  <option value="ORG_GOUV">ORG_GOUV</option>
+                </select>
+              </div>
+              <div class="form-group col">
+                <label class="form-control-label" for="field_proprio_serviceOcupant">Service Ocupant</label>
+                <input
+                  class="form-control"
+                  data-cy="serviceOcupant"
+                  formControlName="serviceOcupant"
+                  id="field_proprio_serviceOcupant"
+                  name="serviceOcupant"
+                  type="text"
+                />
+              </div>
+              <div class="form-group col">
+                <label class="form-control-label" for="field_proprio_etablssement">Etablssement</label>
+                <input
+                  class="form-control"
+                  data-cy="etablssement"
+                  formControlName="etablssement"
+                  id="field_proprio_etablssement"
+                  name="etablssement"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div *ngIf="editProprioForm.get('personneMorale')!.value != true" class="row">
+              <div class="form-group col-3">
+                <label class="form-control-label" for="field_proprio_dateNaiss">Date Naiss</label>
+                <div class="d-flex">
+                  <input
+                    class="form-control"
+                    data-cy="dateNaiss"
+                    formControlName="dateNaiss"
+                    id="field_proprio_dateNaiss"
+                    name="dateNaiss"
+                    placeholder="YYYY-MM-DD"
+                    type="date"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-3">
+                <label class="form-control-label" for="field_proprio_lieuNaissance">Lieu Naissance</label>
+                <input
+                  class="form-control"
+                  data-cy="lieuNaissance"
+                  formControlName="lieuNaissance"
+                  id="field_proprio_lieuNaissance"
+                  name="lieuNaissance"
+                  type="text"
+                />
+              </div>
+              <div class="form-group col-4">
+                <label class="form-control-label" for="field_proprio_numCNI">Num CNI</label>
+                <input class="form-control" data-cy="numCNI" formControlName="numCNI" id="field_proprio_numCNI" name="numCNI" type="text" />
+              </div>
+              <div class="form-group col-2" *ngIf="editProprioForm.get('situation')!.value == 'DECEDE'">
+                <label class="form-control-label" for="field_proprio_nombreHeritiers">Nb Heritiers</label>
+                <input
+                  class="form-control"
+                  data-cy="nombreHeritiers"
+                  formControlName="nombreHeritiers"
+                  id="field_proprio_nombreHeritiers"
+                  name="nombreHeritiers"
+                  type="number"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <div class="form-group col">
+                <label class="form-control-label" for="field_proprio_adresse">Adresse</label>
+                <input
+                  class="form-control"
+                  data-cy="adresse"
+                  formControlName="adresse"
+                  id="field_proprio_adresse"
+                  name="adresse"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-4">
+                <label class="form-control-label" for="field_proprio_email">Email</label>
+                <input class="form-control" data-cy="email" formControlName="email" id="field_proprio_email" name="email" type="text" />
+              </div>
+              <div class="form-group col-3">
+                <label class="form-control-label" for="field_proprio_telephone">Telephone</label>
+                <input
+                  class="form-control"
+                  data-cy="telephone"
+                  formControlName="telephone"
+                  id="field_proprio_telephone"
+                  name="telephone"
+                  type="text"
+                />
+              </div>
+              <div class="form-group col-3">
+                <label class="form-control-label" for="field_proprio_telephone2">Telephone 2</label>
+                <input
+                  class="form-control"
+                  data-cy="telephone2"
+                  formControlName="telephone2"
+                  id="field_proprio_telephone2"
+                  name="telephone2"
+                  type="text"
+                />
+              </div>
+              <div class="form-group col-2">
+                <label class="form-control-label" for="field_proprio_aquisition">Aquisition</label>
+                <input
+                  class="form-control"
+                  data-cy="aquisition"
+                  formControlName="aquisition"
+                  id="field_proprio_aquisition"
+                  name="aquisition"
+                  type="text"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="delegue-part" *ngIf="editProprioForm.get('gestionDelegue')!.value == true">
+      <form name="editRepForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editRepForm">
+        <h2 id="jhi-representant-heading" data-cy="RepresentantCreateUpdateHeading">Representant</h2>
+        <div class="row">
+          <div class="col-6">
+            <div class="row">
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_personneMorale">Personne Morale</label>
+                <input
+                  type="checkbox"
+                  class="form-check"
+                  name="personneMorale"
+                  id="field_rep_personneMorale"
+                  data-cy="personneMorale"
+                  formControlName="personneMorale"
+                />
+              </div>
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_prenom"
+                  >Prenom <span *ngIf="editRepForm.get('personneMorale')!.value == true">Contact</span></label
+                >
+                <input type="text" class="form-control" name="prenom" id="field_rep_prenom" data-cy="prenom" formControlName="prenom" />
+              </div>
+
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_nom"
+                  >Nom <span *ngIf="editRepForm.get('personneMorale')!.value == true">Contact</span></label
+                >
+                <input type="text" class="form-control" name="nom" id="field_rep_nom" data-cy="nom" formControlName="nom" />
+              </div>
+              <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value != true">
+                <label class="form-control-label" for="field_rep_lienProprietaire">Lien Proprietaire</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="lienProprietaire"
+                  id="field_rep_lienProprietaire"
+                  data-cy="lienProprietaire"
+                  formControlName="lienProprietaire"
+                />
+              </div>
+              <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value == true">
+                <label class="form-control-label" for="field_rep_statutPersoneStructure">Statut dans Structure</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="statutPersoneStructure"
+                  id="field_rep_statutPersoneStructure"
+                  data-cy="statutPersoneStructure"
+                  formControlName="statutPersoneStructure"
+                />
+              </div>
+            </div>
+            <div class="row" *ngIf="editRepForm.get('personneMorale')!.value == true">
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_raisonSocial">Raison Social</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="raisonSocial"
+                  id="field_rep_raisonSocial"
+                  data-cy="raisonSocial"
+                  formControlName="raisonSocial"
+                />
+              </div>
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_ninea">Ninea</label>
+                <input type="text" class="form-control" name="ninea" id="field_rep_ninea" data-cy="ninea" formControlName="ninea" />
+              </div>
+
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_typeStructure">Type Structure</label>
+                <select
+                  class="form-control"
+                  name="typeStructure"
+                  formControlName="typeStructure"
+                  id="field_rep_typeStructure"
+                  data-cy="typeStructure"
+                >
+                  <option [ngValue]="null"></option>
+                  <option value="ENTREPRISE_INDIVIDUEL">ENTREPRISE_INDIVIDUEL</option>
+                  <option value="SURL">SURL</option>
+                  <option value="GIE">GIE</option>
+                  <option value="SA">SA</option>
+                  <option value="SARL">SARL</option>
+                  <option value="SNC">SNC</option>
+                  <option value="SCS">SCS</option>
+                  <option value="ASSOCIATION">ASSOCIATION</option>
+                  <option value="ONG">ONG</option>
+                  <option value="ORG_GOUV">ORG_GOUV</option>
+                </select>
+              </div>
+            </div>
+            <div class="row" *ngIf="editRepForm.get('personneMorale')!.value != true">
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_dateNaiss">Date Naiss</label>
+                <div class="d-flex">
+                  <input
+                    id="field_rep_dateNaiss"
+                    data-cy="dateNaiss"
+                    type="datetime-local"
+                    class="form-control"
+                    name="dateNaiss"
+                    formControlName="dateNaiss"
+                    placeholder="YYYY-MM-DD HH:mm"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_lieuNaissance">Lieu Naissance</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="lieuNaissance"
+                  id="field_rep_lieuNaissance"
+                  data-cy="lieuNaissance"
+                  formControlName="lieuNaissance"
+                />
+              </div>
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_numCNI">Num CNI</label>
+                <input type="text" class="form-control" name="numCNI" id="field_rep_numCNI" data-cy="numCNI" formControlName="numCNI" />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value == true">
+                <label class="form-control-label" for="field_rep_siegeSocial">Siege Social</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="siegeSocial"
+                  id="field_rep_siegeSocial"
+                  data-cy="siegeSocial"
+                  formControlName="siegeSocial"
+                />
+              </div>
+
+              <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value != true">
+                <label class="form-control-label" for="field_rep_adresse">Adresse</label>
+                <input type="text" class="form-control" name="adresse" id="field_rep_adresse" data-cy="adresse" formControlName="adresse" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_email">Email</label>
+                <input type="text" class="form-control" name="email" id="field_rep_email" data-cy="email" formControlName="email" />
+              </div>
+
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_telephone">Telephone</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="telephone"
+                  id="field_rep_telephone"
+                  data-cy="telephone"
+                  formControlName="telephone"
+                />
+              </div>
+
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_telephone2">Telephone 2</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="telephone2"
+                  id="field_rep_telephone2"
+                  data-cy="telephone2"
+                  formControlName="telephone2"
+                />
+              </div>
+
+              <div class="form-group col">
+                <label class="form-control-label" for="field_rep_telephone3">Telephone 3</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="telephone3"
+                  id="field_rep_telephone3"
+                  data-cy="telephone3"
+                  formControlName="telephone3"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="fieldset section-usage col-6">
     <h2 class="col-12">Occupation</h2>
     <div class="form-group col-12">
@@ -208,7 +642,7 @@
               <th scope="col"><span>Activite</span></th>
               <th scope="col"><span>Ninea</span></th>
               <th scope="col"><span>Mensualité</span></th>
-              s
+
               <th scope="col"></th>
             </tr>
           </thead>
@@ -251,429 +685,12 @@
               </td>
             </tr>
           </tbody>
+          <tfoot>
+            <th colspan="4">Total</th>
+            <th>{{ totalLocation }}</th>
+          </tfoot>
         </table>
       </div>
-    </div>
-  </div>
-  <div class="fieldset col-6 section-proprio">
-    <div class="pro-part">
-      <h2 data-cy="ProprietaireCreateUpdateHeading" id="jhi-proprietaire-heading">Titulaire de droit</h2>
-      <form (ngSubmit)="save()" [formGroup]="editProprioForm" name="editProprioForm" novalidate role="form">
-        <div class="row">
-          <div class="form-group col-3">
-            <label class="form-control-label" for="field_proprio_personneMorale">Personne Morale</label>
-            <input
-              class="form-check"
-              data-cy="personneMorale"
-              formControlName="personneMorale"
-              id="field_proprio_personneMorale"
-              name="personneMorale"
-              type="checkbox"
-            />
-          </div>
-          <div class="form-group col-3">
-            <label class="form-control-label" for="field_proprio_gestionDelegue">Gestion Delegue ?</label>
-            <input
-              class="form-check"
-              data-cy="gestionDelegue"
-              formControlName="gestionDelegue"
-              id="field_proprio_gestionDelegue"
-              name="gestionDelegue"
-              type="checkbox"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col">
-            <label class="form-control-label" for="field_proprio_prenom"
-              >Prenom <span *ngIf="editProprioForm.get('personneMorale')!.value == true">Contact</span></label
-            >
-            <input class="form-control" data-cy="prenom" formControlName="prenom" id="field_proprio_prenom" name="prenom" type="text" />
-          </div>
-          <div class="form-group col">
-            <label class="form-control-label" for="field_proprio_nom"
-              >Nom <span *ngIf="editProprioForm.get('personneMorale')!.value == true">Contact</span></label
-            >
-            <input class="form-control" data-cy="nom" formControlName="nom" id="field_proprio_nom" name="nom" type="text" />
-          </div>
-          <div *ngIf="editProprioForm.get('personneMorale')!.value != true" class="form-group col">
-            <label class="form-control-label" for="field_proprio_situation">Situation</label>
-            <select class="form-control" data-cy="situation" formControlName="situation" id="field_proprio_situation" name="situation">
-              <option [ngValue]="null"></option>
-              <option value="RESIDENT">RESIDENT</option>
-              <option value="DECEDE">DECEDE</option>
-              <option value="EXTERIEUR">EXTERIEUR</option>
-              <option value="AUTRE">AUTRE</option>
-            </select>
-          </div>
-          <div *ngIf="editProprioForm.get('personneMorale')!.value == true" class="form-group col">
-            <label class="form-control-label" for="field_proprio_statutPersoneStructure">Statut Dans Structure</label>
-            <input
-              class="form-control"
-              data-cy="statutPersoneStructure"
-              formControlName="statutPersoneStructure"
-              id="field_proprio_statutPersoneStructure"
-              name="statutPersoneStructure"
-              type="text"
-            />
-          </div>
-        </div>
-        <div class="row personne-morale" *ngIf="editProprioForm.get('personneMorale')!.value == true">
-          <div class="form-group col">
-            <label class="form-control-label" for="field_proprio_raisonSocial">Raison Social</label>
-            <input
-              class="form-control"
-              data-cy="raisonSocial"
-              formControlName="raisonSocial"
-              id="field_proprio_raisonSocial"
-              name="raisonSocial"
-              type="text"
-            />
-          </div>
-
-          <div class="form-group col">
-            <label class="form-control-label" for="field_proprio_siegeSocial">Siege Social</label>
-            <input
-              class="form-control"
-              data-cy="siegeSocial"
-              formControlName="siegeSocial"
-              id="field_proprio_siegeSocial"
-              name="siegeSocial"
-              type="text"
-            />
-          </div>
-          <div class="form-group col">
-            <label class="form-control-label" for="field_proprio_ninea">Ninea</label>
-            <input class="form-control" data-cy="ninea" formControlName="ninea" id="field_proprio_ninea" name="ninea" type="text" />
-          </div>
-        </div>
-        <div *ngIf="editProprioForm.get('personneMorale')!.value == true" class="row">
-          <div class="form-group col">
-            <label class="form-control-label" for="field_proprio_typeStructure">Type Structure</label>
-            <select
-              class="form-control"
-              data-cy="typeStructure"
-              formControlName="typeStructure"
-              id="field_proprio_typeStructure"
-              name="typeStructure"
-            >
-              <option [ngValue]="null"></option>
-              <option value="ENTREPRISE_INDIVIDUEL">ENTREPRISE_INDIVIDUEL</option>
-              <option value="SURL">SURL</option>
-              <option value="GIE">GIE</option>
-              <option value="SA">SA</option>
-              <option value="SARL">SARL</option>
-              <option value="SNC">SNC</option>
-              <option value="SCS">SCS</option>
-              <option value="ASSOCIATION">ASSOCIATION</option>
-              <option value="ONG">ONG</option>
-              <option value="ORG_GOUV">ORG_GOUV</option>
-            </select>
-          </div>
-          <div class="form-group col">
-            <label class="form-control-label" for="field_proprio_serviceOcupant">Service Ocupant</label>
-            <input
-              class="form-control"
-              data-cy="serviceOcupant"
-              formControlName="serviceOcupant"
-              id="field_proprio_serviceOcupant"
-              name="serviceOcupant"
-              type="text"
-            />
-          </div>
-          <div class="form-group col">
-            <label class="form-control-label" for="field_proprio_etablssement">Etablssement</label>
-            <input
-              class="form-control"
-              data-cy="etablssement"
-              formControlName="etablssement"
-              id="field_proprio_etablssement"
-              name="etablssement"
-              type="text"
-            />
-          </div>
-        </div>
-
-        <div *ngIf="editProprioForm.get('personneMorale')!.value != true" class="row">
-          <div class="form-group col-3">
-            <label class="form-control-label" for="field_proprio_dateNaiss">Date Naiss</label>
-            <div class="d-flex">
-              <input
-                class="form-control"
-                data-cy="dateNaiss"
-                formControlName="dateNaiss"
-                id="field_proprio_dateNaiss"
-                name="dateNaiss"
-                placeholder="YYYY-MM-DD"
-                type="date"
-              />
-            </div>
-          </div>
-          <div class="form-group col-3">
-            <label class="form-control-label" for="field_proprio_lieuNaissance">Lieu Naissance</label>
-            <input
-              class="form-control"
-              data-cy="lieuNaissance"
-              formControlName="lieuNaissance"
-              id="field_proprio_lieuNaissance"
-              name="lieuNaissance"
-              type="text"
-            />
-          </div>
-          <div class="form-group col-4">
-            <label class="form-control-label" for="field_proprio_numCNI">Num CNI</label>
-            <input class="form-control" data-cy="numCNI" formControlName="numCNI" id="field_proprio_numCNI" name="numCNI" type="text" />
-          </div>
-          <div class="form-group col-2" *ngIf="editProprioForm.get('situation')!.value == 'DECEDE'">
-            <label class="form-control-label" for="field_proprio_nombreHeritiers">Nb Heritiers</label>
-            <input
-              class="form-control"
-              data-cy="nombreHeritiers"
-              formControlName="nombreHeritiers"
-              id="field_proprio_nombreHeritiers"
-              name="nombreHeritiers"
-              type="number"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col">
-            <label class="form-control-label" for="field_proprio_adresse">Adresse</label>
-            <input class="form-control" data-cy="adresse" formControlName="adresse" id="field_proprio_adresse" name="adresse" type="text" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-4">
-            <label class="form-control-label" for="field_proprio_email">Email</label>
-            <input class="form-control" data-cy="email" formControlName="email" id="field_proprio_email" name="email" type="text" />
-          </div>
-          <div class="form-group col-3">
-            <label class="form-control-label" for="field_proprio_telephone">Telephone</label>
-            <input
-              class="form-control"
-              data-cy="telephone"
-              formControlName="telephone"
-              id="field_proprio_telephone"
-              name="telephone"
-              type="text"
-            />
-          </div>
-          <div class="form-group col-3">
-            <label class="form-control-label" for="field_proprio_telephone2">Telephone 2</label>
-            <input
-              class="form-control"
-              data-cy="telephone2"
-              formControlName="telephone2"
-              id="field_proprio_telephone2"
-              name="telephone2"
-              type="text"
-            />
-          </div>
-          <div class="form-group col-2">
-            <label class="form-control-label" for="field_proprio_aquisition">Aquisition</label>
-            <input
-              class="form-control"
-              data-cy="aquisition"
-              formControlName="aquisition"
-              id="field_proprio_aquisition"
-              name="aquisition"
-              type="text"
-            />
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="delegue-part" *ngIf="editProprioForm.get('gestionDelegue')!.value == true">
-      <form name="editRepForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editRepForm">
-        <h2 id="jhi-representant-heading" data-cy="RepresentantCreateUpdateHeading">Representant</h2>
-
-        <div>
-          <div class="row">
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_personneMorale">Personne Morale</label>
-              <input
-                type="checkbox"
-                class="form-check"
-                name="personneMorale"
-                id="field_rep_personneMorale"
-                data-cy="personneMorale"
-                formControlName="personneMorale"
-              />
-            </div>
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_prenom"
-                >Prenom <span *ngIf="editRepForm.get('personneMorale')!.value == true">Contact</span></label
-              >
-              <input type="text" class="form-control" name="prenom" id="field_rep_prenom" data-cy="prenom" formControlName="prenom" />
-            </div>
-
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_nom"
-                >Nom <span *ngIf="editRepForm.get('personneMorale')!.value == true">Contact</span></label
-              >
-              <input type="text" class="form-control" name="nom" id="field_rep_nom" data-cy="nom" formControlName="nom" />
-            </div>
-            <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value != true">
-              <label class="form-control-label" for="field_rep_lienProprietaire">Lien Proprietaire</label>
-              <input
-                type="text"
-                class="form-control"
-                name="lienProprietaire"
-                id="field_rep_lienProprietaire"
-                data-cy="lienProprietaire"
-                formControlName="lienProprietaire"
-              />
-            </div>
-            <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value == true">
-              <label class="form-control-label" for="field_rep_statutPersoneStructure">Statut dans Structure</label>
-              <input
-                type="text"
-                class="form-control"
-                name="statutPersoneStructure"
-                id="field_rep_statutPersoneStructure"
-                data-cy="statutPersoneStructure"
-                formControlName="statutPersoneStructure"
-              />
-            </div>
-          </div>
-
-          <div class="row" *ngIf="editRepForm.get('personneMorale')!.value == true">
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_raisonSocial">Raison Social</label>
-              <input
-                type="text"
-                class="form-control"
-                name="raisonSocial"
-                id="field_rep_raisonSocial"
-                data-cy="raisonSocial"
-                formControlName="raisonSocial"
-              />
-            </div>
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_ninea">Ninea</label>
-              <input type="text" class="form-control" name="ninea" id="field_rep_ninea" data-cy="ninea" formControlName="ninea" />
-            </div>
-
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_typeStructure">Type Structure</label>
-              <select
-                class="form-control"
-                name="typeStructure"
-                formControlName="typeStructure"
-                id="field_rep_typeStructure"
-                data-cy="typeStructure"
-              >
-                <option [ngValue]="null"></option>
-                <option value="ENTREPRISE_INDIVIDUEL">ENTREPRISE_INDIVIDUEL</option>
-                <option value="SURL">SURL</option>
-                <option value="GIE">GIE</option>
-                <option value="SA">SA</option>
-                <option value="SARL">SARL</option>
-                <option value="SNC">SNC</option>
-                <option value="SCS">SCS</option>
-                <option value="ASSOCIATION">ASSOCIATION</option>
-                <option value="ONG">ONG</option>
-                <option value="ORG_GOUV">ORG_GOUV</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="row" *ngIf="editRepForm.get('personneMorale')!.value != true">
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_dateNaiss">Date Naiss</label>
-              <div class="d-flex">
-                <input
-                  id="field_rep_dateNaiss"
-                  data-cy="dateNaiss"
-                  type="datetime-local"
-                  class="form-control"
-                  name="dateNaiss"
-                  formControlName="dateNaiss"
-                  placeholder="YYYY-MM-DD HH:mm"
-                />
-              </div>
-            </div>
-
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_lieuNaissance">Lieu Naissance</label>
-              <input
-                type="text"
-                class="form-control"
-                name="lieuNaissance"
-                id="field_rep_lieuNaissance"
-                data-cy="lieuNaissance"
-                formControlName="lieuNaissance"
-              />
-            </div>
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_numCNI">Num CNI</label>
-              <input type="text" class="form-control" name="numCNI" id="field_rep_numCNI" data-cy="numCNI" formControlName="numCNI" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value == true">
-              <label class="form-control-label" for="field_rep_siegeSocial">Siege Social</label>
-              <input
-                type="text"
-                class="form-control"
-                name="siegeSocial"
-                id="field_rep_siegeSocial"
-                data-cy="siegeSocial"
-                formControlName="siegeSocial"
-              />
-            </div>
-
-            <div class="form-group col" *ngIf="editRepForm.get('personneMorale')!.value != true">
-              <label class="form-control-label" for="field_rep_adresse">Adresse</label>
-              <input type="text" class="form-control" name="adresse" id="field_rep_adresse" data-cy="adresse" formControlName="adresse" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_email">Email</label>
-              <input type="text" class="form-control" name="email" id="field_rep_email" data-cy="email" formControlName="email" />
-            </div>
-
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_telephone">Telephone</label>
-              <input
-                type="text"
-                class="form-control"
-                name="telephone"
-                id="field_rep_telephone"
-                data-cy="telephone"
-                formControlName="telephone"
-              />
-            </div>
-
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_telephone2">Telephone 2</label>
-              <input
-                type="text"
-                class="form-control"
-                name="telephone2"
-                id="field_rep_telephone2"
-                data-cy="telephone2"
-                formControlName="telephone2"
-              />
-            </div>
-
-            <div class="form-group col">
-              <label class="form-control-label" for="field_rep_telephone3">Telephone 3</label>
-              <input
-                type="text"
-                class="form-control"
-                name="telephone3"
-                id="field_rep_telephone3"
-                data-cy="telephone3"
-                formControlName="telephone3"
-              />
-            </div>
-          </div>
-        </div>
-      </form>
     </div>
   </div>
 </div>
@@ -693,6 +710,7 @@
             <th scope="col"><span>Superficie Batie</span></th>
             <th scope="col"><span>Secteur</span></th>
             <th scope="col"><span>Prix M²</span></th>
+            <th scope="col"><span>Prix Total</span></th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -702,6 +720,7 @@
             <td>{{ evaluationSurfaceBatie.superficieBatie }}</td>
             <td>{{ evaluationSurfaceBatie.categorieBatie?.libelle }}</td>
             <td>{{ evaluationSurfaceBatie.categorieBatie?.prixMetreCare }}</td>
+            <th>{{ calculeTotalTerrain(evaluationSurfaceBatie) }}</th>
             <td class="text-right">
               <div class="btn-group">
                 <button
@@ -733,6 +752,12 @@
             </td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="4">Total</th>
+            <th>{{ totalEvalTerrain }}</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -749,6 +774,7 @@
             <th scope="col"><span>Coeff</span></th>
             <th scope="col"><span>Categorie</span></th>
             <th scope="col"><span>Prix M²</span></th>
+            <th scope="col"><span>Total Ligne</span></th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -758,6 +784,7 @@
             <td>{{ evaluationCoursAmenage.coeff }}</td>
             <td>{{ evaluationCoursAmenage.categorieCoursAmenage?.libelle }}</td>
             <td>{{ evaluationCoursAmenage.categorieCoursAmenage?.prixMetreCare }}</td>
+            <td>{{ calculTotalCours(evaluationCoursAmenage) }}</td>
             <td class="text-right">
               <div class="btn-group">
                 <button
@@ -790,6 +817,12 @@
             </td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="4">Total</th>
+            <th>{{ totalEvalCoursAmen }}</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -807,6 +840,7 @@
             <th scope="col"><span>Coeff</span></th>
             <th scope="col"><span>Categorie Nature</span></th>
             <th scope="col"><span>prix m²</span></th>
+            <th scope="col"><span>Total Ligne</span></th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -818,6 +852,9 @@
             <td>{{ evaluationBatiment.categorieNature?.libelle }}</td>
             <td>
               {{ evaluationBatiment.categorieNature?.prixMetreCare }}
+            </td>
+            <td>
+              {{ calculeTotalBatiment(evaluationBatiment) }}
             </td>
             <td>
               <div *ngIf="evaluationBatiment.dossier">
@@ -856,6 +893,12 @@
             </td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="6">Total</th>
+            <th>{{ totalEvalBatiment }}</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -916,6 +959,13 @@
             </td>
           </tr>
         </tbody>
+
+        <tfoot>
+          <tr>
+            <th colspan="4">Total</th>
+            <th>{{ totalEvalCloture }}</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>

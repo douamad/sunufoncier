@@ -6,7 +6,6 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IEvaluationCloture, getEvaluationClotureIdentifier } from '../evaluation-cloture.model';
-import { IEvaluationBatiments } from 'app/entities/evaluation-batiments/evaluation-batiments.model';
 
 export type EntityResponseType = HttpResponse<IEvaluationCloture>;
 export type EntityArrayResponseType = HttpResponse<IEvaluationCloture[]>;

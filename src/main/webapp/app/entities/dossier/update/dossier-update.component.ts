@@ -68,7 +68,11 @@ export class DossierUpdateComponent implements OnInit {
   categorieCoursAmenagesSharedCollection: ICategorieCoursAmenage[] = [];
   categorieCloturesSharedCollection: ICategorieCloture[] = [];
   categorieNaturesSharedCollection: ICategorieNature[] = [];
-
+  totalEvalTerrain = 0;
+  totalEvalBatiment = 0;
+  totalEvalCloture = 0;
+  totalEvalCoursAmen = 0;
+  totalLocation = 0;
   editDossierForm = this.fb.group({
     id: [],
     numero: [],
@@ -422,6 +426,7 @@ export class DossierUpdateComponent implements OnInit {
     console.warn(eca);
     this.evaluationCoursAmenages.push(eca);
     console.warn(this.evaluationCoursAmenages);
+    this.calculeEvalCours();
     this.modalService.dismissAll();
   }
   saveESBForm(): void {
@@ -429,6 +434,7 @@ export class DossierUpdateComponent implements OnInit {
     console.warn(esb);
     this.evaluationSurfaceBaties.push(esb);
     console.warn(this.evaluationSurfaceBaties);
+    this.calculeEvalTerrain();
     this.modalService.dismissAll();
   }
   saveECForm(): void {
@@ -436,6 +442,7 @@ export class DossierUpdateComponent implements OnInit {
     console.warn(ec);
     this.evaluationClotures.push(ec);
     console.warn(this.evaluationClotures);
+    this.calculeEvalCloture();
     this.modalService.dismissAll();
   }
   ajouterLocataire(content: any): void {
@@ -520,7 +527,60 @@ export class DossierUpdateComponent implements OnInit {
     this.evaluationBatiments.push(eb);
     console.warn(this.evaluationBatiments);
     this.resetEBForm();
+    this.calculeEvalBatiment();
     this.modalService.dismissAll();
+  }
+  calculeEvalLocation(): void {
+    const init = 0;
+    this.totalLocation = this.locataires.reduce(function (a, b) {
+      if (b.montant) {
+        return a + b.montant;
+      }
+      return a;
+    }, init);
+  }
+  calculeEvalBatiment(): void {
+    const init = 0;
+    this.totalEvalBatiment = this.evaluationBatiments.reduce((a, b) => a + this.calculeTotalBatiment(b), init);
+  }
+  calculeTotalBatiment(b: IEvaluationBatiments): number {
+    if (b.surface && b.coeff && b.categorieNature?.prixMetreCare) {
+      return b.surface && b.coeff && b.categorieNature.prixMetreCare;
+    }
+    return 0;
+  }
+  calculeEvalTerrain(): void {
+    const init = 0;
+    this.totalEvalTerrain = this.evaluationSurfaceBaties.reduce((a, b) => a + this.calculeTotalTerrain(b), init);
+  }
+  calculeTotalTerrain(a: IEvaluationSurfaceBatie): number {
+    if (a.superficieBatie && a.categorieBatie?.prixMetreCare && a.superficieTotale) {
+      return (
+        a.superficieBatie * (a.categorieBatie.prixMetreCare / 2) + (a.superficieTotale - a.superficieBatie) * a.categorieBatie.prixMetreCare
+      );
+    }
+    return 0;
+  }
+
+  calculeEvalCours(): void {
+    const init = 0;
+    this.totalEvalCoursAmen = this.evaluationCoursAmenages.reduce((a, b) => a + this.calculTotalCours(b), init);
+  }
+  calculTotalCours(b: IEvaluationCoursAmenage): number {
+    if (b.categorieCoursAmenage?.prixMetreCare && b.surface && b.coeff) {
+      return b.categorieCoursAmenage.prixMetreCare * b.surface * b.coeff;
+    }
+    return 0;
+  }
+  calculeEvalCloture(): void {
+    const init = 0;
+    this.totalEvalCloture = this.evaluationClotures.reduce((a, b) => a + this.calculeTotalCloture(b), init);
+  }
+  calculeTotalCloture(b: IEvaluationCloture): number {
+    if (b.categoriteCloture?.prixMetreCare && b.coeff && b.lineaire) {
+      return b.categoriteCloture.prixMetreCare * b.coeff * b.lineaire;
+    }
+    return 0;
   }
   tniCheckBoxChange(target: any): void {
     if (target.checked) {

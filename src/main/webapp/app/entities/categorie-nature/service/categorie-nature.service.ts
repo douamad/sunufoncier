@@ -6,7 +6,6 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICategorieNature, getCategorieNatureIdentifier } from '../categorie-nature.model';
-import { ICategorieCoursAmenage } from 'app/entities/categorie-cours-amenage/categorie-cours-amenage.model';
 
 export type EntityResponseType = HttpResponse<ICategorieNature>;
 export type EntityArrayResponseType = HttpResponse<ICategorieNature[]>;

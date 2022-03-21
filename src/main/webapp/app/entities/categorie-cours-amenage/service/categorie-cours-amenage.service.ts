@@ -6,7 +6,6 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICategorieCoursAmenage, getCategorieCoursAmenageIdentifier } from '../categorie-cours-amenage.model';
-import { ICategorieCloture } from 'app/entities/categorie-cloture/categorie-cloture.model';
 
 export type EntityResponseType = HttpResponse<ICategorieCoursAmenage>;
 export type EntityArrayResponseType = HttpResponse<ICategorieCoursAmenage[]>;
