@@ -120,6 +120,7 @@ export class DossierUpdateComponent implements OnInit {
     numeroParcelle: [],
     natureParcelle: [],
     batie: [],
+    nue: [],
     commune: [],
   });
   editRCForm = this.fb.group({
@@ -545,7 +546,7 @@ export class DossierUpdateComponent implements OnInit {
   }
   calculeTotalBatiment(b: IEvaluationBatiments): number {
     if (b.surface && b.coeff && b.categorieNature?.prixMetreCare) {
-      return b.surface && b.coeff && b.categorieNature.prixMetreCare;
+      return b.surface * b.coeff * b.categorieNature.prixMetreCare;
     }
     return 0;
   }
@@ -594,6 +595,20 @@ export class DossierUpdateComponent implements OnInit {
       this.editRCForm.get(['titreNonImatricule'])!.setValue(false);
     } else {
       this.editRCForm.get(['titreNonImatricule'])!.setValue(true);
+    }
+  }
+  batieCheckBoxChange(target: any): void {
+    if (target.checked) {
+      this.editRPForm.get(['nue'])!.setValue(false);
+    } else {
+      this.editRPForm.get(['nue'])!.setValue(true);
+    }
+  }
+  nueCheckBoxChange(target: any): void {
+    if (target.checked) {
+      this.editRPForm.get(['batie'])!.setValue(false);
+    } else {
+      this.editRPForm.get(['batie'])!.setValue(true);
     }
   }
 

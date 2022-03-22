@@ -42,9 +42,29 @@
             type="text"
           />
         </div>
-        <div class="form-group col-2">
+        <div class="form-group col-1">
           <label class="form-control-label" for="field_rp_batie">Batie</label>
-          <input class="form-check" data-cy="batie" formControlName="batie" id="field_rp_batie" name="batie" type="checkbox" />
+          <input
+            class="form-check"
+            data-cy="batie"
+            formControlName="batie"
+            id="field_rp_batie"
+            name="batie"
+            type="checkbox"
+            (input)="batieCheckBoxChange($event.target)"
+          />
+        </div>
+        <div class="form-group col-1">
+          <label class="form-control-label" for="field_rp_nue">Nue</label>
+          <input
+            class="form-check"
+            data-cy="nue"
+            formControlName="nue"
+            id="field_rp_nue"
+            name="nue"
+            type="checkbox"
+            (input)="nueCheckBoxChange($event.target)"
+          />
         </div>
       </div>
     </form>
@@ -895,7 +915,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="6">Total</th>
+            <th colspan="5">Total</th>
             <th>{{ totalEvalBatiment }}</th>
           </tr>
         </tfoot>
@@ -915,6 +935,7 @@
             <th scope="col"><span>Coeff</span></th>
             <th scope="col"><span>Categorite</span></th>
             <th scope="col"><span>Prix M²</span></th>
+            <th scope="col"><span>Total Ligne</span></th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -924,6 +945,7 @@
             <td>{{ evaluationCloture.coeff }}</td>
             <td>{{ evaluationCloture.categoriteCloture?.libelle }}</td>
             <td>{{ evaluationCloture.categoriteCloture?.prixMetreCare }}</td>
+            <td>{{ calculeTotalCloture(evaluationCloture) }}</td>
             <td class="text-right">
               <div class="btn-group">
                 <button
