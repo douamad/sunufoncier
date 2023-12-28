@@ -3,7 +3,9 @@ package com.pirtol.lab.web.rest;
 import com.pirtol.lab.repository.DepartementRepository;
 import com.pirtol.lab.service.DepartementQueryService;
 import com.pirtol.lab.service.DepartementService;
+import com.pirtol.lab.service.criteria.CommuneCriteria;
 import com.pirtol.lab.service.criteria.DepartementCriteria;
+import com.pirtol.lab.service.dto.CommuneDTO;
 import com.pirtol.lab.service.dto.DepartementDTO;
 import com.pirtol.lab.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -173,6 +175,14 @@ public class DepartementResource {
         List<DepartementDTO> page = departementQueryService.findByCriteria(criteria);
         //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().body(page);
+    }
+
+    @GetMapping("/departements/all")
+    public ResponseEntity<List<DepartementDTO>> getListAllDepartements(DepartementCriteria criteria) {
+        log.debug("REST request to get Communes by criteria: {}", criteria);
+        List<DepartementDTO> list = departementQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest());
+        return ResponseEntity.ok().body(list);
     }
 
     /**

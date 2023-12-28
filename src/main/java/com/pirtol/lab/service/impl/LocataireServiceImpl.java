@@ -5,7 +5,9 @@ import com.pirtol.lab.repository.LocataireRepository;
 import com.pirtol.lab.service.LocataireService;
 import com.pirtol.lab.service.dto.LocataireDTO;
 import com.pirtol.lab.service.mapper.LocataireMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -37,6 +39,11 @@ public class LocataireServiceImpl implements LocataireService {
         Locataire locataire = locataireMapper.toEntity(locataireDTO);
         locataire = locataireRepository.save(locataire);
         return locataireMapper.toDto(locataire);
+    }
+
+    @Override
+    public List<LocataireDTO> saveBulk(List<LocataireDTO> locataireDTO) {
+        return locataireDTO.stream().map(this::save).collect(Collectors.toList());
     }
 
     @Override

@@ -1,5 +1,9 @@
 {
-  "name": "EvaluationCoursAmenage",
+  "applications": "*",
+  "changelogDate": "20210728231137",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "evaluation_cours_amenage",
   "fields": [
     {
       "fieldName": "surface",
@@ -10,28 +14,27 @@
       "fieldType": "Double"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "EvaluationCoursAmenage",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "categorieCoursAmenage",
       "otherEntityRelationshipName": "evaluationCoursAmenage",
-      "relationshipName": "categorieCoursAmenage"
+      "relationshipName": "categorieCoursAmenage",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "dossier",
       "otherEntityRelationshipName": "evaluationCoursAmenage",
-      "relationshipName": "dossier"
+      "relationshipName": "dossier",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "evaluation_cours_amenage",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231137"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

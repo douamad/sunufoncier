@@ -1,0 +1,28 @@
+entity Refcadastrale{
+    codeSection String,
+    codeParcelle String,
+    nicad String,
+    superfici Double,
+    titreMere String,
+    titreCree String,
+    numeroRequisition String,
+    dateBornage Instant,
+    dependantDomaine DependantDomaine,
+    numeroDeliberation String,
+    dateDeliberation String,
+    nomGeometre String,
+    issueBornage TypeBornage
+}
+
+enum DependantDomaine{
+    DONAIME_NATIONAL,
+    DOMAINE_PUBLIC,
+    DOMAINE_FLUVIAL,
+    DOMAINE_MARITIME
+}
+enum TypeBornage{
+    IMMATRICULATION
+    MORCELLEMENT
+    RECTIFICATIF_DE_LIMITES
+    FUSION
+}

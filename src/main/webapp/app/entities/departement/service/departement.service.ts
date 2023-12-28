@@ -64,4 +64,9 @@ export class DepartementService {
     }
     return departementCollection;
   }
+
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IDepartement[]>(`${this.resourceUrl}/all`, { params: options, observe: 'response' });
+  }
 }

@@ -1,5 +1,9 @@
 {
-  "name": "CategorieBatie",
+  "applications": "*",
+  "changelogDate": "20210728231152",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "categorie_batie",
   "fields": [
     {
       "fieldName": "libelle",
@@ -10,22 +14,20 @@
       "fieldType": "Double"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "CategorieBatie",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "evaluationSurfaceBatie",
       "otherEntityRelationshipName": "categorieBatie",
-      "relationshipName": "evaluationSurfaceBatie"
+      "relationshipName": "evaluationSurfaceBatie",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
-  "entityTableName": "categorie_batie",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231152"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

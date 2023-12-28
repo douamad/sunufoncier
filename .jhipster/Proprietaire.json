@@ -1,5 +1,9 @@
 {
-  "name": "Proprietaire",
+  "applications": "*",
+  "changelogDate": "20210728231150",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "proprietaire",
   "fields": [
     {
       "fieldName": "prenom",
@@ -96,28 +100,27 @@
       "fieldType": "Instant"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Proprietaire",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "dossier",
       "otherEntityRelationshipName": "proprietaire",
-      "relationshipName": "dossier"
+      "relationshipName": "dossier",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "representant",
       "otherEntityRelationshipName": "proprietaire",
-      "relationshipName": "representant"
+      "relationshipName": "representant",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
-  "entityTableName": "proprietaire",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231150"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

@@ -4,7 +4,9 @@ import com.pirtol.lab.repository.ArrondissementRepository;
 import com.pirtol.lab.service.ArrondissementQueryService;
 import com.pirtol.lab.service.ArrondissementService;
 import com.pirtol.lab.service.criteria.ArrondissementCriteria;
+import com.pirtol.lab.service.criteria.DepartementCriteria;
 import com.pirtol.lab.service.dto.ArrondissementDTO;
+import com.pirtol.lab.service.dto.DepartementDTO;
 import com.pirtol.lab.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -171,6 +173,14 @@ public class ArrondissementResource {
     public ResponseEntity<Long> countArrondissements(ArrondissementCriteria criteria) {
         log.debug("REST request to count Arrondissements by criteria: {}", criteria);
         return ResponseEntity.ok().body(arrondissementQueryService.countByCriteria(criteria));
+    }
+
+    @GetMapping("/arrondissements/all")
+    public ResponseEntity<List<ArrondissementDTO>> getListAllArrondissements(ArrondissementCriteria criteria) {
+        log.debug("REST request to get Arrondissement by criteria: {}", criteria);
+        List<ArrondissementDTO> list = arrondissementQueryService.findByCriteria(criteria);
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest());
+        return ResponseEntity.ok().body(list);
     }
 
     /**

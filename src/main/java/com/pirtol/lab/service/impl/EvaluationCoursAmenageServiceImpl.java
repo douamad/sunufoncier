@@ -5,7 +5,9 @@ import com.pirtol.lab.repository.EvaluationCoursAmenageRepository;
 import com.pirtol.lab.service.EvaluationCoursAmenageService;
 import com.pirtol.lab.service.dto.EvaluationCoursAmenageDTO;
 import com.pirtol.lab.service.mapper.EvaluationCoursAmenageMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -40,6 +42,11 @@ public class EvaluationCoursAmenageServiceImpl implements EvaluationCoursAmenage
         EvaluationCoursAmenage evaluationCoursAmenage = evaluationCoursAmenageMapper.toEntity(evaluationCoursAmenageDTO);
         evaluationCoursAmenage = evaluationCoursAmenageRepository.save(evaluationCoursAmenage);
         return evaluationCoursAmenageMapper.toDto(evaluationCoursAmenage);
+    }
+
+    @Override
+    public List<EvaluationCoursAmenageDTO> saveBulk(List<EvaluationCoursAmenageDTO> evaluationCoursAmenageDTOList) {
+        return evaluationCoursAmenageDTOList.stream().map(this::save).collect(Collectors.toList());
     }
 
     @Override

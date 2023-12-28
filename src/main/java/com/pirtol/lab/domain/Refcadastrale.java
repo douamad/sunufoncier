@@ -1,10 +1,13 @@
 package com.pirtol.lab.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pirtol.lab.domain.enumeration.DependantDomaine;
+import com.pirtol.lab.domain.enumeration.TypeBornage;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -48,6 +51,23 @@ public class Refcadastrale implements Serializable {
     @Column(name = "date_bornage")
     private Instant dateBornage;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dependant_domaine")
+    private DependantDomaine dependantDomaine;
+
+    @Column(name = "numero_deliberation")
+    private String numeroDeliberation;
+
+    @Column(name = "date_deliberation")
+    private String dateDeliberation;
+
+    @Column(name = "nom_geometre")
+    private String nomGeometre;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "issue_bornage")
+    private TypeBornage issueBornage;
+
     @Column(name = "titre_foncier")
     private Boolean titreFoncier;
 
@@ -74,6 +94,7 @@ public class Refcadastrale implements Serializable {
     private Set<Dossier> dossiers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
     public Long getId() {
         return id;
     }
@@ -238,6 +259,71 @@ public class Refcadastrale implements Serializable {
         this.dossiers = dossiers;
     }
 
+    public DependantDomaine getDependantDomaine() {
+        return this.dependantDomaine;
+    }
+
+    public Refcadastrale dependantDomaine(DependantDomaine dependantDomaine) {
+        this.setDependantDomaine(dependantDomaine);
+        return this;
+    }
+
+    public void setDependantDomaine(DependantDomaine dependantDomaine) {
+        this.dependantDomaine = dependantDomaine;
+    }
+
+    public String getNumeroDeliberation() {
+        return this.numeroDeliberation;
+    }
+
+    public Refcadastrale numeroDeliberation(String numeroDeliberation) {
+        this.setNumeroDeliberation(numeroDeliberation);
+        return this;
+    }
+
+    public void setNumeroDeliberation(String numeroDeliberation) {
+        this.numeroDeliberation = numeroDeliberation;
+    }
+
+    public String getDateDeliberation() {
+        return this.dateDeliberation;
+    }
+
+    public Refcadastrale dateDeliberation(String dateDeliberation) {
+        this.setDateDeliberation(dateDeliberation);
+        return this;
+    }
+
+    public void setDateDeliberation(String dateDeliberation) {
+        this.dateDeliberation = dateDeliberation;
+    }
+
+    public String getNomGeometre() {
+        return this.nomGeometre;
+    }
+
+    public Refcadastrale nomGeometre(String nomGeometre) {
+        this.setNomGeometre(nomGeometre);
+        return this;
+    }
+
+    public void setNomGeometre(String nomGeometre) {
+        this.nomGeometre = nomGeometre;
+    }
+
+    public TypeBornage getIssueBornage() {
+        return this.issueBornage;
+    }
+
+    public Refcadastrale issueBornage(TypeBornage issueBornage) {
+        this.setIssueBornage(issueBornage);
+        return this;
+    }
+
+    public void setIssueBornage(TypeBornage issueBornage) {
+        this.issueBornage = issueBornage;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -270,8 +356,11 @@ public class Refcadastrale implements Serializable {
             ", titreCree='" + getTitreCree() + "'" +
             ", numeroRequisition='" + getNumeroRequisition() + "'" +
             ", dateBornage='" + getDateBornage() + "'" +
-            ", titreFoncier='" + getTitreFoncier() + "'" +
-            ", titreNonImatricule='" + getTitreNonImatricule() + "'" +
+            ", dependantDomaine='" + getDependantDomaine() + "'" +
+            ", numeroDeliberation='" + getNumeroDeliberation() + "'" +
+            ", dateDeliberation='" + getDateDeliberation() + "'" +
+            ", nomGeometre='" + getNomGeometre() + "'" +
+            ", issueBornage='" + getIssueBornage() + "'" +
             "}";
     }
 }

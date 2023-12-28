@@ -1,5 +1,9 @@
 {
-  "name": "CategorieCloture",
+  "applications": "*",
+  "changelogDate": "20210728231153",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "categorie_cloture",
   "fields": [
     {
       "fieldName": "libelle",
@@ -10,22 +14,20 @@
       "fieldType": "Double"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "CategorieCloture",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "evaluationCloture",
       "otherEntityRelationshipName": "categoriteCloture",
-      "relationshipName": "evaluationCloture"
+      "relationshipName": "evaluationCloture",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
-  "entityTableName": "categorie_cloture",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231153"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

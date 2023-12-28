@@ -1,5 +1,7 @@
 {
-  "name": "Refcadastrale",
+  "applications": "*",
+  "changelogDate": "20210728231149",
+  "entityTableName": "refcadastrale",
   "fields": [
     {
       "fieldName": "codeSection",
@@ -34,30 +36,29 @@
       "fieldType": "Instant"
     },
     {
-      "fieldName": "titreFoncier",
-      "fieldType": "Boolean"
+      "fieldName": "dependantDomaine",
+      "fieldType": "DependantDomaine",
+      "fieldValues": "DONAIME_NATIONAL,DOMAINE_PUBLIC,DOMAINE_FLUVIAL,DOMAINE_MARITIME"
     },
     {
-      "fieldName": "titreNonImatricule",
-      "fieldType": "Boolean"
-    }
-  ],
-  "relationships": [
+      "fieldName": "numeroDeliberation",
+      "fieldType": "String"
+    },
     {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "dossier",
-      "otherEntityRelationshipName": "refcadastrale",
-      "relationshipName": "dossier"
+      "fieldName": "dateDeliberation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nomGeometre",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "issueBornage",
+      "fieldType": "TypeBornage",
+      "fieldValues": "IMMATRICULATION,MORCELLEMENT,RECTIFICATIF_DE_LIMITES,FUSION"
     }
   ],
-  "entityTableName": "refcadastrale",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231149"
+  "name": "Refcadastrale",
+  "relationships": [],
+  "searchEngine": "no"
 }

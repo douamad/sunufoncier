@@ -1,5 +1,9 @@
 {
-  "name": "EvaluationCloture",
+  "applications": "*",
+  "changelogDate": "20210728231138",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "evaluation_cloture",
   "fields": [
     {
       "fieldName": "lineaire",
@@ -10,28 +14,27 @@
       "fieldType": "Double"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "EvaluationCloture",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "categorieCloture",
       "otherEntityRelationshipName": "evaluationCloture",
-      "relationshipName": "categoriteCloture"
+      "relationshipName": "categoriteCloture",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "dossier",
       "otherEntityRelationshipName": "evaluationCloture",
-      "relationshipName": "dossier"
+      "relationshipName": "dossier",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "evaluation_cloture",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231138"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

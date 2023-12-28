@@ -76,6 +76,21 @@ public class EvaluationClotureResource {
             .body(result);
     }
 
+    @PostMapping("/evaluation-clotures/bulk")
+    public ResponseEntity<List<EvaluationClotureDTO>> createEvaluationClotureList(
+        @RequestBody List<EvaluationClotureDTO> evaluationClotureDTOList
+    ) throws URISyntaxException {
+        log.debug("REST request to save EvaluationCloture : {}", evaluationClotureDTOList);
+        if (evaluationClotureDTOList.isEmpty()) {
+            throw new BadRequestAlertException("La list est vide", ENTITY_NAME, "idexists");
+        }
+        List<EvaluationClotureDTO> resultList = evaluationClotureService.saveBulk(evaluationClotureDTOList);
+        return ResponseEntity
+            .created(new URI("/api/evaluation-clotures/"))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, resultList.toString()))
+            .body(resultList);
+    }
+
     /**
      * {@code PUT  /evaluation-clotures/:id} : Updates an existing evaluationCloture.
      *

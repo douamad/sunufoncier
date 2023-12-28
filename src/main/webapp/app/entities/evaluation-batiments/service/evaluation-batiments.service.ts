@@ -20,6 +20,10 @@ export class EvaluationBatimentsService {
     return this.http.post<IEvaluationBatiments>(this.resourceUrl, evaluationBatiments, { observe: 'response' });
   }
 
+  createBulk(evaluationBatiments: IEvaluationBatiments[]): Observable<EntityArrayResponseType> {
+    return this.http.post<IEvaluationBatiments[]>(`${this.resourceUrl}/bulk`, evaluationBatiments, { observe: 'response' });
+  }
+
   update(evaluationBatiments: IEvaluationBatiments): Observable<EntityResponseType> {
     return this.http.put<IEvaluationBatiments>(
       `${this.resourceUrl}/${getEvaluationBatimentsIdentifier(evaluationBatiments) as number}`,

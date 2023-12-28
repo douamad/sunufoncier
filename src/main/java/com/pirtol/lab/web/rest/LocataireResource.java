@@ -75,6 +75,19 @@ public class LocataireResource {
             .body(result);
     }
 
+    @PostMapping("/locataires/bulk")
+    public ResponseEntity<List<LocataireDTO>> createLocataire(@RequestBody List<LocataireDTO> locataireDTO) throws URISyntaxException {
+        log.debug("REST request to save Locataire : {}", locataireDTO);
+        if (locataireDTO.isEmpty()) {
+            throw new BadRequestAlertException("List LocataireEmpty", ENTITY_NAME, "idexists");
+        }
+        List<LocataireDTO> result = locataireService.saveBulk(locataireDTO);
+        return ResponseEntity
+            .created(new URI("/api/locataires"))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.toString()))
+            .body(result);
+    }
+
     /**
      * {@code PUT  /locataires/:id} : Updates an existing locataire.
      *

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
 import { map } from 'rxjs/operators';
 import * as dayjs from 'dayjs';
 
@@ -14,9 +15,9 @@ export type EntityArrayResponseType = HttpResponse<IRefcadastrale[]>;
 
 @Injectable({ providedIn: 'root' })
 export class RefcadastraleService {
-  public resourceUrl = this.applicationConfigService.getEndpointFor('api/refcadastrales');
+  protected resourceUrl = this.applicationConfigService.getEndpointFor('api/refcadastrales');
 
-  constructor(protected http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
+  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(refcadastrale: IRefcadastrale): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(refcadastrale);

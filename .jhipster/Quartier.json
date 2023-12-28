@@ -1,5 +1,9 @@
 {
-  "name": "Quartier",
+  "applications": "*",
+  "changelogDate": "20210728231144",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "quartier",
   "fields": [
     {
       "fieldName": "code",
@@ -10,28 +14,27 @@
       "fieldType": "String"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Quartier",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "lotissement",
       "otherEntityRelationshipName": "quartier",
-      "relationshipName": "lotissement"
+      "relationshipName": "lotissement",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "commune",
       "otherEntityRelationshipName": "quartier",
-      "relationshipName": "communune"
+      "relationshipName": "communune",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "quartier",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231144"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

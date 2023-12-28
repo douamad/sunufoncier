@@ -1,6 +1,7 @@
 package com.pirtol.lab.service;
 
 import com.pirtol.lab.service.dto.LocataireDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ public interface LocataireService {
      * @return the persisted entity.
      */
     LocataireDTO save(LocataireDTO locataireDTO);
+
+    List<LocataireDTO> saveBulk(List<LocataireDTO> locataireDTO);
 
     /**
      * Partially updates a locataire.

@@ -18,11 +18,13 @@ import com.pirtol.lab.domain.RefParcelaire;
 import com.pirtol.lab.domain.Refcadastrale;
 import com.pirtol.lab.domain.UsageDossier;
 import com.pirtol.lab.repository.DossierRepository;
+import com.pirtol.lab.repository.LotissementRepository;
 import com.pirtol.lab.service.criteria.DossierCriteria;
 import com.pirtol.lab.service.dto.DossierDTO;
 import com.pirtol.lab.service.mapper.DossierMapper;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,6 +81,9 @@ class DossierResourceIT {
     private MockMvc restDossierMockMvc;
 
     private Dossier dossier;
+
+    @Autowired
+    private LotissementRepository lotissementRepository;
 
     /**
      * Create an entity for this test.
@@ -784,8 +789,8 @@ class DossierResourceIT {
         Lotissement dossier = LotissementResourceIT.createEntity(em);
         em.persist(dossier);
         em.flush();
-        dossier.setDossier(dossier);
-        dossierRepository.saveAndFlush(dossier);
+        dossier.setLotissements((Set<Dossier>) dossier);
+        lotissementRepository.saveAndFlush(dossier);
         Long dossierId = dossier.getId();
 
         // Get all the dossierList where dossier equals to dossierId

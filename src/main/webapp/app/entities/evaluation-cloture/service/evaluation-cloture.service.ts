@@ -20,6 +20,10 @@ export class EvaluationClotureService {
     return this.http.post<IEvaluationCloture>(this.resourceUrl, evaluationCloture, { observe: 'response' });
   }
 
+  createBulk(evaluationClotures: IEvaluationCloture[]): Observable<EntityArrayResponseType> {
+    return this.http.post<IEvaluationCloture[]>(`${this.resourceUrl}/bulk`, evaluationClotures, { observe: 'response' });
+  }
+
   update(evaluationCloture: IEvaluationCloture): Observable<EntityResponseType> {
     return this.http.put<IEvaluationCloture>(
       `${this.resourceUrl}/${getEvaluationClotureIdentifier(evaluationCloture) as number}`,

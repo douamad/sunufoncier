@@ -77,6 +77,21 @@ public class EvaluationCoursAmenageResource {
             .body(result);
     }
 
+    @PostMapping("/evaluation-cours-amenages/bulk")
+    public ResponseEntity<List<EvaluationCoursAmenageDTO>> createEvaluationCoursAmenageBulk(
+        @RequestBody List<EvaluationCoursAmenageDTO> evaluationCoursAmenageDTO
+    ) throws URISyntaxException {
+        log.debug("REST request to save EvaluationCoursAmenage : {}", evaluationCoursAmenageDTO);
+        if (evaluationCoursAmenageDTO.isEmpty()) {
+            throw new BadRequestAlertException("Is empty", ENTITY_NAME, "idexists");
+        }
+        List<EvaluationCoursAmenageDTO> result = evaluationCoursAmenageService.saveBulk(evaluationCoursAmenageDTO);
+        return ResponseEntity
+            .created(new URI("/api/evaluation-cours-amenages"))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.toString()))
+            .body(result);
+    }
+
     /**
      * {@code PUT  /evaluation-cours-amenages/:id} : Updates an existing evaluationCoursAmenage.
      *

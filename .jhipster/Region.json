@@ -1,5 +1,9 @@
 {
-  "name": "Region",
+  "applications": "*",
+  "changelogDate": "20210728231140",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "region",
   "fields": [
     {
       "fieldName": "code",
@@ -10,22 +14,20 @@
       "fieldType": "String"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Region",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "departement",
       "otherEntityRelationshipName": "region",
-      "relationshipName": "departement"
+      "relationshipName": "departement",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
-  "entityTableName": "region",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231140"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

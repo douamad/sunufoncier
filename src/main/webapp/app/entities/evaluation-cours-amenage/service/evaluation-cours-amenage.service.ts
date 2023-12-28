@@ -19,6 +19,9 @@ export class EvaluationCoursAmenageService {
   create(evaluationCoursAmenage: IEvaluationCoursAmenage): Observable<EntityResponseType> {
     return this.http.post<IEvaluationCoursAmenage>(this.resourceUrl, evaluationCoursAmenage, { observe: 'response' });
   }
+  createBulk(evaluationCoursAmenage: IEvaluationCoursAmenage[]): Observable<EntityArrayResponseType> {
+    return this.http.post<IEvaluationCoursAmenage[]>(`${this.resourceUrl}/bulk`, evaluationCoursAmenage, { observe: 'response' });
+  }
 
   update(evaluationCoursAmenage: IEvaluationCoursAmenage): Observable<EntityResponseType> {
     return this.http.put<IEvaluationCoursAmenage>(

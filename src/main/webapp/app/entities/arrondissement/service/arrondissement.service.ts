@@ -38,6 +38,11 @@ export class ArrondissementService {
     return this.http.get<IArrondissement>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  queryAll(criteria?: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(null);
+    const c = criteria != null ? criteria : '';
+    return this.http.get<IArrondissement[]>(`${this.resourceUrl}/all/${criteria!}`, { params: options, observe: 'response' });
+  }
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IArrondissement[]>(this.resourceUrl, { params: options, observe: 'response' });

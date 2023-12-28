@@ -1,6 +1,7 @@
 package com.pirtol.lab.service;
 
 import com.pirtol.lab.service.dto.EvaluationClotureDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ public interface EvaluationClotureService {
      * @return the persisted entity.
      */
     EvaluationClotureDTO save(EvaluationClotureDTO evaluationClotureDTO);
+
+    List<EvaluationClotureDTO> saveBulk(List<EvaluationClotureDTO> evaluationClotureDTOList);
 
     /**
      * Partially updates a evaluationCloture.

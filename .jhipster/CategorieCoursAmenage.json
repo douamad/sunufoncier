@@ -1,5 +1,9 @@
 {
-  "name": "CategorieCoursAmenage",
+  "applications": "*",
+  "changelogDate": "20210728231154",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "categorie_cours_amenage",
   "fields": [
     {
       "fieldName": "libelle",
@@ -10,22 +14,20 @@
       "fieldType": "Double"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "CategorieCoursAmenage",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "evaluationCoursAmenage",
       "otherEntityRelationshipName": "categorieCoursAmenage",
-      "relationshipName": "evaluationCoursAmenage"
+      "relationshipName": "evaluationCoursAmenage",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
-  "entityTableName": "categorie_cours_amenage",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231154"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

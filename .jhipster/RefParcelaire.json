@@ -1,5 +1,9 @@
 {
-  "name": "RefParcelaire",
+  "applications": "*",
+  "changelogDate": "20210728231148",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "ref_parcelaire",
   "fields": [
     {
       "fieldName": "numeroParcelle",
@@ -14,28 +18,27 @@
       "fieldType": "Boolean"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "RefParcelaire",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "dossier",
       "otherEntityRelationshipName": "refParcelaire",
-      "relationshipName": "dossier"
+      "relationshipName": "dossier",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "commune",
       "otherEntityRelationshipName": "refParcelaire",
-      "relationshipName": "commune"
+      "relationshipName": "commune",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "ref_parcelaire",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231148"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

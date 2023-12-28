@@ -45,6 +45,10 @@ import { EvaluationBatimentsDeleteDialogComponent } from 'app/entities/evaluatio
 import { EvaluationClotureDeleteDialogComponent } from 'app/entities/evaluation-cloture/delete/evaluation-cloture-delete-dialog.component';
 import { EvaluationCoursAmenageDeleteDialogComponent } from 'app/entities/evaluation-cours-amenage/delete/evaluation-cours-amenage-delete-dialog.component';
 import { EvaluationSurfaceBatieDeleteDialogComponent } from 'app/entities/evaluation-surface-batie/delete/evaluation-surface-batie-delete-dialog.component';
+import { ArrondissementService } from 'app/entities/arrondissement/service/arrondissement.service';
+import { DepartementService } from 'app/entities/departement/service/departement.service';
+import { IDepartement } from 'app/entities/departement/departement.model';
+import { IArrondissement } from 'app/entities/arrondissement/arrondissement.model';
 
 @Component({
   selector: 'jhi-dossier-update',
@@ -64,6 +68,8 @@ export class DossierUpdateComponent implements OnInit {
   refParcelairesSharedCollection: IRefParcelaire[] = [];
   refcadastralesSharedCollection: IRefcadastrale[] = [];
   communesSharedCollection: ICommune[] = [];
+  arrondissementsSharedCollection: IArrondissement[] = [];
+  departementsSharedCollection: IDepartement[] = [];
   categorieBatiesSharedCollection: ICategorieBatie[] = [];
   categorieCoursAmenagesSharedCollection: ICategorieCoursAmenage[] = [];
   categorieCloturesSharedCollection: ICategorieCloture[] = [];
@@ -73,6 +79,11 @@ export class DossierUpdateComponent implements OnInit {
   totalEvalCloture = 0;
   totalEvalCoursAmen = 0;
   totalLocation = 0;
+  proprietaire: any;
+  rc: any;
+  rp: any;
+  rep: any;
+  dossier: any;
   editDossierForm = this.fb.group({
     id: [],
     numero: [],
@@ -117,16 +128,18 @@ export class DossierUpdateComponent implements OnInit {
   });
   editRPForm = this.fb.group({
     id: [],
-    numeroParcelle: [],
+    numeroParcelle: ['', [Validators.pattern('[0-9]{5}')]],
     natureParcelle: [],
     batie: [],
     nue: [],
     commune: [],
+    arrondissement: [],
+    departement: [],
   });
   editRCForm = this.fb.group({
     id: [],
-    codeSection: [],
-    codeParcelle: [],
+    codeSection: ['', [Validators.pattern('[0-9]{3}')]],
+    codeParcelle: ['', [Validators.pattern('[0-9]{5}')]],
     nicad: [],
     superfici: [],
     titreMere: [],
@@ -134,6 +147,10 @@ export class DossierUpdateComponent implements OnInit {
     numeroRequisition: [],
     dateBornage: [],
     titreFoncier: [],
+    dependantDomaine: [],
+    numeroDeliberation: [],
+    dateDeliberation: [],
+    nomGeometre: [],
     titreNonImatricule: [],
   });
   editProprioForm = this.fb.group({
@@ -209,6 +226,8 @@ export class DossierUpdateComponent implements OnInit {
     protected evaluationSurfaceBatieService: EvaluationSurfaceBatieService,
     protected categorieBatieService: CategorieBatieService,
     protected communeService: CommuneService,
+    protected arrondissmentService: ArrondissementService,
+    protected departementService: DepartementService,
     protected locataireService: LocataireService,
     protected modalService: NgbModal,
     protected activatedRoute: ActivatedRoute,
@@ -260,6 +279,13 @@ export class DossierUpdateComponent implements OnInit {
   }
 
   trackCommuneById(index: number, item: ICommune): number {
+    return item.id!;
+  }
+
+  trackArrondissemntById(index: number, item: IArrondissement): number {
+    return item.id!;
+  }
+  trackDepartementById(index: number, item: IDepartement): number {
     return item.id!;
   }
   trackCategorieNatureById(index: number, item: ICategorieNature): number {
@@ -415,6 +441,16 @@ export class DossierUpdateComponent implements OnInit {
     this.editRCForm.get(['nicad'])!.setValue(`${commune}-${section}-${parcelle}`);
   }
 
+  setArrondissement(_departement: string): void {
+    console.warn('_departement');
+    console.warn(_departement);
+    this.loadArrondissementRelationshipOptions(_departement);
+  }
+  setCommune(_arrondissment: string): void {
+    console.warn('_arrondissment');
+    console.warn(_arrondissment);
+    this.loadCommuneRelationshipOptions(_arrondissment);
+  }
   saveLocataire(): void {
     const locataire = this.createLocataireFromForm();
     console.warn(locataire);
@@ -612,18 +648,175 @@ export class DossierUpdateComponent implements OnInit {
     }
   }
 
+  saveDossier(): void {
+    const dossier = new Dossier();
+    dossier.usageDossier = this.editDossierForm.get('usageDossier')!.value;
+    dossier.activite = null;
+    dossier.proprietaire = this.proprietaire;
+    dossier.refcadastrale = this.rc;
+    dossier.refParcelaire = this.rp;
+    dossier.valeurBatie = 0;
+    dossier.valeurLocativ = 0;
+    dossier.valeurVenale = 0;
+    this.subscribeToSaveDossierResponse(this.dossierService.create(dossier));
+    console.warn('dossier saved');
+  }
+  saveAll(): void {
+    for (let i = 0; i < this.evaluationClotures.length; i++) {
+      this.evaluationClotures[i].dossier = this.dossier;
+    }
+    for (let i = 0; i < this.evaluationBatiments.length; i++) {
+      this.evaluationBatiments[i].dossier = this.dossier;
+    }
+    for (let i = 0; i < this.evaluationCoursAmenages.length; i++) {
+      this.evaluationCoursAmenages[i].dossier = this.dossier;
+    }
+    for (let i = 0; i < this.locataires.length; i++) {
+      this.locataires[i].dossier = this.dossier;
+    }
+    if (this.evaluationClotures.length > 0) {
+      this.subscribeToSaveECResponse(this.evaluationClotureService.createBulk(this.evaluationClotures));
+    }
+    if (this.evaluationBatiments.length > 0) {
+      this.subscribeToSaveEBResponse(this.evaluationBatimentsService.createBulk(this.evaluationBatiments));
+    }
+    if (this.evaluationCoursAmenages.length > 0) {
+      this.subscribeToSaveECAResponse(this.evaluationCoursAmenageService.createBulk(this.evaluationCoursAmenages));
+    }
+    if (this.locataires.length > 0) {
+      this.subscribeToSaveLocResponse(this.locataireService.createBulk(this.locataires));
+    }
+    console.warn('saved');
+  }
+  saveRC(): void {
+    const rc = this.createRCFromForm();
+    this.subscribeToSaveRCResponse(this.refcadastraleService.create(rc));
+  }
+  saveRP(): void {
+    const rp = this.createRPFromForm();
+    this.subscribeToSaveRPResponse(this.refParcelaireService.create(rp));
+  }
+
+  saveProprietaire(): void {
+    const proprio = this.createProprioFromForm();
+    this.subscribeToSaveProResponse(this.proprietaireService.create(proprio));
+  }
+
+  saveRepresantant(): void {
+    const rep = this.createProprioFromForm();
+    this.subscribeToSaveRepResponse(this.proprietaireService.create(rep));
+  }
+
+  protected subscribeToSaveECResponse(result: Observable<HttpResponse<IEvaluationCloture[]>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      r => this.onSaveAllSuccess(r),
+      () => this.onSaveAllError()
+    );
+  }
+  protected subscribeToSaveEBResponse(result: Observable<HttpResponse<IEvaluationBatiments[]>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      r => this.onSaveAllSuccess(r),
+      () => this.onSaveAllError()
+    );
+  }
+  protected subscribeToSaveECAResponse(result: Observable<HttpResponse<IEvaluationCoursAmenage[]>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      r => this.onSaveAllSuccess(r),
+      () => this.onSaveAllError()
+    );
+  }
+  protected subscribeToSaveLocResponse(result: Observable<HttpResponse<ILocataire[]>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      r => this.onSaveAllSuccess(r),
+      () => this.onSaveAllError()
+    );
+  }
+  protected subscribeToSaveProResponse(result: Observable<HttpResponse<IProprietaire>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      r => this.onSaveProprioSuccess(r),
+      () => this.onSaveError()
+    );
+  }
+
+  protected subscribeToSaveRepResponse(result: Observable<HttpResponse<IRepresentant>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      r => this.onSaveProprioSuccess(r),
+      () => this.onSaveError()
+    );
+  }
+
+  protected subscribeToSaveRPResponse(result: Observable<HttpResponse<IRefParcelaire>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      r => this.onSaveRPSuccess(r),
+      () => this.onSaveError()
+    );
+  }
+
+  protected subscribeToSaveRCResponse(result: Observable<HttpResponse<IRefcadastrale>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      r => this.onSaveRCSuccess(r),
+      () => this.onSaveError()
+    );
+  }
+
+  protected subscribeToSaveESBResponse(result: Observable<HttpResponse<IEvaluationSurfaceBatie>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
+  }
+  protected subscribeToSaveDossierResponse(result: Observable<HttpResponse<IEvaluationSurfaceBatie>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      r => this.onSaveDossierSuccess(r),
+      () => this.onSaveError()
+    );
+  }
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IDossier>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
       () => this.onSaveError()
     );
   }
-
   protected onSaveSuccess(): void {
     this.previousState();
   }
 
   protected onSaveError(): void {
+    // Api for inheritance.
+  }
+  protected onSaveAllSuccess(result: any): void {
+    console.warn(result);
+  }
+  protected onSaveRCSuccess(result: any): void {
+    console.warn(result.body);
+    if (result.body.id) {
+      this.rc = result.body;
+    }
+    this.saveRP();
+  }
+  protected onSaveRPSuccess(result: any): void {
+    console.warn(result.body);
+    if (result.body.id) {
+      this.rp = result.body;
+    }
+    this.saveProprietaire();
+  }
+  protected onSaveProprioSuccess(result: any): void {
+    console.warn(result.body);
+    if (result.body.id) {
+      this.proprietaire = result.body;
+    }
+    this.saveDossier();
+  }
+  protected onSaveDossierSuccess(result: any): void {
+    console.warn(result.body);
+    if (result.body.id) {
+      this.dossier = result.body;
+    }
+    this.saveAll();
+  }
+
+  protected onSaveAllError(): void {
     // Api for inheritance.
   }
 
@@ -708,7 +901,6 @@ export class DossierUpdateComponent implements OnInit {
         )
       )
       .subscribe((refParcelaires: IRefParcelaire[]) => (this.refParcelairesSharedCollection = refParcelaires));
-
     this.refcadastraleService
       .query()
       .pipe(map((res: HttpResponse<IRefcadastrale[]>) => res.body ?? []))
@@ -718,13 +910,10 @@ export class DossierUpdateComponent implements OnInit {
         )
       )
       .subscribe((refcadastrales: IRefcadastrale[]) => (this.refcadastralesSharedCollection = refcadastrales));
-    this.communeService
-      .queryAll()
-      .pipe(map((res: HttpResponse<ICommune[]>) => res.body ?? []))
-      .pipe(
-        map((communes: ICommune[]) => this.communeService.addCommuneToCollectionIfMissing(communes, this.editRPForm.get('commune')!.value))
-      )
-      .subscribe((communes: ICommune[]) => (this.communesSharedCollection = communes));
+
+    this.loadDepartementRelationshipOptions('12');
+    this.loadArrondissementRelationshipOptions('4,5,6');
+    this.loadCommuneRelationshipOptions('10,12,11,13,14,15,16,17,18');
     this.loadLocataires();
     this.loadEB();
     this.loadEC();
@@ -734,6 +923,44 @@ export class DossierUpdateComponent implements OnInit {
     this.loadECARelationshipsOptions();
     this.loadECRelationshipsOptions();
     this.loadESBRelationshipsOptions();
+  }
+
+  protected loadCommuneRelationshipOptions(arrondissement?: any): void {
+    const req = arrondissement != null ? { 'arrondissementId.in': arrondissement } : null;
+    this.communeService
+      .queryAll(req)
+      .pipe(map((res: HttpResponse<ICommune[]>) => res.body ?? []))
+      .pipe(
+        map((communes: ICommune[]) => this.communeService.addCommuneToCollectionIfMissing(communes, this.editRPForm.get('commune')!.value))
+      )
+      .subscribe((communes: ICommune[]) => (this.communesSharedCollection = communes));
+  }
+  protected loadArrondissementRelationshipOptions(departementId?: string): void {
+    const criteria = departementId != null ? `?departementId.in=${departementId}` : 'null';
+    console.warn(criteria);
+    this.arrondissmentService
+      .queryAll(criteria)
+      .pipe(map((res: HttpResponse<IArrondissement[]>) => res.body ?? []))
+      .pipe(
+        map((arrondissements: IArrondissement[]) =>
+          this.arrondissmentService.addArrondissementToCollectionIfMissing(arrondissements, this.editRPForm.get('arrondissement')!.value)
+        )
+      )
+      .subscribe((arrondissements: IArrondissement[]) => (this.arrondissementsSharedCollection = arrondissements));
+    console.warn(this.arrondissementsSharedCollection);
+  }
+
+  protected loadDepartementRelationshipOptions(region?: any): void {
+    const req = region != null ? { 'regionId.equals': region } : null;
+    this.departementService
+      .query(req)
+      .pipe(map((res: HttpResponse<IDepartement[]>) => res.body ?? []))
+      .pipe(
+        map((departements: IDepartement[]) =>
+          this.departementService.addDepartementToCollectionIfMissing(departements, this.editRPForm.get('departement')!.value)
+        )
+      )
+      .subscribe((departements: IDepartement[]) => (this.departementsSharedCollection = departements));
   }
   protected loadEBRelationshipsOptions(): void {
     this.categorieNatureService
@@ -895,7 +1122,7 @@ export class DossierUpdateComponent implements OnInit {
       numeroParcelle: refParcelaire.numeroParcelle,
       natureParcelle: refParcelaire.natureParcelle,
       batie: refParcelaire.batie,
-      commune: refParcelaire.commune,
+      departement: refParcelaire.departement,
     });
   }
   protected createRPFromForm(): IRefParcelaire {
@@ -904,8 +1131,10 @@ export class DossierUpdateComponent implements OnInit {
       id: this.editRPForm.get(['id'])!.value,
       numeroParcelle: this.editRPForm.get(['numeroParcelle'])!.value,
       natureParcelle: this.editRPForm.get(['natureParcelle'])!.value,
-      batie: this.editDossierForm.get(['batie'])!.value,
+      batie: this.editRPForm.get(['batie'])!.value,
       commune: this.editRPForm.get(['commune'])!.value,
+      arrondissement: this.editRPForm.get(['arrondissement'])!.value,
+      departement: this.editRPForm.get(['departement'])!.value,
     };
   }
   protected updateRCForm(refcadastrale: IRefcadastrale): void {
@@ -919,6 +1148,10 @@ export class DossierUpdateComponent implements OnInit {
       titreCree: refcadastrale.titreCree,
       titreNonImatricule: refcadastrale.titreNonImatricule,
       titreFoncier: refcadastrale.titreFoncier,
+      dependantDomaine: refcadastrale.dependantDomaine,
+      nomGeometre: refcadastrale.nomGeometre,
+      issueBornage: refcadastrale.issueBornage,
+      dateDeliberation: refcadastrale.dateDeliberation,
       numeroRequisition: refcadastrale.numeroRequisition,
       dateBornage: refcadastrale.dateBornage ? refcadastrale.dateBornage.format(DATE_TIME_FORMAT) : null,
     });
@@ -937,6 +1170,11 @@ export class DossierUpdateComponent implements OnInit {
       numeroRequisition: this.editRCForm.get(['numeroRequisition'])!.value,
       titreNonImatricule: this.editRCForm.get(['titreNonImatricule'])!.value,
       titreFoncier: this.editRCForm.get(['titreFoncier'])!.value,
+      dependantDomaine: this.editRCForm.get(['dependantDomaine'])!.value,
+      nomGeometre: this.editRCForm.get(['nomGeometre'])!.value,
+      dateDeliberation: this.editRCForm.get(['dateDeliberation'])!.value,
+      issueBornage: this.editRCForm.get(['issueBornage'])!.value,
+      numeroDeliberation: this.editRCForm.get(['numeroDeliberation'])!.value,
       dateBornage: this.editRCForm.get(['dateBornage'])!.value
         ? dayjs(this.editRCForm.get(['dateBornage'])!.value, DATE_TIME_FORMAT)
         : undefined,

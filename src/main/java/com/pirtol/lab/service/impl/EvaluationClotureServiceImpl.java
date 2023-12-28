@@ -5,7 +5,9 @@ import com.pirtol.lab.repository.EvaluationClotureRepository;
 import com.pirtol.lab.service.EvaluationClotureService;
 import com.pirtol.lab.service.dto.EvaluationClotureDTO;
 import com.pirtol.lab.service.mapper.EvaluationClotureMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -40,6 +42,11 @@ public class EvaluationClotureServiceImpl implements EvaluationClotureService {
         EvaluationCloture evaluationCloture = evaluationClotureMapper.toEntity(evaluationClotureDTO);
         evaluationCloture = evaluationClotureRepository.save(evaluationCloture);
         return evaluationClotureMapper.toDto(evaluationCloture);
+    }
+
+    @Override
+    public List<EvaluationClotureDTO> saveBulk(List<EvaluationClotureDTO> evaluationClotureDTOList) {
+        return evaluationClotureDTOList.stream().map(this::save).collect(Collectors.toList());
     }
 
     @Override

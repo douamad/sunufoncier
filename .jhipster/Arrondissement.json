@@ -1,5 +1,9 @@
 {
-  "name": "Arrondissement",
+  "applications": "*",
+  "changelogDate": "20210728231142",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "arrondissement",
   "fields": [
     {
       "fieldName": "code",
@@ -10,28 +14,27 @@
       "fieldType": "String"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Arrondissement",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "commune",
       "otherEntityRelationshipName": "arrondissement",
-      "relationshipName": "commune"
+      "relationshipName": "commune",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "departement",
       "otherEntityRelationshipName": "arrondissement",
-      "relationshipName": "departement"
+      "relationshipName": "departement",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "arrondissement",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231142"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

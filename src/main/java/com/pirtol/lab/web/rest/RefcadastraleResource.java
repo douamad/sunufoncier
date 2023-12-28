@@ -1,10 +1,7 @@
 package com.pirtol.lab.web.rest;
 
+import com.pirtol.lab.domain.Refcadastrale;
 import com.pirtol.lab.repository.RefcadastraleRepository;
-import com.pirtol.lab.service.RefcadastraleQueryService;
-import com.pirtol.lab.service.RefcadastraleService;
-import com.pirtol.lab.service.criteria.RefcadastraleCriteria;
-import com.pirtol.lab.service.dto.RefcadastraleDTO;
 import com.pirtol.lab.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,15 +11,10 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -30,6 +22,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
+@Transactional
 public class RefcadastraleResource {
 
     private final Logger log = LoggerFactory.getLogger(RefcadastraleResource.class);
@@ -39,36 +32,26 @@ public class RefcadastraleResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final RefcadastraleService refcadastraleService;
-
     private final RefcadastraleRepository refcadastraleRepository;
 
-    private final RefcadastraleQueryService refcadastraleQueryService;
-
-    public RefcadastraleResource(
-        RefcadastraleService refcadastraleService,
-        RefcadastraleRepository refcadastraleRepository,
-        RefcadastraleQueryService refcadastraleQueryService
-    ) {
-        this.refcadastraleService = refcadastraleService;
+    public RefcadastraleResource(RefcadastraleRepository refcadastraleRepository) {
         this.refcadastraleRepository = refcadastraleRepository;
-        this.refcadastraleQueryService = refcadastraleQueryService;
     }
 
     /**
      * {@code POST  /refcadastrales} : Create a new refcadastrale.
      *
-     * @param refcadastraleDTO the refcadastraleDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new refcadastraleDTO, or with status {@code 400 (Bad Request)} if the refcadastrale has already an ID.
+     * @param refcadastrale the refcadastrale to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new refcadastrale, or with status {@code 400 (Bad Request)} if the refcadastrale has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/refcadastrales")
-    public ResponseEntity<RefcadastraleDTO> createRefcadastrale(@RequestBody RefcadastraleDTO refcadastraleDTO) throws URISyntaxException {
-        log.debug("REST request to save Refcadastrale : {}", refcadastraleDTO);
-        if (refcadastraleDTO.getId() != null) {
+    public ResponseEntity<Refcadastrale> createRefcadastrale(@RequestBody Refcadastrale refcadastrale) throws URISyntaxException {
+        log.debug("REST request to save Refcadastrale : {}", refcadastrale);
+        if (refcadastrale.getId() != null) {
             throw new BadRequestAlertException("A new refcadastrale cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        RefcadastraleDTO result = refcadastraleService.save(refcadastraleDTO);
+        Refcadastrale result = refcadastraleRepository.save(refcadastrale);
         return ResponseEntity
             .created(new URI("/api/refcadastrales/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -78,23 +61,23 @@ public class RefcadastraleResource {
     /**
      * {@code PUT  /refcadastrales/:id} : Updates an existing refcadastrale.
      *
-     * @param id the id of the refcadastraleDTO to save.
-     * @param refcadastraleDTO the refcadastraleDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated refcadastraleDTO,
-     * or with status {@code 400 (Bad Request)} if the refcadastraleDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the refcadastraleDTO couldn't be updated.
+     * @param id the id of the refcadastrale to save.
+     * @param refcadastrale the refcadastrale to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated refcadastrale,
+     * or with status {@code 400 (Bad Request)} if the refcadastrale is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the refcadastrale couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/refcadastrales/{id}")
-    public ResponseEntity<RefcadastraleDTO> updateRefcadastrale(
+    public ResponseEntity<Refcadastrale> updateRefcadastrale(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody RefcadastraleDTO refcadastraleDTO
+        @RequestBody Refcadastrale refcadastrale
     ) throws URISyntaxException {
-        log.debug("REST request to update Refcadastrale : {}, {}", id, refcadastraleDTO);
-        if (refcadastraleDTO.getId() == null) {
+        log.debug("REST request to update Refcadastrale : {}, {}", id, refcadastrale);
+        if (refcadastrale.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, refcadastraleDTO.getId())) {
+        if (!Objects.equals(id, refcadastrale.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -102,34 +85,34 @@ public class RefcadastraleResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        RefcadastraleDTO result = refcadastraleService.save(refcadastraleDTO);
+        Refcadastrale result = refcadastraleRepository.save(refcadastrale);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, refcadastraleDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, refcadastrale.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /refcadastrales/:id} : Partial updates given fields of an existing refcadastrale, field will ignore if it is null
      *
-     * @param id the id of the refcadastraleDTO to save.
-     * @param refcadastraleDTO the refcadastraleDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated refcadastraleDTO,
-     * or with status {@code 400 (Bad Request)} if the refcadastraleDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the refcadastraleDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the refcadastraleDTO couldn't be updated.
+     * @param id the id of the refcadastrale to save.
+     * @param refcadastrale the refcadastrale to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated refcadastrale,
+     * or with status {@code 400 (Bad Request)} if the refcadastrale is not valid,
+     * or with status {@code 404 (Not Found)} if the refcadastrale is not found,
+     * or with status {@code 500 (Internal Server Error)} if the refcadastrale couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/refcadastrales/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<RefcadastraleDTO> partialUpdateRefcadastrale(
+    @PatchMapping(value = "/refcadastrales/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    public ResponseEntity<Refcadastrale> partialUpdateRefcadastrale(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody RefcadastraleDTO refcadastraleDTO
+        @RequestBody Refcadastrale refcadastrale
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Refcadastrale partially : {}, {}", id, refcadastraleDTO);
-        if (refcadastraleDTO.getId() == null) {
+        log.debug("REST request to partial update Refcadastrale partially : {}, {}", id, refcadastrale);
+        if (refcadastrale.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, refcadastraleDTO.getId())) {
+        if (!Objects.equals(id, refcadastrale.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -137,64 +120,95 @@ public class RefcadastraleResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<RefcadastraleDTO> result = refcadastraleService.partialUpdate(refcadastraleDTO);
+        Optional<Refcadastrale> result = refcadastraleRepository
+            .findById(refcadastrale.getId())
+            .map(
+                existingRefcadastrale -> {
+                    if (refcadastrale.getCodeSection() != null) {
+                        existingRefcadastrale.setCodeSection(refcadastrale.getCodeSection());
+                    }
+                    if (refcadastrale.getCodeParcelle() != null) {
+                        existingRefcadastrale.setCodeParcelle(refcadastrale.getCodeParcelle());
+                    }
+                    if (refcadastrale.getNicad() != null) {
+                        existingRefcadastrale.setNicad(refcadastrale.getNicad());
+                    }
+                    if (refcadastrale.getSuperfici() != null) {
+                        existingRefcadastrale.setSuperfici(refcadastrale.getSuperfici());
+                    }
+                    if (refcadastrale.getTitreMere() != null) {
+                        existingRefcadastrale.setTitreMere(refcadastrale.getTitreMere());
+                    }
+                    if (refcadastrale.getTitreCree() != null) {
+                        existingRefcadastrale.setTitreCree(refcadastrale.getTitreCree());
+                    }
+                    if (refcadastrale.getNumeroRequisition() != null) {
+                        existingRefcadastrale.setNumeroRequisition(refcadastrale.getNumeroRequisition());
+                    }
+                    if (refcadastrale.getDateBornage() != null) {
+                        existingRefcadastrale.setDateBornage(refcadastrale.getDateBornage());
+                    }
+                    if (refcadastrale.getDependantDomaine() != null) {
+                        existingRefcadastrale.setDependantDomaine(refcadastrale.getDependantDomaine());
+                    }
+                    if (refcadastrale.getNumeroDeliberation() != null) {
+                        existingRefcadastrale.setNumeroDeliberation(refcadastrale.getNumeroDeliberation());
+                    }
+                    if (refcadastrale.getDateDeliberation() != null) {
+                        existingRefcadastrale.setDateDeliberation(refcadastrale.getDateDeliberation());
+                    }
+                    if (refcadastrale.getNomGeometre() != null) {
+                        existingRefcadastrale.setNomGeometre(refcadastrale.getNomGeometre());
+                    }
+                    if (refcadastrale.getIssueBornage() != null) {
+                        existingRefcadastrale.setIssueBornage(refcadastrale.getIssueBornage());
+                    }
+
+                    return existingRefcadastrale;
+                }
+            )
+            .map(refcadastraleRepository::save);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, refcadastraleDTO.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, refcadastrale.getId().toString())
         );
     }
 
     /**
      * {@code GET  /refcadastrales} : get all the refcadastrales.
      *
-     * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of refcadastrales in body.
      */
     @GetMapping("/refcadastrales")
-    public ResponseEntity<List<RefcadastraleDTO>> getAllRefcadastrales(RefcadastraleCriteria criteria, Pageable pageable) {
-        log.debug("REST request to get Refcadastrales by criteria: {}", criteria);
-        Page<RefcadastraleDTO> page = refcadastraleQueryService.findByCriteria(criteria, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    /**
-     * {@code GET  /refcadastrales/count} : count all the refcadastrales.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/refcadastrales/count")
-    public ResponseEntity<Long> countRefcadastrales(RefcadastraleCriteria criteria) {
-        log.debug("REST request to count Refcadastrales by criteria: {}", criteria);
-        return ResponseEntity.ok().body(refcadastraleQueryService.countByCriteria(criteria));
+    public List<Refcadastrale> getAllRefcadastrales() {
+        log.debug("REST request to get all Refcadastrales");
+        return refcadastraleRepository.findAll();
     }
 
     /**
      * {@code GET  /refcadastrales/:id} : get the "id" refcadastrale.
      *
-     * @param id the id of the refcadastraleDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the refcadastraleDTO, or with status {@code 404 (Not Found)}.
+     * @param id the id of the refcadastrale to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the refcadastrale, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/refcadastrales/{id}")
-    public ResponseEntity<RefcadastraleDTO> getRefcadastrale(@PathVariable Long id) {
+    public ResponseEntity<Refcadastrale> getRefcadastrale(@PathVariable Long id) {
         log.debug("REST request to get Refcadastrale : {}", id);
-        Optional<RefcadastraleDTO> refcadastraleDTO = refcadastraleService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(refcadastraleDTO);
+        Optional<Refcadastrale> refcadastrale = refcadastraleRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(refcadastrale);
     }
 
     /**
      * {@code DELETE  /refcadastrales/:id} : delete the "id" refcadastrale.
      *
-     * @param id the id of the refcadastraleDTO to delete.
+     * @param id the id of the refcadastrale to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/refcadastrales/{id}")
     public ResponseEntity<Void> deleteRefcadastrale(@PathVariable Long id) {
         log.debug("REST request to delete Refcadastrale : {}", id);
-        refcadastraleService.delete(id);
+        refcadastraleRepository.deleteById(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

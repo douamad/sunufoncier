@@ -1,5 +1,9 @@
 {
-  "name": "UsageDossier",
+  "applications": "*",
+  "changelogDate": "20210728231147",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "usage_dossier",
   "fields": [
     {
       "fieldName": "code",
@@ -10,22 +14,20 @@
       "fieldType": "String"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "UsageDossier",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "dossier",
       "otherEntityRelationshipName": "usageDossier",
-      "relationshipName": "dossier"
+      "relationshipName": "dossier",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
-  "entityTableName": "usage_dossier",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231147"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

@@ -1,6 +1,7 @@
 package com.pirtol.lab.service;
 
 import com.pirtol.lab.service.dto.EvaluationBatimentsDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ public interface EvaluationBatimentsService {
      * @return the persisted entity.
      */
     EvaluationBatimentsDTO save(EvaluationBatimentsDTO evaluationBatimentsDTO);
+
+    List<EvaluationBatimentsDTO> saveBulk(List<EvaluationBatimentsDTO> evaluationBatimentsDTOList);
 
     /**
      * Partially updates a evaluationBatiments.

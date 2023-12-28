@@ -1,5 +1,9 @@
 {
-  "name": "Departement",
+  "applications": "*",
+  "changelogDate": "20210728231141",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "departement",
   "fields": [
     {
       "fieldName": "code",
@@ -10,28 +14,27 @@
       "fieldType": "String"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Departement",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "arrondissement",
       "otherEntityRelationshipName": "departement",
-      "relationshipName": "arrondissement"
+      "relationshipName": "arrondissement",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "region",
       "otherEntityRelationshipName": "departement",
-      "relationshipName": "region"
+      "relationshipName": "region",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "departement",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231141"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

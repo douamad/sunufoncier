@@ -1,5 +1,9 @@
 {
-  "name": "Commune",
+  "applications": "*",
+  "changelogDate": "20210728231143",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "commune",
   "fields": [
     {
       "fieldName": "code",
@@ -10,34 +14,34 @@
       "fieldType": "String"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Commune",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "quartier",
       "otherEntityRelationshipName": "communune",
-      "relationshipName": "quartier"
+      "relationshipName": "quartier",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "arrondissement",
       "otherEntityRelationshipName": "commune",
-      "relationshipName": "arrondissement"
+      "relationshipName": "arrondissement",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     },
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "refParcelaire",
       "otherEntityRelationshipName": "commune",
-      "relationshipName": "refParcelaire"
+      "relationshipName": "refParcelaire",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
-  "entityTableName": "commune",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231143"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

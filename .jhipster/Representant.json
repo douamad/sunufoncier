@@ -1,5 +1,9 @@
 {
-  "name": "Representant",
+  "applications": "*",
+  "changelogDate": "20210728231151",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "representant",
   "fields": [
     {
       "fieldName": "prenom",
@@ -79,22 +83,20 @@
       "fieldValues": "ENTREPRISE_INDIVIDUEL,SURL,GIE,SA,SARL,SNC,SCS,ASSOCIATION,ONG,ORG_GOUV"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Representant",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "proprietaire",
       "otherEntityRelationshipName": "representant",
-      "relationshipName": "proprietaire"
+      "relationshipName": "proprietaire",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "representant",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231151"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

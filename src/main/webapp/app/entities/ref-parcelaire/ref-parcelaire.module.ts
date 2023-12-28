@@ -6,10 +6,17 @@ import { RefParcelaireDetailComponent } from './detail/ref-parcelaire-detail.com
 import { RefParcelaireUpdateComponent } from './update/ref-parcelaire-update.component';
 import { RefParcelaireDeleteDialogComponent } from './delete/ref-parcelaire-delete-dialog.component';
 import { RefParcelaireRoutingModule } from './route/ref-parcelaire-routing.module';
+import { RefcadastraleUpdateComponent } from 'app/entities/refcadastrale/update/refcadastrale-update.component';
 
 @NgModule({
   imports: [SharedModule, RefParcelaireRoutingModule],
-  declarations: [RefParcelaireComponent, RefParcelaireDetailComponent, RefParcelaireUpdateComponent, RefParcelaireDeleteDialogComponent],
+  declarations: [
+    RefcadastraleUpdateComponent,
+    RefParcelaireComponent,
+    RefParcelaireDetailComponent,
+    RefParcelaireUpdateComponent,
+    RefParcelaireDeleteDialogComponent,
+  ],
   entryComponents: [RefParcelaireDeleteDialogComponent],
 })
 export class RefParcelaireModule {}

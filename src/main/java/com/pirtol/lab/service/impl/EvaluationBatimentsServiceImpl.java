@@ -5,7 +5,9 @@ import com.pirtol.lab.repository.EvaluationBatimentsRepository;
 import com.pirtol.lab.service.EvaluationBatimentsService;
 import com.pirtol.lab.service.dto.EvaluationBatimentsDTO;
 import com.pirtol.lab.service.mapper.EvaluationBatimentsMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -40,6 +42,11 @@ public class EvaluationBatimentsServiceImpl implements EvaluationBatimentsServic
         EvaluationBatiments evaluationBatiments = evaluationBatimentsMapper.toEntity(evaluationBatimentsDTO);
         evaluationBatiments = evaluationBatimentsRepository.save(evaluationBatiments);
         return evaluationBatimentsMapper.toDto(evaluationBatiments);
+    }
+
+    @Override
+    public List<EvaluationBatimentsDTO> saveBulk(List<EvaluationBatimentsDTO> evaluationBatimentsDTOList) {
+        return evaluationBatimentsDTOList.stream().map(this::save).collect(Collectors.toList());
     }
 
     @Override

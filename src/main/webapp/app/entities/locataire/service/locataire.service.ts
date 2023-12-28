@@ -19,6 +19,9 @@ export class LocataireService {
   create(locataire: ILocataire): Observable<EntityResponseType> {
     return this.http.post<ILocataire>(this.resourceUrl, locataire, { observe: 'response' });
   }
+  createBulk(locataire: ILocataire[]): Observable<EntityArrayResponseType> {
+    return this.http.post<ILocataire[]>(`${this.resourceUrl}/bulk`, locataire, { observe: 'response' });
+  }
 
   update(locataire: ILocataire): Observable<EntityResponseType> {
     return this.http.put<ILocataire>(`${this.resourceUrl}/${getLocataireIdentifier(locataire) as number}`, locataire, {

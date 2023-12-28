@@ -4,6 +4,48 @@
     <form (ngSubmit)="save()" [formGroup]="editRPForm" name="editRPForm" novalidate role="form">
       <div class="row">
         <div class="form-group col-4">
+          <label class="form-control-label" for="field_rp_commune">Département</label>
+          <select
+            #departementSelected
+            (change)="setArrondissement(departementSelected.value)"
+            class="form-control"
+            data-cy="departement"
+            formControlName="departement"
+            id="field_rp_departement"
+            name="departement"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              *ngFor="let departementOption of departementsSharedCollection; trackBy: trackDepartementById"
+              [ngValue]="departementOption.id"
+              [value]="departementOption.id"
+            >
+              {{ departementOption.libelle }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-4">
+          <label class="form-control-label" for="field_rp_commune">Arrondissement</label>
+          <select
+            #arrondissementSelected
+            (change)="setCommune(arrondissementSelected.value)"
+            class="form-control"
+            data-cy="arrondissement"
+            formControlName="arrondissement"
+            id="field_rp_arrondissement"
+            name="arrondissement"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              *ngFor="let arrondissementOption of arrondissementsSharedCollection; trackBy: trackArrondissemntById"
+              [ngValue]="arrondissementOption.id"
+              [value]="arrondissementOption.id"
+            >
+              {{ arrondissementOption.libelle }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group col-4">
           <label class="form-control-label" for="field_rp_commune">Commune</label>
           <select
             (input)="setNicad()"
@@ -19,7 +61,8 @@
             </option>
           </select>
         </div>
-
+      </div>
+      <div class="row">
         <div class="form-group col-4">
           <label class="form-control-label" for="field_rp_natureParcelle">Localisation</label>
           <input
@@ -40,6 +83,7 @@
             id="field_rp_numeroParcelle"
             name="numeroParcelle"
             type="text"
+            minlength="5"
           />
         </div>
         <div class="form-group col-1">
@@ -82,7 +126,8 @@
             formControlName="codeSection"
             id="field_rc_codeSection"
             name="codeSection"
-            type="text"
+            type="number"
+            maxlength="3"
           />
         </div>
 
@@ -95,7 +140,8 @@
             formControlName="codeParcelle"
             id="field_rc_codeParcelle"
             name="codeParcelle"
-            type="text"
+            type="number"
+            maxlength="5"
           />
         </div>
 
@@ -117,8 +163,8 @@
         </div>
       </div>
       <div class="row">
-        <div class="form-group col-1">
-          <label class="form-control-label" for="field_rp_tni">TNI</label>
+        <div class="form-group col-6">
+          <label class="form-control-label" for="field_rp_tni">Terrain Non Immatriculé</label>
           <input
             class="form-check"
             data-cy="titreNonImatricule"
@@ -129,8 +175,8 @@
             type="checkbox"
           />
         </div>
-        <div class="form-group col-1">
-          <label class="form-control-label" for="field_rp_tf">TF</label>
+        <div class="form-group col-6">
+          <label class="form-control-label" for="field_rp_tf">Terrain Immatriculé</label>
           <input
             class="form-check"
             data-cy="titreFoncier"
@@ -141,7 +187,46 @@
             type="checkbox"
           />
         </div>
-        <div class="form-group col-3">
+        <div class="form-group col-4" *ngIf="editRCForm.get('titreFoncier')!.value == false">
+          <label class="form-control-label" for="field_dependantDomaine">Dependant Domaine</label>
+          <select
+            class="form-control"
+            name="dependantDomaine"
+            formControlName="dependantDomaine"
+            id="field_dependantDomaine"
+            data-cy="dependantDomaine"
+          >
+            <option [ngValue]="null"></option>
+            <option value="DONAIME_NATIONAL">DONAIME NATIONAL</option>
+            <option value="DOMAINE_PUBLIC">DOMAINE PUBLIC</option>
+            <option value="DOMAINE_FLUVIAL">DOMAINE FLUVIAL</option>
+            <option value="DOMAINE_MARITIME">DOMAINE MARITIME</option>
+          </select>
+        </div>
+
+        <div class="form-group col-4" *ngIf="editRCForm.get('titreFoncier')!.value == true">
+          <label class="form-control-label" for="field_rc_titreCree">Titre Foncier N°</label>
+          <input
+            class="form-control"
+            data-cy="titreCree"
+            formControlName="titreCree"
+            id="field_rc_titreCree"
+            name="titreCree"
+            type="text"
+          />
+        </div>
+        <div class="form-group col-4" *ngIf="editRCForm.get('titreFoncier')!.value == true">
+          <label class="form-control-label" for="field_rc_titreMere">Titre Mere</label>
+          <input
+            class="form-control"
+            data-cy="titreMere"
+            formControlName="titreMere"
+            id="field_rc_titreMere"
+            name="titreMere"
+            type="text"
+          />
+        </div>
+        <div class="form-group col-4" *ngIf="editRCForm.get('titreFoncier')!.value == true">
           <label class="form-control-label" for="field_rc_numeroRequisition">N° Requisition</label>
           <input
             class="form-control"
@@ -152,7 +237,47 @@
             type="text"
           />
         </div>
-        <div class="form-group col-3">
+        <div class="form-group col-4" *ngIf="editRCForm.get('titreFoncier')!.value == true">
+          <label class="form-control-label" jhiTranslate="sunufoncierApp.refcadastrale.issueBornage" for="field_issueBornage"
+            >Issue Bornage</label
+          >
+          <select class="form-control" name="issueBornage" formControlName="issueBornage" id="field_issueBornage" data-cy="issueBornage">
+            <option [ngValue]="null"></option>
+            <option value="IMMATRICULATION">IMMATRICULATION</option>
+            <option value="MORCELLEMENT">MORCELLEMENT</option>
+            <option value="RECTIFICATIF_DE_LIMITES">RECTIFICATIF DE LIMITES</option>
+            <option value="FUSION">FUSION</option>
+          </select>
+        </div>
+
+        <div class="form-group col-3" *ngIf="editRCForm.get('titreFoncier')!.value == false">
+          <label class="form-control-label" jhiTranslate="sunufoncierApp.refcadastrale.numeroDeliberation" for="field_numeroDeliberation"
+            >Numero Deliberation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="numeroDeliberation"
+            id="field_numeroDeliberation"
+            data-cy="numeroDeliberation"
+            formControlName="numeroDeliberation"
+          />
+        </div>
+        <div class="form-group col-3" *ngIf="editRCForm.get('titreFoncier')!.value == false">
+          <label class="form-control-label" jhiTranslate="sunufoncierApp.refcadastrale.dateDeliberation" for="field_dateDeliberation"
+            >Date Deliberation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="dateDeliberation"
+            id="field_dateDeliberation"
+            data-cy="dateDeliberation"
+            formControlName="dateDeliberation"
+          />
+        </div>
+
+        <div class="form-group col-3" *ngIf="editRCForm.get('titreFoncier')!.value == true">
           <label class="form-control-label" for="field_rc_dateBornage">Date Bornage</label>
           <div class="d-flex">
             <input
@@ -166,26 +291,18 @@
             />
           </div>
         </div>
-        <div class="form-group col-2" *ngIf="editRCForm.get('titreFoncier')!.value == true">
-          <label class="form-control-label" for="field_rc_titreMere">Titre Mere</label>
+
+        <div class="form-group col-12" *ngIf="editRCForm.get('titreFoncier')!.value == true">
+          <label class="form-control-label" jhiTranslate="sunufoncierApp.refcadastrale.nomGeometre" for="field_nomGeometre"
+            >Nom Geometre</label
+          >
           <input
-            class="form-control"
-            data-cy="titreMere"
-            formControlName="titreMere"
-            id="field_rc_titreMere"
-            name="titreMere"
             type="text"
-          />
-        </div>
-        <div class="form-group col-2">
-          <label class="form-control-label" for="field_rc_titreCree">Titre Cree</label>
-          <input
             class="form-control"
-            data-cy="titreCree"
-            formControlName="titreCree"
-            id="field_rc_titreCree"
-            name="titreCree"
-            type="text"
+            name="nomGeometre"
+            id="field_nomGeometre"
+            data-cy="nomGeometre"
+            formControlName="nomGeometre"
           />
         </div>
       </div>
@@ -991,6 +1108,10 @@
       </table>
     </div>
   </div>
+</div>
+<hr />
+<div class="row justify-content-center">
+  <button (click)="saveRC()">Enregistrer Dossier</button>
 </div>
 <ng-template #addLocataire let-c="close" let-d="dismiss">
   <form (ngSubmit)="saveLocataire()" [formGroup]="editLocataireForm" name="editLocataireForm" novalidate role="form">

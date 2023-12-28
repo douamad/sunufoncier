@@ -76,6 +76,21 @@ public class EvaluationBatimentsResource {
             .body(result);
     }
 
+    @PostMapping("/evaluation-batiments/bulk")
+    public ResponseEntity<List<EvaluationBatimentsDTO>> createEvaluationBatimentsBulk(
+        @RequestBody List<EvaluationBatimentsDTO> evaluationBatimentsDTOList
+    ) throws URISyntaxException {
+        log.debug("REST request to save EvaluationBatiments : {}", evaluationBatimentsDTOList);
+        if (evaluationBatimentsDTOList.isEmpty()) {
+            throw new BadRequestAlertException("List Empty", ENTITY_NAME, "idexists");
+        }
+        List<EvaluationBatimentsDTO> result = evaluationBatimentsService.saveBulk(evaluationBatimentsDTOList);
+        return ResponseEntity
+            .created(new URI("/api/evaluation-batiments"))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.toString()))
+            .body(result);
+    }
+
     /**
      * {@code PUT  /evaluation-batiments/:id} : Updates an existing evaluationBatiments.
      *

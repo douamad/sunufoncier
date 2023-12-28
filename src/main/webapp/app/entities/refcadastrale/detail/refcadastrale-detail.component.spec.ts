@@ -1,38 +1,38 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { RouterTestingHarness, RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { RefcadastraleDetailComponent } from './refcadastrale-detail.component';
 
-describe('Component Tests', () => {
-  describe('Refcadastrale Management Detail Component', () => {
-    let comp: RefcadastraleDetailComponent;
-    let fixture: ComponentFixture<RefcadastraleDetailComponent>;
+describe('Refcadastrale Management Detail Component', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RefcadastraleDetailComponent, RouterTestingModule.withRoutes([], { bindToComponentInputs: true })],
+      providers: [
+        provideRouter(
+          [
+            {
+              path: '**',
+              component: RefcadastraleDetailComponent,
+              resolve: { refcadastrale: () => of({ id: 123 }) },
+            },
+          ],
+          withComponentInputBinding()
+        ),
+      ],
+    })
+      .overrideTemplate(RefcadastraleDetailComponent, '')
+      .compileComponents();
+  });
 
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        declarations: [RefcadastraleDetailComponent],
-        providers: [
-          {
-            provide: ActivatedRoute,
-            useValue: { data: of({ refcadastrale: { id: 123 } }) },
-          },
-        ],
-      })
-        .overrideTemplate(RefcadastraleDetailComponent, '')
-        .compileComponents();
-      fixture = TestBed.createComponent(RefcadastraleDetailComponent);
-      comp = fixture.componentInstance;
-    });
+  describe('OnInit', () => {
+    it('Should load refcadastrale on init', async () => {
+      const harness = await RouterTestingHarness.create();
+      const instance = await harness.navigateByUrl('/', RefcadastraleDetailComponent);
 
-    describe('OnInit', () => {
-      it('Should load refcadastrale on init', () => {
-        // WHEN
-        comp.ngOnInit();
-
-        // THEN
-        expect(comp.refcadastrale).toEqual(jasmine.objectContaining({ id: 123 }));
-      });
+      // THEN
+      expect(instance.refcadastrale).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 });

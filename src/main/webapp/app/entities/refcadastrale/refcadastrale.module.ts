@@ -9,7 +9,7 @@ import { RefcadastraleRoutingModule } from './route/refcadastrale-routing.module
 
 @NgModule({
   imports: [SharedModule, RefcadastraleRoutingModule],
-  declarations: [RefcadastraleComponent, RefcadastraleDetailComponent, RefcadastraleUpdateComponent, RefcadastraleDeleteDialogComponent],
+  declarations: [RefcadastraleComponent, RefcadastraleDetailComponent, RefcadastraleDeleteDialogComponent],
   entryComponents: [RefcadastraleDeleteDialogComponent],
 })
 export class RefcadastraleModule {}

@@ -1,11 +1,11 @@
 <div>
   <h2 id="page-heading" data-cy="RefcadastraleHeading">
-    <span>Refcadastrales</span>
+    <span jhiTranslate="sunufoncierApp.refcadastrale.home.title">Refcadastrales</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+      <button class="btn btn-info me-2" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Refresh List</span>
+        <span jhiTranslate="sunufoncierApp.refcadastrale.home.refreshListLabel">Actualiser la liste</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/refcadastrale/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Refcadastrale </span>
+        <span jhiTranslate="sunufoncierApp.refcadastrale.home.createLabel"> Créer un nouveau Refcadastrale </span>
       </button>
     </div>
   </h2>
@@ -25,22 +25,97 @@
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="refcadastrales?.length === 0">
-    <span>No refcadastrales found</span>
+    <span jhiTranslate="sunufoncierApp.refcadastrale.home.notFound">Aucun Refcadastrale trouvé</span>
   </div>
 
-  <div class="table-responsive" id="entities" *ngIf="refcadastrales && refcadastrales.length > 0">
+  <div class="table-responsive table-entities" id="entities" *ngIf="refcadastrales && refcadastrales.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="codeSection"><span>Code Section</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="codeParcelle"><span>Code Parcelle</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="nicad"><span>Nicad</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="superfici"><span>Superfici</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="titreMere"><span>Titre Mere</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="titreCree"><span>Titre Cree</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="numeroRequisition"><span>Numero Requisition</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="dateBornage"><span>Date Bornage</span> <fa-icon icon="sort"></fa-icon></th>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="codeSection">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.codeSection">Code Section</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="codeParcelle">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.codeParcelle">Code Parcelle</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nicad">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.nicad">Nicad</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="superfici">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.superfici">Superfici</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="titreMere">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.titreMere">Titre Mere</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="titreCree">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.titreCree">Titre Cree</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="numeroRequisition">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.numeroRequisition">Numero Requisition</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateBornage">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.dateBornage">Date Bornage</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dependantDomaine">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.dependantDomaine">Dependant Domaine</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="numeroDeliberation">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.numeroDeliberation">Numero Deliberation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateDeliberation">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.dateDeliberation">Date Deliberation</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nomGeometre">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.nomGeometre">Nom Geometre</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="issueBornage">
+            <div class="d-flex">
+              <span jhiTranslate="sunufoncierApp.refcadastrale.issueBornage">Issue Bornage</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -57,7 +132,14 @@
           <td>{{ refcadastrale.titreCree }}</td>
           <td>{{ refcadastrale.numeroRequisition }}</td>
           <td>{{ refcadastrale.dateBornage | formatMediumDatetime }}</td>
-          <td class="text-right">
+          <td>
+            {{ refcadastrale.dependantDomaine }}
+          </td>
+          <td>{{ refcadastrale.numeroDeliberation }}</td>
+          <td>{{ refcadastrale.dateDeliberation }}</td>
+          <td>{{ refcadastrale.nomGeometre }}</td>
+          <td>{{ refcadastrale.issueBornage }}</td>
+          <td class="text-end">
             <div class="btn-group">
               <button
                 type="submit"
@@ -66,7 +148,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline">View</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
               </button>
 
               <button
@@ -76,35 +158,17 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
               </button>
 
               <button type="submit" (click)="delete(refcadastrale)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Delete</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
               </button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <div *ngIf="refcadastrales && refcadastrales.length > 0">
-    <div class="row justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
-    <div class="row justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="ngbPaginationPage"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="loadPage($event)"
-      ></ngb-pagination>
-    </div>
   </div>
 </div>

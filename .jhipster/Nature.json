@@ -1,5 +1,9 @@
 {
-  "name": "Nature",
+  "applications": "*",
+  "changelogDate": "20210728231146",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "nature",
   "fields": [
     {
       "fieldName": "code",
@@ -10,15 +14,12 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [],
-  "entityTableName": "nature",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
   "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Nature",
+  "pagination": "pagination",
   "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231146"
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

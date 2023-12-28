@@ -1,5 +1,9 @@
 {
-  "name": "Lotissement",
+  "applications": "*",
+  "changelogDate": "20210728231145",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "lotissement",
   "fields": [
     {
       "fieldName": "code",
@@ -10,28 +14,27 @@
       "fieldType": "String"
     }
   ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Lotissement",
+  "pagination": "pagination",
+  "readOnly": false,
   "relationships": [
     {
-      "relationshipType": "one-to-many",
       "otherEntityName": "dossier",
       "otherEntityRelationshipName": "dossier",
-      "relationshipName": "lotissement"
+      "relationshipName": "lotissement",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     },
     {
-      "relationshipType": "many-to-one",
       "otherEntityName": "quartier",
       "otherEntityRelationshipName": "lotissement",
-      "relationshipName": "quartier"
+      "relationshipName": "quartier",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
-  "entityTableName": "lotissement",
-  "dto": "mapstruct",
-  "pagination": "pagination",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": true,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "applications": "*",
-  "changelogDate": "20210728231145"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }
